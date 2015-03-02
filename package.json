@@ -1,8 +1,12 @@
 {
   "name": "mobilectures",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "a Sails application",
+  "engines": {
+    "node": "~0.13.0",
+    "npm": "~1.4.28"
+  },
   "keywords": [],
   "dependencies": {
     "sails": "~0.10.5",
