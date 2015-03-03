@@ -15,6 +15,8 @@
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
+  'bootstrap/dist/css/bootstrap.css',
+  'bootstrap/dist/css/bootstrap.min.css',
   'styles/**/*.css'
 ];
 
@@ -23,6 +25,13 @@ var cssFilesToInject = [
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
   
+  //Load Jquery
+  'jquery/dist/jquery.js',
+  'jquery/dist/jquery.min.js', 
+  //Load Bootstrap
+  'bootstrap/dist/js/bootstrap.js',
+  'bootstrap/dist/js/bootstrap.min.js',
+
   // Load sails.io before everything else
   'js/dependencies/sails.io.js',
 
