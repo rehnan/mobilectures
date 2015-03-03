@@ -20,11 +20,4 @@ module.exports = {
    models: {
      connection: 'MongodbDev'
    }
-
-   port: 1337,
-
-   log: {
-     level: "debug"
-   }
-
 };
