@@ -6,7 +6,7 @@
 */
 
 module.exports = {
-  connection: 'MongodbDev',
+  connection: 'MongodbProd',
   attributes: {
   	   name: {
           type: 'string',
