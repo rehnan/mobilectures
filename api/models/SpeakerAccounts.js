@@ -6,14 +6,13 @@
 */
 
 module.exports = {
-  connection: 'MongodbProd',
   attributes: {
   	   name: {
           type: 'string',
           required: true
       },
 	    
-      username: {
+      email: {
           type: 'string',
           required: true,
           unique: true
