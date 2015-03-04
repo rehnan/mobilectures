@@ -18,7 +18,7 @@ module.exports.models = {
   *                                                                          *
   ***************************************************************************/
    //connection: 'MongodbDev',
-  // connection: 'MongodbProd',
+   //connection: 'MongodbProd',
 
   /***************************************************************************
   *                                                                          *
@@ -28,6 +28,6 @@ module.exports.models = {
   * See http://sailsjs.org/#/documentation/concepts/ORM/model-settings.html  *
   *                                                                          *
   ***************************************************************************/
-   migrate: 'alter'
-
+   migrate: 'alter',
+   connection: 'MongodbDev',
 };
