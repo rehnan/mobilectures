@@ -21,17 +21,23 @@ module.exports = {
         password: '',
         database: 'mobilecturesdb',
         schema: true
-    }
+    },
+
+    MongodbProd: {
+    adapter: 'sails-mongo',
+    schema: true,
+    url: 'mongodb://rehnan:mobidb@ds049171.mongolab.com:49171/mobilecturesdb'
+  },
   }
 
   /***************************************************************************
    * Set the default database connection for models in the development       *
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
-   port: 1337,
-   environment: process.env.NODE_ENV || 'development',
+   
+   environment: process.env.NODE_ENV || 'production',
 
    models: {
-     connection: 'MongodbDev'
+     connection: 'MongodbProd'
    }
 };
