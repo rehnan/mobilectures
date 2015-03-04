@@ -5,29 +5,59 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
+var passport = require('passport');
+
 module.exports = {
-	
+
   /**
    * `AuthController.login()`
    */
   index: function (req, res) {
-    return res.view();
+    if (req.session.passport.user) {
+            return res.redirect('/speaker');
+        }
+        return res.view({layout: 'layout_login'});
   },
 
   /**
    * `AuthController.signin()`
    */
   signin: function (req, res) {
-    return res.json({
-      todo: 'signin() is not implemented yet!'
-    });
-  },
+        sails.log.debug('Entrou na action passport_local');
+        passport.authenticate('local', function(err, user, info)
+        {
+            //Se houver erro renderiza a view login com a mensagem de erro
+            if(err){
+              return res.view('auth/index', {layout: 'layout_login', locals: {message: info.message}});
+            }
+
+            //Se houver usuário inexistente renderiza a view login com a mensagem de erro
+            if (!user){
+              sails.log.error(user+' ########### User Error ########'+JSON.stringify(info));
+              return res.view('auth/index', {layout: 'layout_login', locals: {message: info.message}});
+            }
+
+            req.logIn(user, function(err) {
+                  sails.log.debug('########### Login Efetuado ######## '+user);
+                  if (err){
+                      return res.view('auth/index', {layout: 'layout_login', locals: {message: info.message}});
+                  }
+                  
+                  return res.redirect('/speaker');
+            });
+        })(req, res);
+    },
+  
 
   /**
    * `AuthController.signup()`
    */
   signup: function (req, res) {
-    return res.view();
+    //Verifica se há algum usuário logado para o redirecionamento correto
+        if (req.session.passport.user) {
+            return res.redirect('/speaker');
+        }
+        return res.view({layout: 'layout_login'});
   },
 
 
@@ -46,20 +76,16 @@ module.exports = {
                 SpeakerAccounts.create(req.params.all(), function (err, user) {
                     if (err){return next(err);}
                     sails.log.debug('[Sucesso] Email '+user.email+' cadastrado com sucesso!!');
-                    res.json({msg:'Usuário autenticado!!'});
-                    /*
+                    
                     req.login(user, function(err) {
                         if (err) { return next(err); }
                          sails.log.debug('Sessão criada! Redirecionando para Speaker Area');
-                        //return res.redirect('/login');
-                        res.json({msg:'Usuário autenticado!!'});
+                        return res.redirect('/speaker');
                     });
-                    */
                 });
             }else{
-                sails.log.debug('[erro] Email já existente!');
-                //return res.redirect('/login');
-                res.json({msg:'Usuário já existente!'});
+                sails.log.error('[erro] Email já cadastrado!!');
+                return res.view('auth/signup', {layout: 'layout_login', locals: {message: "Este email já foi cadastrado!"}});
             }
         });
   },
@@ -69,9 +95,11 @@ module.exports = {
    * `AuthController.logout()`
    */
   logout: function (req, res) {
-    return res.json({
-      todo: 'logout() is not implemented yet!'
-    });
+        //req.logout();
+        req.session.destroy(function(err){
+           // cannot access session here
+         });
+        res.redirect('/login');
   }
 };
 

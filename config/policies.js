@@ -27,6 +27,12 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
+ //Política de autenticação inclusa em /policies/isAuthenticated
+  '*': 'isAuthenticated',
+    //Lista branca das ações do controller AuthController
+    'auth': {
+        '*': true
+    },
 
   /***************************************************************************
   *                                                                          *
