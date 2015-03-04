@@ -12,5 +12,39 @@
 
 module.exports = {
 
-  
+   
+
+   port: environment: process.env.PORT || 1337,
+   environment: process.env.NODE_ENV || 'development',
+
+   connections: {
+    'default': 'MongodbDev',
+
+      MongodbDev: {
+	    adapter: 'sails-mongo',
+	    host: 'localhost',
+	    port: 27017,
+	    user: '',
+	    password: '',
+	    database: 'mobilecturesdb',
+	    schema: true
+	  }
+   },
+
+   models: {
+     connection: 'MongodbDev'
+   }
+  /***************************************************************************
+   * Set the port in the production environment to 80                        *
+   ***************************************************************************/
+
+  // port: 80,
+
+  /***************************************************************************
+   * Set the log level in production environment to "silent"                 *
+   ***************************************************************************/
+
+  // log: {
+  //   level: "silent"
+  // }
 };
