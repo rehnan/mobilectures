@@ -12,6 +12,16 @@
 
 module.exports = {
 
+  connections: {
+         MongodbProd: {
+         adapter: 'sails-mongo',
+         schema: true,
+         url: 'mongodb://rehnan:mobidb@ds049171.mongolab.com:49171/mobilecturesdb'
+      },
+  }
+
+  environment: process.env.NODE_ENV || 'production',
+
   /***************************************************************************
    * Set the default database connection for models in the production        *
    * environment (see config/connections.js and config/models.js )           *
@@ -24,9 +34,7 @@ module.exports = {
   /***************************************************************************
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
-
-   port: 80,
-
+  port: 80,
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
    ***************************************************************************/
@@ -35,12 +43,7 @@ module.exports = {
    //  level: "silent"
   // }
 
-  connections: {
-         MongodbProd: {
-         adapter: 'sails-mongo',
-         schema: true,
-         url: 'mongodb://rehnan:mobidb@ds049171.mongolab.com:49171/mobilecturesdb'
-      },
-  }
+  
+  
 
 };
