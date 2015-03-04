@@ -1,7 +1,8 @@
+<% var globals = sails.config.globals %>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>New Sails App</title>
+    <title><%= globals.title %></title>
 
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -37,9 +38,53 @@
   </head>
 
   <body>
-    <%- body %>
+  <div class="page-header">
+    <h1>Web Application 
+          <small>Hello, <span id="id_current_user"><%= req.session.passport.user %></span> . Welcome to the Speaker Dashboard!</small></h1>
+  </div>
+  <div class="container">
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            
+            <a class="navbar-brand" href="/speaker">Dashboard</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav" id="menu_options"> <!-- class="active" -->
+              <li class="<%= (globals.title == 'Session') ? 'active' : '' %>"><a href="/speaker/session"> <button class="btn" type="button" >
+                 Sessions
+              </button></a></li>
+              <li class="<%= (globals.title == 'Quiz') ? 'active' : '' %>"><a href="/speaker/quiz"> <button class="btn" type="button" >
+                 Quiz 
+              </button></a></li>
+              <li class="<%= (globals.title == 'Doubts') ? 'active' : '' %>"><a href="/speaker/doubts"> <button class="btn" type="button" >
+                 Doubts <span class="badge">0</span>
+              </button></a></li>
+              <li class="<%= (globals.title == 'Polls') ? 'active' : '' %>"><a href="/speaker/polls"> <button class="btn" type="button" >
+                 Polls 
+              </button></a></li>
+              <li class="<%= (globals.title == 'Listeners') ? 'active' : '' %>"><a href="/speaker/listeners"> <button class="btn" type="button" >
+                 Listeners
+              </button></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/logout"> <button type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Logout!</button></a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
 
-
+      <div class="jumbotron">
+          <%- body %>
+      </div>
+  </div>
 
     <!--
         Client-side Templates

@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><center><h3> Manage Sessions </h3></center><a class="openModalNewSession" href="#" >New Session</a></div>
+  <div class="panel-body">
+    <p>...</p>
+  </div>
+
+  <!-- Table Sessions -->
+
+ <div class="table-responsive">
+  <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Key</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th colspan="4"><center>Actions</center></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% _.each(sessions, function (session) { %>
+        <tr>
+          <td><%= session.id     %></td>
+          <td><%= session.key    %></td>
+          <td><%= session.name   %></td>
+          <td><%= session.status %></td>
+          <td>Edit</td>
+          <td>View</td>
+          <td>Delete</td>
+          <td>Start</td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+

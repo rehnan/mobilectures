@@ -60,4 +60,8 @@ module.exports.globals = {
   ****************************************************************************/
 
 	// models: true
+  
+  title: 'Título do Projeto',
+  message: undefined,
+  current_session: undefined,
 };

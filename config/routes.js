@@ -36,6 +36,8 @@ module.exports.routes = {
     view: 'homepage'
   }
   */
+
+  //Routes Authentication
   '/': {
     controller: 'AuthController',
     action: 'index'
@@ -64,7 +66,43 @@ module.exports.routes = {
   '/logout': {
     controller: 'AuthController',
     action: 'logout'
-  }
+  },
+
+
+    //SpeakerController Routes:
+    'GET /speaker':{
+        controller: 'SpeakerController',
+        action: 'index'
+    },
+
+    'GET /speaker/session':{
+        controller: 'SessionController',
+        action: 'show'
+    },
+
+    //Rest to session quiz
+    'GET /speaker/quiz':{
+        controller: 'QuizController',
+        action: 'show'
+    },
+
+    //Rest to session doubts
+    'GET /speaker/doubts':{
+        controller: 'DoubtsController',
+        action: 'show'
+    },
+
+    //Rest to session polls
+    'GET /speaker/polls':{
+        controller: 'PollsController',
+        action: 'show'
+    },
+
+    //Rest to session quiz
+    'GET /speaker/listeners':{
+        controller: 'ListenersController',
+        action: 'show'
+    }
 
   /***************************************************************************
   *                                                                          *
