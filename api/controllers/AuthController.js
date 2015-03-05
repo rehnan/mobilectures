@@ -15,15 +15,15 @@ module.exports = {
   index: function (req, res) {
     if (req.session.passport.user) {
             return res.redirect('/speaker');
-        }
-        return res.view({layout: 'layout_login'});
+      }
+     return res.view({layout: 'layout_login'});
   },
 
   /**
    * `AuthController.signin()`
    */
   signin: function (req, res) {
-        sails.log.debug('Entrou na action passport_local');
+        sails.log.debug('Entrou na action signin');
         passport.authenticate('local', function(err, user, info)
         {
             //Se houver erro renderiza a view login com a mensagem de erro
@@ -99,7 +99,7 @@ module.exports = {
         req.session.destroy(function(err){
            // cannot access session here
          });
-        res.redirect('/login');
+       return res.redirect('/login');
   }
 };
 

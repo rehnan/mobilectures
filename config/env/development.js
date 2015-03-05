@@ -14,7 +14,7 @@ module.exports = {
 
    
 
-   port: environment: process.env.PORT || 1337,
+   port: process.env.PORT || 1337,
    environment: process.env.NODE_ENV || 'development',
 
    connections: {

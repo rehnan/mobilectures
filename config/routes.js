@@ -102,6 +102,11 @@ module.exports.routes = {
     'GET /speaker/listeners':{
         controller: 'ListenersController',
         action: 'show'
+    },
+
+    'GET /listener/subscribe' : {
+      controller: 'ListenersController',
+      action: 'subscribe'
     }
 
   /***************************************************************************

@@ -6,7 +6,6 @@ var ListenersController = {
 		application.title = 'Listeners';
 		res.view('speaker/listeners/show');
 	},
-
 };
 
 module.exports = ListenersController;

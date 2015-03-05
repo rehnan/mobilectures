@@ -12,8 +12,8 @@
 
 module.exports = {
 
-  port: environment: process.env.PORT || 80,
-   environment: process.env.NODE_ENV || 'production',
+  port: process.env.PORT || 80,
+  environment: process.env.NODE_ENV || 'production',
 
    connections: {
     'default': 'MongodbProd',
