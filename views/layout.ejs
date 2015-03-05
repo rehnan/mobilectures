@@ -39,8 +39,7 @@
 
   <body>
   <div class="page-header">
-    <h1>Web Application 
-          <small>Hello, <span id="id_current_user"><%= req.session.passport.user %></span> . Welcome to the Speaker Dashboard!</small></h1>
+    <h4><center><%= i18n("msg_hello") %>, <span id="id_current_user"><%= req.session.passport.user %></span>. <%= i18n("msg_welcome") %></center></h4>
   </div>
   <div class="container">
       <!-- Static navbar -->
@@ -54,28 +53,38 @@
               <span class="icon-bar"></span>
             </button>
             
-            <a class="navbar-brand" href="/speaker">Dashboard</a>
+            <a class="navbar-brand" href="/speaker"><%= i18n("label_dashboard") %></a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav" id="menu_options"> <!-- class="active" -->
               <li class="<%= (globals.title == 'Session') ? 'active' : '' %>"><a href="/speaker/session"> <button class="btn" type="button" >
-                 Sessions
+                 <%= i18n("option_sessions") %>
               </button></a></li>
               <li class="<%= (globals.title == 'Quiz') ? 'active' : '' %>"><a href="/speaker/quiz"> <button class="btn" type="button" >
-                 Quiz 
+                 <%= i18n("option_quizes") %> 
               </button></a></li>
               <li class="<%= (globals.title == 'Doubts') ? 'active' : '' %>"><a href="/speaker/doubts"> <button class="btn" type="button" >
-                 Doubts <span class="badge">0</span>
+                 <%= i18n("option_doubts") %> <span class="badge">0</span>
               </button></a></li>
               <li class="<%= (globals.title == 'Polls') ? 'active' : '' %>"><a href="/speaker/polls"> <button class="btn" type="button" >
-                 Polls 
+                 <%= i18n("option_polls") %> 
               </button></a></li>
               <li class="<%= (globals.title == 'Listeners') ? 'active' : '' %>"><a href="/speaker/listeners"> <button class="btn" type="button" >
-                 Listeners
+                 <%= i18n("option_listeners") %>
               </button></a></li>
             </ul>
+           
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="/logout"> <button type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Logout!</button></a></li>
+               <!--
+               <li style="list-style-type: none; margin-top: 7%;">
+                  <select class="form-control" id="setLanguage"> 
+                      <option value="two">Two</option>
+                      <option value="three">Three</option>
+                  </select>
+
+              </li>
+              -->
+              <li><a href="/logout"> <button type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%= i18n("label_logout") %></button></a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->

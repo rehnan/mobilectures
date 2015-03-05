@@ -9,14 +9,21 @@ var passport = require('passport');
 
 module.exports = {
 
+   /**
+   * `AuthController.login()`
+   */
+  root: function(req, res) {
+    res.redirect('login');
+  },
+
   /**
    * `AuthController.login()`
    */
   index: function (req, res) {
-    if (req.session.passport.user) {
-            return res.redirect('/speaker');
+      if (req.session.passport.user) {
+              return res.redirect('/speaker');
       }
-     return res.view({layout: 'layout_login'});
+      return res.view({layout: 'layout_login'});
   },
 
   /**

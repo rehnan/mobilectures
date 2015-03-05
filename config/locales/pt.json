@@ -1,0 +1,23 @@
+{
+	"label_signin": "Fazer Login",
+	"label_signup": "Criar nova conta",
+	"msg_label_login": "Por favor, entre com seu login!",
+	"label_logout": "Sair",
+	"label_email": "Email",
+	"label_password": "Senha",
+	"msg_welcome": "Seja bem-vindo a área do palestrante!!",
+	"web_app_name": "Mobilectures",
+	"label_dashboard": "Painel de Opções",
+	"option_sessions": "Sessões",
+	"option_quizes": "Quizes",
+	"option_doubts": "Dúvidas",
+	"option_polls": "Enquetes",
+	"option_listeners": "Ouvintes Conectados",
+	"login": "login",
+	"label_name": "Nome",
+	"msg_label_signup": "Inscreva-se!",
+	"label_register": "Registrar",
+	"back_to_login": "Voltar para o login",
+	"label_login": "label_login",
+	"msg_hello": "Olá"
+}

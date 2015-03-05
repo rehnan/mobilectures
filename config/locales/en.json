@@ -1,4 +1,23 @@
 {
-	"Welcome": "Welcome",
-	"A brand new app.": "A brand new app."
+	"label_signin": "Sign in",
+	"label_signup": "Sign up",
+	"msg_label_login": "Please, inform your login",
+	"label_logout": "Logout",
+	"label_email": "Email",
+	"label_password": "Password",
+	"msg_welcome": "Welcome to the speaker dashboard!!",
+	"web_app_name": "Mobilectures",
+	"label_dashboard": "Dashboard",
+	"option_sessions": "Sessions",
+	"option_quizes": "Quizes",
+	"option_doubts": "Doubts",
+	"option_polls": "Polls",
+	"option_listeners": "Connecteds Listeners",
+	"login": "login",
+	"label_name": "Name",
+	"msg_label_signup": "Sign up now!",
+	"label_register": "Register",
+	"back_to_login": "Back to login",
+	"label_login": "Login",
+	"msg_hello": "Hello"
 }

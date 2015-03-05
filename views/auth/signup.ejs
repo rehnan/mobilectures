@@ -1,26 +1,26 @@
 <div class="container">
     <form class="form-signup" action="/signup" method="POST">
-        <h2 class="form-signin-heading">Sign up!</h2>
+        <h2 class="form-signin-heading"><%= i18n("msg_label_signup") %></h2>
         <div class="input-group input-group-lg">
-             <span class="input-group-addon" id="sizing-addon1">Name:</span>
-             <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name" required autofocus>
+             <span class="input-group-addon" id="sizing-addon1"><%= i18n("label_name") %>:</span>
+             <input type="text" name="name" class="form-control" id="name" placeholder="<%= i18n('label_name') %>" required autofocus>
         </div>
 
         <br/>
         <div class="input-group input-group-lg">
-             <span class="input-group-addon">Email:</span>
-             <input type="text" name="email" class="form-control" id="email" placeholder="Enter your email">
+             <span class="input-group-addon"><%= i18n("label_email") %>:</span>
+             <input type="text" name="email" class="form-control" id="email" placeholder="<%= i18n('label_email') %>" required>
         </div>
 
         <br/>
         <div class="input-group input-group-lg">
-            <span class="input-group-addon">Password:</span>
-            <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password">
+            <span class="input-group-addon"><%= i18n("label_password") %>:</span>
+            <input type="password" name="password" class="form-control" id="password" placeholder="<%= i18n('label_password') %>" required>
         </div>
         
         <br/>
-        <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block"/>
-        <a href="/login" class="pull-right need-help"> Back to login </a><span class="clearfix"></span>
+        <input type="submit" value="<%= i18n('label_register') %>" class="btn btn-lg btn-primary btn-block"/>
+        <a href="/login" class="pull-right need-help"> <%= i18n("back_to_login") %> </a><span class="clearfix"></span>
 
         <br>
         <% if (typeof message !== 'undefined' ) { %>

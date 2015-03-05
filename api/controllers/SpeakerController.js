@@ -15,10 +15,7 @@ module.exports = {
   index: function (req, res) {
   		application.title = 'Dashboard';
 		//sails.log.debug('User: '+req.session.passport.user);
-	
-
     return res.view('speaker/index');
-  }
-
+  },
 };
 

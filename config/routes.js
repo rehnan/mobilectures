@@ -40,7 +40,7 @@ module.exports.routes = {
   //Routes Authentication
   '/': {
     controller: 'AuthController',
-    action: 'index'
+    action: 'root'
   },
 
   'GET /login': {
@@ -104,10 +104,7 @@ module.exports.routes = {
         action: 'show'
     },
 
-    'GET /listener/subscribe' : {
-      controller: 'ListenersController',
-      action: 'subscribe'
-    }
+    
 
   /***************************************************************************
   *                                                                          *
