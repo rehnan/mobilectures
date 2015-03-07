@@ -32,12 +32,12 @@ module.exports.policies = {
     //Lista branca das ações do controller AuthController
     'auth': {
         '*': true
-    }
+    },
 
      //Lista branca das ações do controller AuthController
-    //'listeners': {
-      //  '*': true
-    //},
+    'listeners': {
+        '*': true
+    },
 
   /***************************************************************************
   *                                                                          *

@@ -22,7 +22,14 @@ module.exports = {
       password: {
           type: 'string',
           required: true
-      }
+      },
+
+      //Association with sessions (Uma conta de palestrante pode gerenciar várias sessões)
+      /*
+      sessions:{
+            collection: 'sessions',
+            via: 'owner'
+      }*/
   }
 };
 

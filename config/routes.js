@@ -99,12 +99,10 @@ module.exports.routes = {
     },
 
     //Rest to session quiz
-    'GET /speaker/listeners':{
+    'GET /listeners/join/:keySession':{
         controller: 'ListenersController',
-        action: 'show'
-    },
-
-    
+        action: 'join'
+    }
 
   /***************************************************************************
   *                                                                          *
