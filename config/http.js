@@ -8,8 +8,16 @@
  * For more information on configuration, check out:
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.http.html
  */
+var passport = require('passport'),
+LocalStrategy = require('passport-local').Strategy;
 
 module.exports.http = {
+
+  customMiddleware: function(app){
+      console.log('Loading Custom  Express Middleware passport');
+      app.use(passport.initialize());
+      app.use(passport.session());
+    }
 
   /****************************************************************************
   *                                                                           *

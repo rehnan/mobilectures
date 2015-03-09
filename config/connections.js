@@ -58,8 +58,12 @@ module.exports.connections = {
   ***************************************************************************/
   MongodbDev: {
     adapter: 'sails-mongo',
-    schema: true,
-    url: process.env.DB_URL
+    host: 'localhost',
+    port: 27017,
+    user: '',
+    password: '',
+    database: 'mobilecturesdb',
+    schema: true
   },
 
   MongodbProd: {

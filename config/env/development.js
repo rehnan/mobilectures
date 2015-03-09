@@ -14,21 +14,25 @@ module.exports = {
 
    
 
-   port: process.env.PORT || 80,
-   environment: process.env.NODE_ENV || 'production',
+   port: process.env.PORT || 1337,
+   environment: process.env.NODE_ENV || 'development',
 
    connections: {
-    'default': 'MongodbProd',
+    'default': 'MongodbDev',
 
-      MongodbProd: {
-        adapter: 'sails-mongo',
-        schema: true,
-        url: process.env.DB_URL
-      }
+      MongodbDev: {
+	    adapter: 'sails-mongo',
+	    host: 'localhost',
+	    port: 27017,
+	    user: '',
+	    password: '',
+	    database: 'mobilecturesdb',
+	    schema: true
+	  }
    },
 
    models: {
-     connection: 'MongodbProd'
+     connection: 'MongodbDev'
    }
   /***************************************************************************
    * Set the port in the production environment to 80                        *
