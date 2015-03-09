@@ -98,20 +98,23 @@ module.exports.routes = {
         action: 'show'
     },
 
-    //Rest to session quiz
     'GET /listeners/join/:keySession':{
         controller: 'ListenersController',
         action: 'join'
+    },
+
+    'POST /listeners':{
+        controller: 'ListenersController',
+        action: 'create'
+    },
+
+    'PUT /listeners':{
+        controller: 'ListenersController',
+        action: 'update'
+    },
+
+    'DELETE /listeners':{
+        controller: 'ListenersController',
+        action: 'destroy'
     }
-
-  /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  *  If a request to a URL doesn't match any of the custom routes above, it  *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
-
 };

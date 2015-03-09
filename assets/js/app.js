@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
-   socket = socket || io.connect();
-
+   //socket = socket || io.connect();
+   var socket = io.connect();
    socket.on("connect", function () {
 	   	console.log('Connected');
    });
