@@ -66,10 +66,10 @@ module.exports.connections = {
     schema: true
   },
 
-  MongodbProd: {
+  'production': {
     adapter: 'sails-mongo',
-    schema: true,
-    url: process.env.DB_URL
+    url: process.env.DB_URL,
+    schema: true
   },
 
   /***************************************************************************

@@ -31,7 +31,7 @@
     "sails-mongo": "^0.10.5"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "sails lift",
     "debug": "node debug app.js"
   },
   "main": "app.js",
