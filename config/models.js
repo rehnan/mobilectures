@@ -29,5 +29,15 @@ module.exports.models = {
   *                                                                          *
   ***************************************************************************/
    migrate: 'alter',
+   
+
+    connections: {
+      MongodbProd: {
+        adapter: 'sails-mongo',
+        schema: true,
+        url: 'mongodb://rehnan:a1275704@ds049171.mongolab.com:49171/mobilecturesdb'
+      }
+   },
+
    connection: 'MongodbProd',
 };
