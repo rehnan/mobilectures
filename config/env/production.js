@@ -11,5 +11,8 @@
  */
 
 module.exports = {
-  
+   migrate: 'alter',
+   models: {
+     connections: 'production'
+   }
 };
