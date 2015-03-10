@@ -12,18 +12,7 @@
 
 module.exports = {
   
-  port: process.env.PORT || 80,
   environment: process.env.NODE_ENV || 'production',
-
-   connections: {
-    'default': 'MongodbProd',
-
-      MongodbProd: {
-        adapter: 'sails-mongo',
-        schema: true,
-        url: process.env.DB_URL
-      }
-   },
 
    models: {
      connection: 'MongodbProd'
