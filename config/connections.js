@@ -68,7 +68,7 @@ module.exports.connections = {
 
   'production': {
     adapter: 'sails-mongo',
-    url: 'mongodb://rehnan:mobidb@ds049171.mongolab.com:49171/mobilecturesdb',
+    url: process.env.DB_URL,
     schema: true
   },
 
