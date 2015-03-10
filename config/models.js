@@ -29,5 +29,6 @@ module.exports.models = {
   *                                                                          *
   ***************************************************************************/
    migrate: 'alter',
-   connections: 'production'
+   //connections: 'production'
+   connection: 'production',
 };

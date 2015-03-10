@@ -56,7 +56,7 @@ module.exports.connections = {
   * Run: npm install sails-mongo                                             *
   *                                                                          *
   ***************************************************************************/
-  MongodbDev: {
+  'development': {
     adapter: 'sails-mongo',
     host: 'localhost',
     port: 27017,
@@ -68,7 +68,7 @@ module.exports.connections = {
 
   'production': {
     adapter: 'sails-mongo',
-    url: process.env.DB_URL,
+    url: 'mongodb://rehnan:mobidb@ds049171.mongolab.com:49171/mobilecturesdb',
     schema: true
   },
 
