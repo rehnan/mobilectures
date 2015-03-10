@@ -11,28 +11,5 @@
  */
 
 module.exports = {
-
    
-
-   port: process.env.PORT || 1337,
-   environment: process.env.NODE_ENV || 'development',
-
-   models: {
-     connection: 'MongodbDev'
-   },
-
-   
-  /***************************************************************************
-   * Set the port in the production environment to 80                        *
-   ***************************************************************************/
-
-  // port: 80,
-
-  /***************************************************************************
-   * Set the log level in production environment to "silent"                 *
-   ***************************************************************************/
-
-  // log: {
-  //   level: "silent"
-  // }
 };

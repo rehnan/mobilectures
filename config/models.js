@@ -29,5 +29,11 @@ module.exports.models = {
   *                                                                          *
   ***************************************************************************/
    migrate: 'alter',
-   'connection': 'production'
+   connections: {
+      'production': {
+        adapter: 'sails-mongo',
+        url: process.env.DB_URL,
+        schema: true
+      }
+   }
 };
