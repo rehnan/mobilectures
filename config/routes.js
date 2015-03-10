@@ -98,6 +98,12 @@ module.exports.routes = {
         action: 'show'
     },
 
+     //Rest to session listeners
+    'GET /speaker/listeners':{
+        controller: 'ListenersController',
+        action: 'show'
+    },
+
     'GET /listeners/join/:keySession':{
         controller: 'ListenersController',
         action: 'join'
