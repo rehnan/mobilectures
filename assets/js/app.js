@@ -4,7 +4,7 @@ $(document).ready(function() {
   function updateUsers(){
     $.ajax({
             dataType: "json",
-            url: 'http://localhost:1337/speaker/listeners/find',
+            url: '/speaker/listeners/find',
             success: function(users){
               $('#users').empty();
               $('#users').append('<ul>');
@@ -44,7 +44,7 @@ $(document).ready(function() {
    var socket = io.connect();
    socket.on("connect", function () {
               //updateUsers();
-              url = 'http://localhost:1337/speaker/listeners/subscribe';
+              url = '/speaker/listeners/subscribe';
               socket.get(url, function (data){
                   console.log(data.msg);
               });
