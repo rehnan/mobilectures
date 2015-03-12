@@ -87,7 +87,6 @@ var ListenersController = {
 
 			Listeners.watch(req.socket);	
 
-
 	        //Update no status de login off para online 
             Listeners.update({email:listener_email},{online:true}).exec(function update(err,updated){
                 if(err){return sails.log.error("ERRO "+err);}
