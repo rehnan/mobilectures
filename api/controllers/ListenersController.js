@@ -98,7 +98,12 @@ var ListenersController = {
 	},
 
 	leave: function(req, res) {
-
+		Listeners.findOne({id:req.param('id')}, function findListener(err, listener) {
+			 Listeners.update({id:listener.id},{online:false}).exec(function update(err,updated){
+                if(err){return sails.log.error("ERRO "+err);}
+          	    Listeners.publishUpdate(updated[0].id,{online:false});
+          	});
+		});
 	}
 };
 

@@ -13,6 +13,7 @@ $(document).ready(function() {
                     $('#users').append('<li>'+users[index].id+'</li>');
                     $('#users').append('<li>'+users[index].name+'</li>');
                     $('#users').append('<li>'+users[index].email+'</li>');
+                    $('#users').append('<li>'+users[index].password+'</li>');
                     $('#users').append('<li>'+users[index].online+'</li>');
                     $('#users').append('<hr>');
                 });
@@ -21,17 +22,33 @@ $(document).ready(function() {
           });
   };
 
+  //Método socket para logar
+   $('#signin').click(function(){
+      var em_user = $('#submit-signin').find('input[id="em_user"]').val();
+      var pass_user = $('#submit-signin').find('input[id="pass_user"]').val();
+      socket.get('/speaker/listeners/join', {email:em_user, password:pass_user}, function (data, jwres){
+          alert("Response: "+data.authorization);        
+      });
+  });
+
+  //Método socket para deslogar
+  $('#signout').click(function(){
+      var user_id = $('#submit-signout').find('input[id="user_id"]').val();
+      socket.get('/speaker/listeners/leave/'+user_id, function (data, jwres){
+      });
+  });
+
+  //Método socket para criar usuário
   $('#createUser').click(function(){
       var name = $('#submit-create').find('input[id="name_user"]').val();
       var email = $('#submit-create').find('input[id="email_user"]').val();
       var password = $('#submit-create').find('input[id="password_user"]').val();
 
-      alert('Name: '+name+ 'Email: '+email+' Password: '+password);
-
       socket.post('/speaker/listeners/create', {name:name, email:email, password:password}, function (data, jwres){
       });
   });
 
+  //Método socket update 
   $('#updateUser').click(function(){
       var id = $('#submit-update').find('input[id="id_user"]').val();
       var email = $('#submit-update').find('input[id="newname_user"]').val();

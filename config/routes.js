@@ -135,5 +135,10 @@ module.exports.routes = {
         action: 'join'
     },
 
+    'GET /speaker/listeners/leave/:id':{
+        controller: 'ListenersController',
+        action: 'leave'
+    },
+
     //########################################
 };
