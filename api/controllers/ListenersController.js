@@ -28,7 +28,7 @@ var ListenersController = {
 		      Listeners.subscribe(req.socket, listOfListeners,['create', 'update']);
 		 });
 
-		 Listeners.watch(req.socket)	
+		 Listeners.watch(req.socket);	
 		 sails.log.debug("Listener: "+req.socket.id+" subscribed!");
 	 	 return res.json({msg:"User: "+req.socket.id+" subscribed!"});
 	},
@@ -49,12 +49,12 @@ var ListenersController = {
 	},
 
 	join: function(req, res) {
-		sails.log.debug("CHAVE DE SESSAO: "+req.param('keySession'));
+		//sails.log.debug("CHAVE DE SESSAO: "+req.param('keySession'));
 		sails.log.debug("EMAIL: "+req.param('email'));
 		sails.log.debug("PASSWORD: "+req.param('password'));
 
 		var keySession = req.param('keySession');
-		
+		/*
 		//Verificar se chave de sessão existe e se ela está ativa
 		Sessions.findOne({key:keySession}, function findSession(err, session) {
 			if(err){sails.log.error("ERRO "+err);}
@@ -67,7 +67,7 @@ var ListenersController = {
 			
 			//retuugrn res.json({msg: session.name})
 		});
-
+		*/
 
 		var listener_email = req.param('email');
 		Listeners.findOne({email:listener_email}, function findListener(err, listener) {
@@ -75,26 +75,32 @@ var ListenersController = {
 			if(err){sails.log.error("ERRO "+err);}
 
 			//Verifica se o ouvinte foi encontrado
-			if(!listener && req.isSocket){
-				return res.json({msg:"LISTENER_NOT_FOUND", authorization:false});
+			if(!listener){
+				return res.json({msg:"LISTENER_NOT_FOUND", authorization:"false"});
 			}
 
-			//sobrescreve lista de ouvintes 
-			Listeners.find({}).exec(function(err, allListeners){
-				if(err){return sails.log.error("ERRO "+err);}
-	         	Listeners.subscribe(req.socket, allListeners);
-	        });
+			//subscribe
+	         Listeners.find({}).exec(function(e,listOfListeners){
+	         	if(err){return sails.log.error("ERRO "+err);}
+		      Listeners.subscribe(req.socket, listOfListeners,['create', 'update']);
+		 	});
 
-	       // Listeners.watch(req.socket);
+			Listeners.watch(req.socket);	
+
 
 	        //Update no status de login off para online 
             Listeners.update({email:listener_email},{online:true}).exec(function update(err,updated){
                 if(err){return sails.log.error("ERRO "+err);}
-          	    Listeners.publishUpdate(updated[0].id,{ name:updated[0].name });
+          	    Listeners.publishUpdate(updated[0].id,{online:true});
           	});
-	    
+
+            return res.json({msg:"welcome", authorization:"true", listener});
         });
 	},
+
+	leave: function(req, res) {
+
+	}
 };
 
 module.exports = ListenersController;

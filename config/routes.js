@@ -130,7 +130,7 @@ module.exports.routes = {
       action: 'subscribe'
     },
 
-    'GET /listeners/join/:keySession':{
+    'GET /speaker/listeners/join':{
         controller: 'ListenersController',
         action: 'join'
     },
