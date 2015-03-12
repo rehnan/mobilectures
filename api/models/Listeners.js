@@ -10,23 +10,18 @@ module.exports = {
   attributes: {
 
     name : { 
-    	type: 'string',
-    	//required: true 
+        type: 'string',
+        //required: true 
     },
 
     email : { 
-    	type: 'string',
-    	//required: true 
-    },
-
-    mac : { 
-    	type: 'string',
-    	//required: true
+        type: 'string',
+        //required: true 
     },
 
     online : { 
-    	type: 'boolean',
-    	defaultsTo: false 
+        type: 'boolean',
+        defaultsTo: false 
     }
   }
 };

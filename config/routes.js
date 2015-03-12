@@ -98,10 +98,36 @@ module.exports.routes = {
         action: 'show'
     },
 
-     //Rest to session listeners
+    //######################################## REST TO LISTENERS
+
     'GET /speaker/listeners':{
         controller: 'ListenersController',
-        action: 'show'
+        action: 'index'
+    },
+
+    'GET /speaker/listeners/find': {
+      controller: 'ListenersController',
+      action: 'getAll'
+    },
+
+    'POST /speaker/listeners/create': {
+      controller: 'ListenersController',
+      action: 'create'
+    },
+
+    'PUT /speaker/listeners/update/:id': {
+      controller: 'ListenersController',
+      action: 'update'
+    },
+
+    'DELETE /speaker/listeners/delete/:id': {
+      controller: 'ListenersController',
+      action: 'destroy'
+    },
+
+    'GET /speaker/listeners/subscribe': {
+      controller: 'ListenersController',
+      action: 'subscribe'
     },
 
     'GET /listeners/join/:keySession':{
@@ -109,18 +135,5 @@ module.exports.routes = {
         action: 'join'
     },
 
-    'POST /listeners':{
-        controller: 'ListenersController',
-        action: 'create'
-    },
-
-    'PUT /listeners':{
-        controller: 'ListenersController',
-        action: 'update'
-    },
-
-    'DELETE /listeners':{
-        controller: 'ListenersController',
-        action: 'destroy'
-    }
+    //########################################
 };

@@ -1,14 +1,55 @@
 var application = sails.config.globals;
 
 var ListenersController = {
-
-	show: function(req, res) {
+	//Renderiza o index da opção Ouvintes Conectados
+	index: function(req, res) {
 		application.title = 'Listeners';
-		res.view('speaker/listeners/show');
+		return res.view('speaker/listeners/index'); 
 	},
 
-    join: function(req, res) {
+	create: function(req, res) {
+		
+		Listeners.create({name:req.param('name'), name:req.param('email')}).exec(function(err, newUser) {
+			if(err){sails.log.debug(err);}
+			Listeners.publishCreate({id:newUser.id,name:newUser.name});
+			sails.log.debug("############# Usuario name: "+newUser.name+" criado!");
+			sails.log.debug("############# Usuario email: "+newUser.email+" criado!");
+		});
+		
+	},
+
+	getAll: function(req, res) {
+		Listeners.find({}).exec(function(err, users) {
+			return res.json(users);
+		});
+	},
+
+	subscribe: function(req, res) {
+
+		 Listeners.find({}).exec(function(e,listOfListeners){
+		      Listeners.subscribe(req.socket, listOfListeners,['create', 'update']);
+		 });
+
+		 Listeners.watch(req.socket)	
+		 sails.log.debug("Listener: "+req.socket.id+" subscribed!");
+	 	 return res.json({msg:"User: "+req.socket.id+" subscribed!"});
+	},
+
+	update: function(req, res) {
+		sails.log.debug('###### Update Called!!');
+		res.json({create:"Update!"});
+	},
+
+	destroy: function(req, res) {
+		sails.log.debug('###### Destroy Called!!');
+		res.json({create:"Destroy!"});
+	},
+
+	join: function(req, res) {
 		sails.log.debug("CHAVE DE SESSAO: "+req.param('keySession'));
+		sails.log.debug("EMAIL: "+req.param('email'));
+		sails.log.debug("PASSWORD: "+req.param('password'));
+
 		var keySession = req.param('keySession');
 		
 		//Verificar se chave de sessão existe e se ela está ativa
@@ -21,52 +62,36 @@ var ListenersController = {
 				return res.json({msg:"SESSION_INATIVE", authorization:false});
 			}
 			
-			return res.json({msg: session.name})
+			//retuugrn res.json({msg: session.name})
 		});
 
-		//Cliente: Action Join: Enviar MAC e Key Session pro servidor
-		//1º //Servidor: verifica se usuário está autenticado [true: redirect admin page; false: next()]
-		//2º //Servidor: Verifica se sessão existe pelo parametro keySession [true: next(); false: return 'SESSION_NOT_FOUND' |  'SESSION_INATIVE']
-		//3º //Servidor: Verifica se o mac está cadastrado no sistema [true: next(autentica usuário); false: return 'LISTENER_NOT_REGISTRED' ]
-		// 
 
-		//Quando a tentativa de Join em uma sessão, o usuário é procurado e verificado se tem um nickname/email definido
-
-		//Verificar se usuário já está cadastrado nesta sessão
-		//Se estiver cadastrado: online: true
-		/*
-		Listeners.findOne({mac:mac}, function findListener(err, listener) {
+		var listener_email = req.param('email');
+		Listeners.findOne({email:listener_email}, function findListener(err, listener) {
+			//trata erros
 			if(err){sails.log.error("ERRO "+err);}
-			if(!listener){
+
+			//Verifica se o ouvinte foi encontrado
+			if(!listener && req.isSocket){
 				return res.json({msg:"LISTENER_NOT_FOUND", authorization:false});
 			}
 
-			Listeners.subscribe(req.socket, listener);
+			//sobrescreve lista de ouvintes 
+			Listeners.find({}).exec(function(err, allListeners){
+				if(err){return sails.log.error("ERRO "+err);}
+	         	Listeners.subscribe(req.socket, allListeners);
+	        });
 
-	        // Get updates about users being created
-	        Listeners.watch(req.socket);
+	       // Listeners.watch(req.socket);
 
-
-        // Publish this user creation event to every socket watching the User model via User.watch()
-        User.publishCreate(user, req.socket);
-			
-			else{
-				return res.json({msg: session.name})
-			}
-		});*/
+	        //Update no status de login off para online 
+            Listeners.update({email:listener_email},{online:true}).exec(function update(err,updated){
+                if(err){return sails.log.error("ERRO "+err);}
+          	    Listeners.publishUpdate(updated[0].id,{ name:updated[0].name });
+          	});
+	    
+        });
 	},
-
-	create: function(req, res) {
-		sails.log.debug('POST send by: '+req.socket.id);
-	},
-
-	update: function(req, res) {
-		sails.log.debug('UPDATE send by: '+req.socket.id);
-	},
-
-	destroy: function(req, res) {
-		sails.log.debug('DELETE send by: '+req.socket.id);
-	}
 };
 
 module.exports = ListenersController;

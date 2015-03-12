@@ -35,8 +35,12 @@ module.exports.policies = {
     },
 
      //Lista branca das ações do controller AuthController
-    'listeners': {
-        '*': true
+    listeners: {
+        getAll: 'isAuthenticated', //Ação liberada apenas para requisiçõe HTTP autenticadas
+        create: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
+        update: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
+        subscribe: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
+        destroy: 'onlySocketReq' //Ação liberada apenas para requisiçõe sockets
     },
 
   /***************************************************************************
