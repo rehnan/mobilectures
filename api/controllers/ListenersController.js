@@ -9,7 +9,7 @@ var ListenersController = {
 
 	create: function(req, res) {
 		
-		Listeners.create({name:req.param('name'), email:req.param('email')}).exec(function(err, newUser) {
+		Listeners.create({name:req.param('name'), email:req.param('email'), password:req.param('password')}).exec(function(err, newUser) {
 			if(err){sails.log.debug(err);}
 			Listeners.publishCreate({id:newUser.id,name:newUser.name});
 		});

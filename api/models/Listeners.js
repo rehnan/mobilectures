@@ -11,12 +11,17 @@ module.exports = {
 
     name : { 
         type: 'string',
-        //required: true 
+        required: true 
     },
 
     email : { 
         type: 'string',
-        //required: true 
+        required: true 
+    },
+
+    password : { 
+        type: 'string',
+        required: true 
     },
 
     online : { 

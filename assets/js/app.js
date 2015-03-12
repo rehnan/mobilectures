@@ -24,15 +24,17 @@ $(document).ready(function() {
   $('#createUser').click(function(){
       var name = $('#submit-create').find('input[id="name_user"]').val();
       var email = $('#submit-create').find('input[id="email_user"]').val();
-      alert('Name: '+name+ 'Email: '+email);
+      var password = $('#submit-create').find('input[id="password_user"]').val();
 
-      socket.post('/speaker/listeners/create', {name:name, email:email}, function (data, jwres){
+      alert('Name: '+name+ 'Email: '+email+' Password: '+password);
+
+      socket.post('/speaker/listeners/create', {name:name, email:email, password:password}, function (data, jwres){
       });
   });
 
   $('#updateUser').click(function(){
       var id = $('#submit-update').find('input[id="id_user"]').val();
-      var email = $('#submit-update').find('input[id="email_user"]').val();
+      var email = $('#submit-update').find('input[id="newname_user"]').val();
       alert('ID: '+id+ 'Email: '+email);
 
       socket.put('/speaker/listeners/update/'+id, {newName:email}, function (data, jwres){
