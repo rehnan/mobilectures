@@ -9,11 +9,9 @@ var ListenersController = {
 
 	create: function(req, res) {
 		
-		Listeners.create({name:req.param('name'), name:req.param('email')}).exec(function(err, newUser) {
+		Listeners.create({name:req.param('name'), email:req.param('email')}).exec(function(err, newUser) {
 			if(err){sails.log.debug(err);}
 			Listeners.publishCreate({id:newUser.id,name:newUser.name});
-			sails.log.debug("############# Usuario name: "+newUser.name+" criado!");
-			sails.log.debug("############# Usuario email: "+newUser.email+" criado!");
 		});
 		
 	},
@@ -36,8 +34,13 @@ var ListenersController = {
 	},
 
 	update: function(req, res) {
-		sails.log.debug('###### Update Called!!');
-		res.json({create:"Update!"});
+			
+			Listeners.update({id:req.param('id')},{name:req.param('newName')}).exec(function afterwards(err,updated){
+				//res.serverError(err)
+				if(err){sails.log.debug(err);}	 
+				Listeners.publishUpdate(updated[0].id, {name:updated[0].name});		
+			   console.log('Updated user to have name '+updated[0].name);
+			});
 	},
 
 	destroy: function(req, res) {

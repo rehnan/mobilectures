@@ -21,13 +21,21 @@ $(document).ready(function() {
           });
   };
 
-  $('#updateUsers').click(function(){
-      var name = $('#submit-form').find('input[id="name_user"]').val();
-      var email = $('#submit-form').find('input[id="email_user"]').val();
+  $('#createUser').click(function(){
+      var name = $('#submit-create').find('input[id="name_user"]').val();
+      var email = $('#submit-create').find('input[id="email_user"]').val();
       alert('Name: '+name+ 'Email: '+email);
 
-      alert(name+" "+email);
       socket.post('/speaker/listeners/create', {name:name, email:email}, function (data, jwres){
+      });
+  });
+
+  $('#updateUser').click(function(){
+      var id = $('#submit-update').find('input[id="id_user"]').val();
+      var email = $('#submit-update').find('input[id="email_user"]').val();
+      alert('ID: '+id+ 'Email: '+email);
+
+      socket.put('/speaker/listeners/update/'+id, {newName:email}, function (data, jwres){
       });
   });
   
@@ -63,12 +71,14 @@ $(document).ready(function() {
               socket.on('listeners',function(obj){
                   if (obj.verb == 'created') {
                     console.log('New socket was created!!');
-                    alert('Refresh list');
+                    alert('Refresh after create');
                     updateUsers();
                   }
 
                   if (obj.verb == 'updated') {
                       console.log('Socket was updated!!');
+                      alert('Refresh after update');
+                      updateUsers();
                     }
                });
              
