@@ -94,7 +94,7 @@ var ListenersController = {
           	    Listeners.publishUpdate(updated[0].id,{online:true});
           	});
 
-            return res.json({msg:"welcome", authorization:"true", listener});
+            return res.json({msg:"welcome", authorization:"true"});
         });
 	},
 
