@@ -17,6 +17,7 @@
 var cssFilesToInject = [
   'bootstrap/dist/css/bootstrap.css',
   'bootstrap/dist/css/bootstrap.min.css',
+  'bootstrap/dist/css/bootstrap-table.css',
   'styles/**/*.css'
 ];
 
@@ -31,7 +32,7 @@ var jsFilesToInject = [
   //Load Bootstrap
   'bootstrap/dist/js/bootstrap.js',
   'bootstrap/dist/js/bootstrap.min.js',
-
+  'bootstrap/dist/js/bootstrap-table.js',
   // Load sails.io before everything else
   'js/dependencies/sails.io.js',
 

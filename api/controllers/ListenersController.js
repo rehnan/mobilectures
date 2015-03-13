@@ -8,12 +8,21 @@ var ListenersController = {
 	},
 
 	create: function(req, res) {
-		
-		Listeners.create({name:req.param('name'), email:req.param('email'), password:req.param('password')}).exec(function(err, newUser) {
+		//Verificando se há alguma ocorrência do email na base de dados
+		Listeners.findOne({email:req.param('email')}).exec(function(err, userFound){
 			if(err){sails.log.debug(err);}
-			Listeners.publishCreate({id:newUser.id,name:newUser.name});
+			if(!userFound){
+				//Caso nenhuma ocorrência do email solicitado for encontrada, o usuário é criado
+				Listeners.create({name:req.param('name'), email:req.param('email'), password:req.param('password')}).exec(function(err, newUser) {
+					if(err){sails.log.debug(err);}
+					Listeners.publishCreate({id:newUser.id,name:newUser.name});
+					sails.log.debug('Usuário criado com sucesso!');	
+					return res.json({msg:"Usuário criado com sucesso!"});
+				});
+			}
+			sails.log.debug('Este email já está cadastrado!');	
+			return res.json({msg:"Este email já está cadastrado!"});
 		});
-		
 	},
 
 	getAll: function(req, res) {
@@ -34,13 +43,21 @@ var ListenersController = {
 	},
 
 	update: function(req, res) {
-			
-			Listeners.update({id:req.param('id')},{name:req.param('newName')}).exec(function afterwards(err,updated){
-				//res.serverError(err)
-				if(err){sails.log.debug(err);}	 
-				Listeners.publishUpdate(updated[0].id, {name:updated[0].name});		
-			   console.log('Updated user to have name '+updated[0].name);
-			});
+		//Verificando se há alguma ocorrência do email na base de dados
+		Listeners.findOne({id:req.param('id')}).exec(function(err, userFound){
+			if(err){sails.log.debug(err);}	
+			if(userFound){
+				Listeners.update({id:req.param('id')},{name:req.param('newName')}).exec(function afterwards(err,updated){
+					//res.serverError(err)
+					if(err){sails.log.debug(err);}	 
+					Listeners.publishUpdate(updated[0].id, {name:updated[0].name});		
+				   sails.log.debug('Nome do usuaŕio alterado com sucesso!'+updated[0].name);
+				   return res.json({msg:"Nome do usuaŕio alterado com sucesso!"});
+				});
+			}
+			sails.log.debug('Usuário não encontrado para alteração');
+			return res.json({msg:"Este usuário não existe!"});
+		});
 	},
 
 	destroy: function(req, res) {
