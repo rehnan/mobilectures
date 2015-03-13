@@ -67,10 +67,8 @@ var ListenersController = {
 
 	join: function(req, res) {
 		//sails.log.debug("CHAVE DE SESSAO: "+req.param('keySession'));
-		sails.log.debug("EMAIL: "+req.param('email'));
-		sails.log.debug("PASSWORD: "+req.param('password'));
 
-		var keySession = req.param('keySession');
+		//var keySession = req.param('keySession');
 		/*
 		//Verificar se chave de sessão existe e se ela está ativa
 		Sessions.findOne({key:keySession}, function findSession(err, session) {
@@ -87,39 +85,59 @@ var ListenersController = {
 		*/
 
 		var listener_email = req.param('email');
+		var listener_password = req.param('password');
 		Listeners.findOne({email:listener_email}, function findListener(err, listener) {
-			//trata erros
 			if(err){sails.log.error("ERRO "+err);}
 
 			//Verifica se o ouvinte foi encontrado
 			if(!listener){
+				sails.log.debug('LISTENER_NOT_FOUND');
 				return res.json({msg:"LISTENER_NOT_FOUND", authorization:"false"});
 			}
 
-			//subscribe
-	         Listeners.find({}).exec(function(e,listOfListeners){
+			//Compara email e senha
+			Listeners.findOne({email:listener.email, password:listener_password}).exec(function(e,found){
 	         	if(err){return sails.log.error("ERRO "+err);}
-		      Listeners.subscribe(req.socket, listOfListeners,['create', 'update']);
+
+		      	if(!found){
+		      		sails.log.debug('INCORRECT_PASSWORD');
+		      		return res.json({msg:"INCORRECT_PASSWORD", authorization:"false"});
+		      	}else{
+		      		//subscribe
+			        Listeners.find({}).exec(function(e,listOfListeners){
+			         	if(err){return sails.log.error("ERRO "+err);}
+				      	Listeners.subscribe(req.socket, listOfListeners,['create', 'update']);
+				      	Listeners.watch(req.socket);	
+				 	});
+
+
+			        //Update no status de login off para online 
+		            Listeners.update({email:listener_email},{online:true}).exec(function update(err,updated){
+		                if(err){return sails.log.error("ERRO "+err);}
+		          	    Listeners.publishUpdate(updated[0].id,{online:true});
+		          	});
+		      	}
 		 	});
 
-			Listeners.watch(req.socket);	
-
-	        //Update no status de login off para online 
-            Listeners.update({email:listener_email},{online:true}).exec(function update(err,updated){
-                if(err){return sails.log.error("ERRO "+err);}
-          	    Listeners.publishUpdate(updated[0].id,{online:true});
-          	});
-
-            return res.json({msg:"welcome", authorization:"true"});
+            sails.log.debug('###### Ouvinte autenticado com sucesso! #####');
+            return res.json({msg:"Seja Bem-vindo!", authorization:"true"});
         });
 	},
 
 	leave: function(req, res) {
 		Listeners.findOne({id:req.param('id')}, function findListener(err, listener) {
-			 Listeners.update({id:listener.id},{online:false}).exec(function update(err,updated){
-                if(err){return sails.log.error("ERRO "+err);}
-          	    Listeners.publishUpdate(updated[0].id,{online:false});
-          	});
+			if(err){return sails.log.error("ERRO "+err);}
+
+			if(listener.online == true){
+			 	Listeners.update({id:listener.id},{online:false}).exec(function update(err,updated){
+	                if(err){return sails.log.error("ERRO "+err);}
+	          	    Listeners.publishUpdate(updated[0].id,{online:false});
+          		});
+          		sails.log.debug('###### Ouvinte deslogado com sucesso! #####');
+          		return res.json({msg:"Bye!", authorization:"false"});
+			}
+			sails.log.debug('Este ouvinte não está logado!!!');
+			return res.json({msg:"Este ouvinte não está logado!!", authorization:"false"});
 		});
 	}
 };
