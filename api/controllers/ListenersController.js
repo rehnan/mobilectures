@@ -116,11 +116,13 @@ var ListenersController = {
 		                if(err){return sails.log.error("ERRO "+err);}
 		          	    Listeners.publishUpdate(updated[0].id,{online:true});
 		          	});
+		          	sails.log.debug('###### Ouvinte autenticado com sucesso! #####');
+            		return res.json({msg:"Seja Bem-vindo!", authorization:"true", listener:listener});
 		      	}
+
 		 	});
 
-            sails.log.debug('###### Ouvinte autenticado com sucesso! #####');
-            return res.json({msg:"Seja Bem-vindo!", authorization:"true"});
+            
         });
 	},
 

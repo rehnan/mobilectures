@@ -30,7 +30,7 @@ module.exports = {
    * `AuthController.signin()`
    */
   signin: function (req, res) {
-        sails.log.debug('Entrou na action signin');
+        //sails.log.debug('Entrou na action signin');
         passport.authenticate('local', function(err, user, info)
         {
             //Se houver erro renderiza a view login com a mensagem de erro

@@ -1,6 +1,12 @@
 $(document).ready(function() {
   createTableListeners();
 
+  // client side
+    function responseHandler(res) {
+      alert('askjd');
+        return res.repos;
+    }
+
   //Atualiza lista de ouvintes conectados
   function updateUsers(){
       $('#table-listeners').bootstrapTable('refresh');

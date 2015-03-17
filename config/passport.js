@@ -4,12 +4,12 @@ LocalStrategy = require('passport-local').Strategy;
 
 //Método de serialização do usuário
 passport.serializeUser(function(user, done) {
-    sails.log.debug('serialize User ID: '+user.email);
+    //sails.log.debug('serialize User ID: '+user.email);
     done(null, user.email);
 });
 
 passport.deserializeUser(function(uname, done) {
-    sails.log.debug('deserializeUser User ID: ');
+    //sails.log.debug('deserializeUser User ID: ');
     SpeakerAccounts.findOne({email:uname}, function (err, user) {
         done(err, user);
     });
@@ -47,7 +47,7 @@ passport.use(new LocalStrategy({
             return done(null, false, { message: 'Senha Incorreta!' }); 
           }
 
-          sails.log.debug('End LocalStrategy');
+          //sails.log.debug('End LocalStrategy');
           return done(null, user);
           
         });
