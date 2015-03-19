@@ -58,20 +58,8 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav" id="menu_options"> <!-- class="active" -->
-              <li class="<%= (globals.title == 'Session') ? 'active' : '' %>"><a href="/speaker/session"> <button class="btn" type="button" >
+              <li class="<%= (globals.title ==  i18n('option_sessions')) ? 'active' : '' %>"><a href="/speaker/sessions"> <button class="btn" type="button" >
                  <%= i18n("option_sessions") %>
-              </button></a></li>
-              <li class="<%= (globals.title == 'Quiz') ? 'active' : '' %>"><a href="/speaker/quiz"> <button class="btn" type="button" >
-                 <%= i18n("option_quizes") %> 
-              </button></a></li>
-              <li class="<%= (globals.title == 'Doubts') ? 'active' : '' %>"><a href="/speaker/doubts"> <button class="btn" type="button" >
-                 <%= i18n("option_doubts") %> <span class="badge">0</span>
-              </button></a></li>
-              <li class="<%= (globals.title == 'Polls') ? 'active' : '' %>"><a href="/speaker/polls"> <button class="btn" type="button" >
-                 <%= i18n("option_polls") %> 
-              </button></a></li>
-              <li class="<%= (globals.title == 'Listeners') ? 'active' : '' %>"><a href="/speaker/listeners"> <button class="btn" type="button" >
-                 <%= i18n("option_listeners") %>
               </button></a></li>
             </ul>
            
@@ -151,6 +139,8 @@
     <script src="/bootstrap/dist/js/bootstrap-table.js"></script>
     <script src="/js/dependencies/sails.io.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/bootstrap-dialog.js"></script>
+    <script src="/js/bootstrap-dialog.min.js"></script>
     <!--SCRIPTS END-->
   </body>
 </html>

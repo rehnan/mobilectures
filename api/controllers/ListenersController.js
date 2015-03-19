@@ -3,8 +3,8 @@ var application = sails.config.globals;
 var ListenersController = {
 	//Renderiza o index da opção Ouvintes Conectados
 	index: function(req, res) {
-		application.title = 'Listeners';
-		return res.view('speaker/listeners/index'); 
+		application.title = req.__('option_listeners');
+		return res.view('speaker/listeners/index', {layout: 'layout_options'}); 
 	},
 
 	create: function(req, res) {

@@ -4,20 +4,94 @@ var ObjectID = require('sails-mongo/node_modules/mongodb').ObjectID;
 
 var SessionController = {
 
-	//Action GET Page findAll Sesisons
-	show: function(req, res) {
-		application.title = 'Session';
-		return res.view('speaker/session/show');
-		/*
-		//Session.find({}).paginate({page: 10, limit: 5})
-		Session.find({id_speaker:req.session.passport.user}).exec(function findCB(err,sessions){
+	//Action index | Method: GET - Renderiza view do formulário listando todas as sessões
+	index: function(req, res) {
+		sails.log.debug('Render sessions index view for user' + req.session.passport.user);
+		application.title = req.__('option_sessions');
+
+		//Session.find({}).paginate({page: 10, limit: 5}) {id_speaker:req.session.passport.user}
+		Session.find({}).exec(function findCB(err, sessions){
 			if(err){return err;}
-			return res.view('speaker/session/show', {sessions:sessions});
+			sails.log.debug(JSON.stringify(sessions));
+			return res.view('speaker/sessions/index', {sessions:sessions});
+		});
+	},
+
+	//Action new | Method: GET - Renderiza view do formulário 
+	new: function(req, res) {
+		sails.log.debug('Rendering new sessions view form for user: ' + req.session.passport.user);
+		return res.view('speaker/sessions/new', {errors: {}, session: Session.new });
+	},
+
+	//Action create | Method: POST - Realiza a pesistência dos dados do formulário
+	create: function(req, res) {
+		sails.log.debug('POST Create View ' + JSON.stringify(req.params.all()));
+		sails.log.debug('User ==> ' + req.session.passport.user);
+
+		Session.validate(req.params.all(), function validadeSession(errors){
+			if(errors) { 
+				errors_messages = SailsValidador(Session, errors);
+				sails.log.debug('Error ==> ' + JSON.stringify(errors_messages));
+				
+				return res.view('speaker/sessions/new', {errors: errors_messages,
+					          
+					                                     session: req.params.all()});
+			}else{
+					SpeakerAccounts.findOne({email:req.session.passport.user}).populate('sessions').exec(function findSpeaker(err, speaker) {
+						if(err) { 
+						    sails.log.debug('Error ==> ' + err);
+							return res.view('speaker/sessions/new');
+						}else{
+							sails.log.debug('Preparando o modelo para salvar...');
+							speaker.sessions.add(req.params.all());
+							speaker.save(function(err,res){
+								if(err){sails.log.debug('Erro ao tentar salvar o modelo+ '+err);}
+						    	sails.log.debug('######## Callback Save() Seccess! '+ JSON.stringify(res));
+						  	});
+						  	//Depois de tudo criado, redireriona para o index sessions
+						  	return res.redirect('speaker/sessions');
+						}
+					});
+			}//End else
+		});
+		
+		/*
+		SpeakerAccounts.findOne({email:req.session.passport.user}).exec(function findSpeaker(err, speaker) {
+
+			if(errors) { 
+				errors_messages = SailsValidador(Session, errors);
+				sails.log.debug('Error ==> ' + JSON.stringify(errors_messages));
+				
+				return res.view('speaker/sessions/new', {errors: errors_messages,
+					                                     session: req.params.all()});
+			}
+
+		});
+		
+        Session.create(req.params.all(), function(errors, session) {
+			if(errors) { 
+				errors_messages = SailsValidador(Session, errors);
+				sails.log.debug('Error ==> ' + JSON.stringify(errors_messages));
+				
+				return res.view('speaker/sessions/new', {errors: errors_messages,
+					                                     session: req.params.all()});
+			}
+			return res.redirect('speaker/sessions');
 		});*/
 	},
 
+	select: function(req, res) {
+		application.title = req.__('option_current_session');
+
+		//Session.find({}).paginate({page: 10, limit: 5})
+		Session.findOne({id:req.param('id')}).exec(function findCB(err, session){
+			if(err){return err;}
+			return res.view('speaker/sessions/current', {layout: 'layout_options', current_session:session});
+		});
+	},
+
 	//Action to select sessions
-	setSession: function(req, res) {
+	/*setSession: function(req, res) {
 		var userid = req.session.passport.user;
 		var session_id = req.param('id');
 		Session.native(function(err, collection) {
@@ -43,18 +117,9 @@ var SessionController = {
 
 	find: function(req, res) {
 
-	},
+	},*/
 
-	//Action POST Create New Session
-	'new': function(req, res) {
-		sails.log.debug('POST Create View'+req.params.all());
-		Session.create(req.params.all(), function(err, user) {
-			if(err){return err;}
-		});
-		application.message = 'Usuário Criado com Sucesso!';
-		return res.redirect('speaker/session');
-	},
-
+/*
 	//Action GET Page Create New Sesison
 	getCreateView: function(req, res) {
 		application.title = 'Session';
@@ -78,43 +143,49 @@ var SessionController = {
             }
         });
 	},
-	
+	*/
+
+	//Action edit | Method: GET - Renderiza view do formulário de edição
+	edit: function(req, res) {
+		sails.log.debug('Rendering edit sessions view form for user: ' + req.session.passport.user);
+		Session.findOne({id:req.param('id')}).exec(function findSession(err, session){
+			if(err){sails.log.debug(err);}
+			return res.view('speaker/sessions/edit', {errors: {}, session:session});
+		});
+	},
+
 	//Action PUT to Form Edit
 	update: function(req, res) {
 
-		var params = _.extend(req.query || {}, req.params || {}, req.body || {});
-	   
-	    var id = params.id;
-
-	    sails.log.debug('ID: '+id+' key:'+params.key+' Name:'+params.name+' Descr:'+params.description);
-	    
-	    if (!id) return res.send("No id specified.",500);
-
-	    Session.update(id, params, function userUpdated(err, updatedUser) {
-	      if (err) {
-	      	return sails.log.debug('Errooooo');
+		var id = req.param('id');
+		var key = req.param('key');
+		var name = req.param('name');
+		var descript = req.param('description');
+		
+	    Session.update({id:id}, {name: name, key: key, description: descript}).exec(function sessionUpdated(errors, updatedUser) {
+	      if (errors) {
+	        errors_messages = SailsValidador(Session, errors);
+			sails.log.debug('Error ==> ' + JSON.stringify(errors_messages));
+	      	return res.view('speaker/sessions/edit', {errors: errors_messages,
+					                                     session: req.params.all()});
 	      }
-	      if(!updatedUser) {
-	      	return sails.log.debug('Segundo Erro');
-	      }
-	      sails.log.debug('Deu certo!');
-	      application.message = 'Sessão alterada com sucesso!';
-	      return res.redirect('speaker/session');
+	      sails.log.debug('Action update called: '+JSON.stringify(req.params.all()));
+	      return res.redirect('speaker/sessions');
 	    });
 	},
 
 
 	destroy: function(req, res) {
-
-		Session.destroy(req.param('id')).exec(function deleteCB(err){
+		sails.log.debug(req.param('id'));
+		Session.destroy({id:req.param('id')}).exec(function sessionDestroy(err){
 			if(err){
 				sails.log.debug('EROO: '+err);
 			}else{
-			   application.message = 'Deletado com sucesso!';
   			   sails.log.debug('The record has been deleted');
   			}
   		});
-  		return res.redirect('speaker/session');
+
+  		return res.redirect('speaker/sessions');
 	},
 }
 

@@ -4,8 +4,8 @@ var QuizController = {
 
 	show: function(req, res) {
 		
-		application.title = 'Quiz';
-		res.view('speaker/quiz/show');
+		application.title = req.__('option_quizes');
+		res.view('speaker/quiz/show', {layout: 'layout_options'});
 	},
 
 };

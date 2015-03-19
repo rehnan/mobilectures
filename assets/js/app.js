@@ -7,6 +7,18 @@ $(document).ready(function() {
         return res.repos;
     }
 
+    $(".delete_session").on("click", function() {
+
+    var link = $(this).attr('link');
+    var session_name = $(this).attr('name');
+    BootstrapDialog.confirm('Deseja excluir está sessão? ('+session_name+')', function(result){
+            if(result) {
+                return window.location = link;
+            }
+            return false;
+        });
+  });
+
   //Atualiza lista de ouvintes conectados
   function updateUsers(){
       $('#table-listeners').bootstrapTable('refresh');

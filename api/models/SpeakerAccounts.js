@@ -25,11 +25,11 @@ module.exports = {
       },
 
       //Association with sessions (Uma conta de palestrante pode gerenciar várias sessões)
-      /*
+      //Possui uma coleção de sessões
       sessions:{
-            collection: 'sessions',
-            via: 'owner'
-      }*/
+            collection: 'session', //do modelo Sessions
+            via: 'owner' //via atributo owner (Localizado no modelo Sessions)
+      }
   }
 };
 

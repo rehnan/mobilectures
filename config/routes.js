@@ -75,32 +75,75 @@ module.exports.routes = {
         action: 'index'
     },
 
-    'GET /speaker/session':{
+    
+    //################################## Begin SESSIONS Routes
+    //Route to get all Sessions
+    'GET /speaker/sessions':{
         controller: 'SessionController',
-        action: 'show'
+        action: 'index'
     },
 
+    //Route to renderize form to new session
+    'GET /speaker/sessions/new':{
+        controller: 'SessionController',
+        action: 'new'
+    },
+
+    //Route to action create the new session
+    'POST /speaker/sessions':{
+        controller: 'SessionController',
+        action: 'create'
+    },
+
+    //Route to renderize edit form some one session
+    'GET /speaker/sessions/edit/:id':{
+        controller: 'SessionController',
+        action: 'edit'
+    },
+
+    //Route to action update the session in edit
+    'POST /speaker/sessions/:id':{
+        controller: 'SessionController',
+        action: 'update'
+    },
+
+    //Route to delete some one session
+    'GET /speaker/sessions/delete/:id':{
+        controller: 'SessionController',
+        action: 'destroy'
+    },
+
+    //Route to select some one session
+    'GET /speaker/sessions/:id':{
+        controller: 'SessionController',
+        action: 'select'
+    },
+
+    //################################## End SESSIONS Routes
+
+
+   
     //Rest to session quiz
-    'GET /speaker/quiz':{
+    'GET /speaker/sessions/:id/quiz':{
         controller: 'QuizController',
         action: 'show'
     },
 
     //Rest to session doubts
-    'GET /speaker/doubts':{
+    'GET /speaker/sessions/:id/doubts':{
         controller: 'DoubtsController',
         action: 'show'
     },
 
     //Rest to session polls
-    'GET /speaker/polls':{
+    'GET /speaker/sessions/:id/polls':{
         controller: 'PollsController',
         action: 'show'
     },
 
     //######################################## REST TO LISTENERS
 
-    'GET /speaker/listeners':{
+    'GET /speaker/sessions/:id/listeners':{
         controller: 'ListenersController',
         action: 'index'
     },
