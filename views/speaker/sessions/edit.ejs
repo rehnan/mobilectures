@@ -1,0 +1,27 @@
+<div class="well center-block" style="max-width: 40%;">
+	<form action='/speaker/sessions/<%= session.id %>' method='POST'>
+			<div class='form-group <%= Messages.errors.form.class("key", errors) %>'>
+				<label for='key'><%= i18n("label_session_key") %>:</label>
+				<input type='text' class='form-control' name='key' placeholder='<%= i18n("ph_session_key") %>' value="<%= session.key %>">
+				<%- Messages.errors.form.message("key", errors) %>
+			</div>
+			
+			<div class='form-group <%= Messages.errors.form.class("name", errors) %>'>
+				<label for='name'><%= i18n("label_session_name") %>:</label>
+				<input type='text' class='form-control' name='name' placeholder='<%= i18n("ph_session_name") %>' value="<%= session.name %>">
+				<%- Messages.errors.form.message("name", errors) %>
+			</div>
+
+			<label for='description'><%= i18n("label_session_description") %>:</label><br>
+			<textarea class='field span12' name='description' rows='6' style='width: 100%;' placeholder='<%= i18n("ph_session_description") %>'><%= session.description %></textarea>
+			<%- Messages.errors.form.message("description", errors) %>
+
+			<div class=modal-footer>
+			    <button type="submit" class="btn btn-primary btn-lg btn-block btn-sm"><%= i18n("label_save") %></button>
+	     		<a class="btn btn-default btn-lg btn-block btn-sm" href="/speaker/sessions" role="button"><%= i18n("label_cancel") %></a>
+			</div>
+		</form>
+</div>
+
+
+	

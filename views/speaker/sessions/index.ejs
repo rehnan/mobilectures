@@ -1,0 +1,36 @@
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><center><h3> <%= i18n("option_sessions") %> </h3></center><a href="/speaker/sessions/new" ><%= i18n("label_new_session") %></a></div>
+  <div class="panel-body">
+    <p>Aqui vão as descrições da sessão</p>
+  </div>
+
+  <!-- Table Sessions -->
+ <div class="table-responsive">
+  <table class="table table-hover">
+      <thead>
+        <tr>
+          <th><%= i18n("title_session_id") %></th>
+          <th><%= i18n("title_session_key") %></th>
+          <th><%= i18n("title_session_name") %></th>
+          <th><%= i18n("title_session_status") %></th>
+          <th colspan="4"><center><%= i18n("title_session_actions") %></center></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% _.each(sessions, function (session) { %>
+        <tr class="<%= (session.status) ? 'success' : 'danger' %>">
+          <td><%= session.id     %></td>
+          <td><%= session.key    %></td>
+          <td><%= session.name   %></td>
+          <td><%= (session.status) ? 'Active' : 'Inative' %></td>
+          <td><a class="btn btn-success" href="/speaker/sessions/<%= session.id %>" title="<%= i18n('label_session_select') %>" role="button" <%= (session.status) ? 'disabled' : '' %> ><%= i18n("label_session_select") %></a></td>
+          <td><a class="btn btn-primary" href="/speaker/sessions/edit/<%= session.id %>" title="<%= i18n('label_session_update') %>" role="button" <%= (session.status) ? 'disabled' : '' %> ><%= i18n("label_session_update") %></a></td>
+          <td><button class="btn btn-danger delete_session" link="/speaker/sessions/delete/<%= session.id %>" name="<%= session.name %>" title="<%= i18n('label_session_destroy') %>" type="button" <%= (session.status) ? 'disabled' : '' %> ><%= i18n("label_session_destroy") %></button></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
