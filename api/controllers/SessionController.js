@@ -10,10 +10,10 @@ var SessionController = {
 		application.title = req.__('option_sessions');
 
 		//Session.find({}).paginate({page: 10, limit: 5}) {id_speaker:req.session.passport.user}
-		Session.find({}).exec(function findCB(err, sessions){
+		Session.find({owner:req.session.passport.user}, {sort: 'createdAt DESC' }).exec(function findCB(err, sessions){
 			if(err){return err;}
-			sails.log.debug(JSON.stringify(sessions));
-			return res.view('speaker/sessions/index', {sessions:sessions});
+			//sails.log.debug(JSON.stringify(sessions));
+			return res.view('speaker/sessions/index',{sessions:sessions});
 		});
 	},
 
@@ -33,11 +33,10 @@ var SessionController = {
 				errors_messages = SailsValidador(Session, errors);
 				sails.log.debug('Error ==> ' + JSON.stringify(errors_messages));
 				
-				return res.view('speaker/sessions/new', {errors: errors_messages,
-					          
-					                                     session: req.params.all()});
+				return res.view('speaker/sessions/new', {errors: errors_messages,  session: req.params.all()});
+					                                    
 			}else{
-					SpeakerAccounts.findOne({email:req.session.passport.user}).populate('sessions').exec(function findSpeaker(err, speaker) {
+					SpeakerAccount.findOne({id:req.session.passport.user}).populate('sessions').exec(function findSpeaker(err, speaker) {
 						if(err) { 
 						    sails.log.debug('Error ==> ' + err);
 							return res.view('speaker/sessions/new');

@@ -5,12 +5,12 @@ LocalStrategy = require('passport-local').Strategy;
 //Método de serialização do usuário
 passport.serializeUser(function(user, done) {
     //sails.log.debug('serialize User ID: '+user.email);
-    done(null, user.email);
+    done(null, user.id);
 });
 
-passport.deserializeUser(function(uname, done) {
+passport.deserializeUser(function(id, done) {
     //sails.log.debug('deserializeUser User ID: ');
-    SpeakerAccounts.findOne({email:uname}, function (err, user) {
+    SpeakerAccount.findOne({id:id}, function (err, user) {
         done(err, user);
     });
 });
@@ -26,7 +26,7 @@ passport.use(new LocalStrategy({
     function(email, password, done) {
 
         //Iniciar procura do usuário pelo método findOne
-        SpeakerAccounts.findOne({email: email}, function (err, user) {
+        SpeakerAccount.findOne({email: email}, function (err, user) {
 
             //Verifica se houve algum erro de banco na busca
           if (err) { 

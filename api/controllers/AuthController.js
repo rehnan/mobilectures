@@ -41,6 +41,7 @@ module.exports = {
             //Se houver usuário inexistente renderiza a view login com a mensagem de erro
             if (!user){
               sails.log.error(user+' ########### User Error ########'+JSON.stringify(info));
+              info.message = (info.message === 'Missing credentials') ? 'Por favor, informa seu email e sua senha!' : info.message; 
               return res.view('auth/index', {layout: 'layout_login', locals: {message: info.message}});
             }
 
@@ -75,12 +76,12 @@ module.exports = {
         var email = req.param('email');
         //Verificar se há algum úsuário com o mesmo email
 
-        SpeakerAccounts.findOne({email:email}, function (err, user) {
+        SpeakerAccount.findOne({email:email}, function (err, user) {
             if(err){return next(err);}
 
             if(!user){
                 
-                SpeakerAccounts.create(req.params.all(), function (err, user) {
+                SpeakerAccount.create(req.params.all(), function (err, user) {
                     if (err){return next(err);}
                     sails.log.debug('[Sucesso] Email '+user.email+' cadastrado com sucesso!!');
                     

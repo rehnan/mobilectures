@@ -32,7 +32,7 @@ module.exports = {
 
 		//Pertence à um proprietário (palestrante)
 		owner:{
-            model:'speakeraccounts' //Referente ao modelo SpeakerAccounts
+            model:'speakeraccount' //Referente ao modelo SpeakerAccounts
         }
   },
 
