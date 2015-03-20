@@ -8,6 +8,8 @@
 	"msg_welcome": "Welcome to the speaker dashboard!!",
 	"web_app_name": "Mobilectures",
 	"label_dashboard": "Dashboard",
+	"title_login": "Login",
+	"title_signup": "Signup",
 	"option_sessions": "Sessions",
 	"option_quizes": "Quizes",
 	"option_doubts": "Doubts",

@@ -8,6 +8,8 @@
 	"msg_welcome": "Seja bem-vindo a área do palestrante!!",
 	"web_app_name": "Mobilectures",
 	"label_dashboard": "Painel de Opções",
+	"title_login": "Efetuar Login",
+	"title_signup": "Registre-se",
 	"option_sessions": "Gerenciar Sessões",
 	"option_current_session": "Sessão Corrente",
 	"option_quizes": "Quizes",

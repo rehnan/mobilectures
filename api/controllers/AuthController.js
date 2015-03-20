@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing Auths
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
-
+var application = sails.config.globals;
 var passport = require('passport');
 
 module.exports = {
@@ -20,6 +20,7 @@ module.exports = {
    * `AuthController.login()`
    */
   index: function (req, res) {
+      application.title = req.__('title_login');
       if (req.session.passport.user) {
               return res.redirect('/speaker');
       }
@@ -61,6 +62,7 @@ module.exports = {
    * `AuthController.signup()`
    */
   signup: function (req, res) {
+    application.title = req.__('title_signup');
     //Verifica se há algum usuário logado para o redirecionamento correto
         if (req.session.passport.user) {
             return res.redirect('/speaker');
