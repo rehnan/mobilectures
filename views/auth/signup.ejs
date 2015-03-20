@@ -1,21 +1,21 @@
 <div class="container">
     <form class="form-signup jumbotron" action="/signup" method="POST">
         <h2 class="form-signin-heading"><%= i18n("msg_label_signup") %></h2>
-        <div class="input-group input-group-lg">
-             <span class="input-group-addon" id="sizing-addon1"><%= i18n("label_name") %>:</span>
-             <input type="text" name="name" class="form-control" id="name" placeholder="<%= i18n('label_name') %>" required autofocus>
+        <div class="form-group input-group-lg  <%= Messages.errors.form.class("name", errors) %>">
+             <input type="text" name="name" class="form-control" id="name" placeholder="<%= i18n('label_name') %>" value="<%= speaker.name %>" autofocus>
+             <%- Messages.errors.form.message("name", errors) %>
         </div>
 
         <br/>
-        <div class="input-group input-group-lg">
-             <span class="input-group-addon"><%= i18n("label_email") %>:</span>
-             <input type="text" name="email" class="form-control" id="email" placeholder="<%= i18n('label_email') %>" required>
+        <div class="form-group input-group-lg  <%= Messages.errors.form.class("email", errors) %>">
+             <input type="text" name="email" class="form-control" id="email" placeholder="<%= i18n('label_email') %>" value="<%= speaker.email %>">
+             <%- Messages.errors.form.message("email", errors) %>
         </div>
 
         <br/>
-        <div class="input-group input-group-lg">
-            <span class="input-group-addon"><%= i18n("label_password") %>:</span>
-            <input type="password" name="password" class="form-control" id="password" placeholder="<%= i18n('label_password') %>" required>
+        <div class="form-group input-group-lg  <%= Messages.errors.form.class("password", errors) %>">
+            <input type="password" name="password" class="form-control" id="password" placeholder="<%= i18n('label_password') %>" value="<%= speaker.password %>">
+            <%- Messages.errors.form.message("password", errors) %>
         </div>
         
         <br/>

@@ -13,7 +13,7 @@
 		</div>
 
 		<label for='description'><%= i18n("label_session_description") %>:</label><br>
-		<textarea class='field span12' name='description' rows='6' style='width: 100%;' placeholder='<%= i18n("ph_session_description") %>'><%= session.description %></textarea>
+		<textarea class='form-control <%= Messages.errors.form.class("key", errors) %>' name='description' rows='6' style='width: 100%;' placeholder='<%= i18n("ph_session_description") %>'><%= session.description %></textarea>
 		<%- Messages.errors.form.message("description", errors) %>
 
 		<div class=modal-footer>

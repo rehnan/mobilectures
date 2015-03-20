@@ -8,7 +8,6 @@ var SessionController = {
 	index: function(req, res) {
 		sails.log.debug('Render sessions index view for user' + req.session.passport.user);
 		application.title = req.__('option_sessions');
-
 		//Session.find({}).paginate({page: 10, limit: 5}) {id_speaker:req.session.passport.user}
 		Session.find({owner:req.session.passport.user}, {sort: 'createdAt DESC' }).exec(function findCB(err, sessions){
 			if(err){return err;}
@@ -47,6 +46,7 @@ var SessionController = {
 								if(err){sails.log.debug('Erro ao tentar salvar o modelo+ '+err);}
 						    	sails.log.debug('######## Callback Save() Seccess! '+ JSON.stringify(res));
 						  	});
+
 						  	//Depois de tudo criado, redireriona para o index sessions
 						  	return res.redirect('speaker/sessions');
 						}

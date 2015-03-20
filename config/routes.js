@@ -53,7 +53,7 @@ module.exports.routes = {
     action: 'signin'
   },
 
-  'GET /signup': {
+  'GET /signup/new': {
     controller: 'AuthController',
     action: 'signup'
   },
