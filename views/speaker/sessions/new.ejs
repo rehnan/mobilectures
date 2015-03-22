@@ -11,10 +11,12 @@
 			<input type='text' class='form-control' name='name' placeholder='<%= i18n("ph_session_name") %>' value="<%= session.name %>">
 			<%- Messages.errors.form.message("name", errors) %>
 		</div>
-
-		<label for='description'><%= i18n("label_session_description") %>:</label><br>
-		<textarea class='form-control <%= Messages.errors.form.class("key", errors) %>' name='description' rows='6' style='width: 100%;' placeholder='<%= i18n("ph_session_description") %>'><%= session.description %></textarea>
-		<%- Messages.errors.form.message("description", errors) %>
+		
+		<div class='form-group <%= Messages.errors.form.class("description", errors) %>'>
+			<label for='description'><%= i18n("label_session_description") %>:</label><br>
+			<textarea class='form-control <%= Messages.errors.form.class("key", errors) %>' name='description' rows='6' style='width: 100%;' placeholder='<%= i18n("ph_session_description") %>'><%= session.description %></textarea>
+			<%- Messages.errors.form.message("description", errors) %>
+		</div>
 
 		<div class=modal-footer>
 		    <button type="submit" class="btn btn-primary btn-lg btn-block btn-sm"><%= i18n("label_save") %></button>

@@ -41,5 +41,10 @@
 	"title_session_name": "Nome",
 	"title_session_status": "Estado",
 	"title_session_description": "Descrição",
-	"title_session_actions": "Ações"
+	"title_session_actions": "Ações",
+	"label_edit_account": "Minha conta",
+	"title_edit_account": "Editar Conta",
+	"title_tab_visualizer": "Visualizar",
+	"title_tab_edit": "Editar",
+	"label_my_account": "Minha Conta"
 }

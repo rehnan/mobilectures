@@ -21,5 +21,18 @@ module.exports = {
 				} else { return "" };
 			}
 		}
+	},
+
+	signin: {
+		push_error: function(input_value, key, message, array_errors){
+			if(input_value.trim() === ''){
+				array_errors[key] = new Array();
+       			array_errors[key].push(message);
+       		}
+		},
+
+		clear_errors: function(array){
+			array = {};
+		}	
 	}
 }	

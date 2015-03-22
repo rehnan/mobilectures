@@ -35,7 +35,7 @@ module.exports = {
   validationMessages: {
 
     name: {
-     required: 'Você deve informar seu nome',
+     required: 'você deve informar seu nome',
     },
 
     email: {

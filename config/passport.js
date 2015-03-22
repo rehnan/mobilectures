@@ -25,6 +25,7 @@ passport.use(new LocalStrategy({
     //Função Callback caso seja dado entrada do email e password do formulário
     function(email, password, done) {
 
+      
         //Iniciar procura do usuário pelo método findOne
         SpeakerAccount.findOne({email: email}, function (err, user) {
 
@@ -37,14 +38,14 @@ passport.use(new LocalStrategy({
           //Verifica se há alguma ocorrência na coleção de usuários procurado
           if (!user) {
             sails.log.error('Email inexistente!');
-            return done(null, false, { message: 'Email Incorreto!' });
+            return done(null, false, { message: 'Usuário/Senha inválido!' });
           }
 
           //Verifica se a senha do usuário encontrado é iguai a senha informada
           if (user.password != password) { 
 
             sails.log.error('Senha Incorreta!');
-            return done(null, false, { message: 'Senha Incorreta!' }); 
+            return done(null, false, { message: 'Usuário/Senha inválido!' }); 
           }
 
           //sails.log.debug('End LocalStrategy');

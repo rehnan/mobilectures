@@ -11,7 +11,7 @@ var SessionController = {
 		//Session.find({}).paginate({page: 10, limit: 5}) {id_speaker:req.session.passport.user}
 		Session.find({owner:req.session.passport.user}, {sort: 'createdAt DESC' }).exec(function findCB(err, sessions){
 			if(err){return err;}
-			//sails.log.debug(JSON.stringify(sessions));
+		
 			return res.view('speaker/sessions/index',{sessions:sessions});
 		});
 	},
@@ -35,48 +35,25 @@ var SessionController = {
 				return res.view('speaker/sessions/new', {errors: errors_messages,  session: req.params.all()});
 					                                    
 			}else{
-					SpeakerAccount.findOne({id:req.session.passport.user}).populate('sessions').exec(function findSpeaker(err, speaker) {
+					SpeakerAccount.findOne({id:req.session.passport.user}).exec(function findSpeaker(err, speaker) {
 						if(err) { 
 						    sails.log.debug('Error ==> ' + err);
+						    req.flash('error', err);
 							return res.view('speaker/sessions/new');
 						}else{
 							sails.log.debug('Preparando o modelo para salvar...');
 							speaker.sessions.add(req.params.all());
-							speaker.save(function(err,res){
-								if(err){sails.log.debug('Erro ao tentar salvar o modelo+ '+err);}
-						    	sails.log.debug('######## Callback Save() Seccess! '+ JSON.stringify(res));
+							speaker.save(function(err,resp_cb){
+								if(err){sails.log.debug('Erro ao tentar salvar o modelo+ '+err); req.flash('error', err);}
+						    	sails.log.debug('######## Callback Save() Seccess! '+ JSON.stringify(resp_cb));
+						    	req.flash('success', 'Sessão <strong>'+req.param('name')+ '</strong> criada com sucesso!');
+						    	//Depois de tudo criado, redireriona para o index sessions
+						  		return res.redirect('speaker/sessions');
 						  	});
-
-						  	//Depois de tudo criado, redireriona para o index sessions
-						  	return res.redirect('speaker/sessions');
 						}
 					});
 			}//End else
 		});
-		
-		/*
-		SpeakerAccounts.findOne({email:req.session.passport.user}).exec(function findSpeaker(err, speaker) {
-
-			if(errors) { 
-				errors_messages = SailsValidador(Session, errors);
-				sails.log.debug('Error ==> ' + JSON.stringify(errors_messages));
-				
-				return res.view('speaker/sessions/new', {errors: errors_messages,
-					                                     session: req.params.all()});
-			}
-
-		});
-		
-        Session.create(req.params.all(), function(errors, session) {
-			if(errors) { 
-				errors_messages = SailsValidador(Session, errors);
-				sails.log.debug('Error ==> ' + JSON.stringify(errors_messages));
-				
-				return res.view('speaker/sessions/new', {errors: errors_messages,
-					                                     session: req.params.all()});
-			}
-			return res.redirect('speaker/sessions');
-		});*/
 	},
 
 	select: function(req, res) {
@@ -163,12 +140,14 @@ var SessionController = {
 		
 	    Session.update({id:id}, {name: name, key: key, description: descript}).exec(function sessionUpdated(errors, updatedUser) {
 	      if (errors) {
+	      	req.flash('error', errors);
 	        errors_messages = SailsValidador(Session, errors);
 			sails.log.debug('Error ==> ' + JSON.stringify(errors_messages));
 	      	return res.view('speaker/sessions/edit', {errors: errors_messages,
 					                                     session: req.params.all()});
 	      }
 	      sails.log.debug('Action update called: '+JSON.stringify(req.params.all()));
+	      req.flash('info', 'Sessão <strong>'+updatedUser[0].id+ '</strong> atualizada sucesso!');
 	      return res.redirect('speaker/sessions');
 	    });
 	},
@@ -178,13 +157,14 @@ var SessionController = {
 		sails.log.debug(req.param('id'));
 		Session.destroy({id:req.param('id')}).exec(function sessionDestroy(err){
 			if(err){
+				req.flash('error', errors);
 				sails.log.debug('EROO: '+err);
 			}else{
   			   sails.log.debug('The record has been deleted');
+  			   req.flash('warning', 'A Sessão <strong>'+req.param('id')+ '</strong> foi deletada!');
+  			   return res.redirect('speaker/sessions');
   			}
   		});
-
-  		return res.redirect('speaker/sessions');
 	},
 }
 

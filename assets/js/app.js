@@ -2,10 +2,10 @@ $(document).ready(function() {
   createTableListeners();
 
   // client side
-    function responseHandler(res) {
-      alert('askjd');
-        return res.repos;
-    }
+  $('#tab_edit_account a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
 
     $(".delete_session").on("click", function() {
 

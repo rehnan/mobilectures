@@ -27,6 +27,11 @@ module.exports = {
     online : { 
         type: 'boolean',
         defaultsTo: false 
+    },
+
+    participants: {
+           collection:'session', //Referente ao modelo Session
+           via: 'ouvintes'
     }
   }
 };

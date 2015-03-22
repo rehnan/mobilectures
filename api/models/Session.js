@@ -9,10 +9,10 @@ module.exports = {
   schema: true,
   attributes: {
 
-  		name: {
+  	name: {
   			type: 'string',
-			required: true,
-  		},
+			  required: true,
+  	},
 
 		key: {
 			type: 'string',
@@ -33,7 +33,14 @@ module.exports = {
 		//Pertence à um proprietário (palestrante)
 		owner:{
             model:'speakeraccount' //Referente ao modelo SpeakerAccounts
-        }
+    },
+
+    //Tem uma coleção de ouvintes (listeners) participantes conectados
+    ouvintes:{
+      collection:'listeners', //Referente ao modelo Listeners
+      via: 'participants' //Relação estabelecida via atributo owners localizado no modelo Listeners 
+    }
+
   },
 
   validationMessages: {

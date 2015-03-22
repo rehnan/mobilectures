@@ -1,0 +1,24 @@
+<div class="well center-block" style="max-width: 40%;">
+	<h3><center><%= i18n("label_my_account") %></center></h3>
+	<hr>
+    <ul class="nav nav-tabs nav-justified" id="tab_edit_account">
+     <li role="presentation" class=<%= (Object.keys(errors).length === 0) ? 'active' : '' %> ><a href="#showMyAccount" id="showMyAccount-tab" role="tab" data-toggle="tab" aria-controls="showMyAccount" aria-expanded="true"><span class="glyphicon glyphicon-user"></span> <%= i18n("title_tab_visualizer") %></a></li>
+
+      <li role="presentation" class=<%= (Object.keys(errors).length > 0) ? 'active' : '' %>><a href="#editMyAccount" role="tab" id="editMyAccount-tab" data-toggle="tab" aria-controls="editMyAccount" aria-expanded="true"><span class="glyphicon glyphicon-edit"></span> <%= i18n("title_tab_edit") %></a></li>
+    </ul>
+
+     <div id="myTabContent" class="tab-content">
+	      <div role="tabpanel" class="tab-pane fade <%= (Object.keys(errors).length === 0) ? 'active in' : '' %> " id="showMyAccount" aria-labelledby="showMyAccount-tab">
+	      	<!-- Partial to show accounts datas. Localed in: view/partials/my_account.ejs -->
+	         <%- partial ('../partials/my_account.ejs') %> 
+	      </div>
+	      <div role="tabpanel" class="tab-pane fade <%= (Object.keys(errors).length > 0) ? 'active in' : '' %>" id="editMyAccount" aria-labelledby="editMyAccount-tab">
+	      <!-- Partial to renderize form to update datas. Localed in: view/partials/_form.ejs -->
+	       <%- partial ('../partials/_form.ejs') %> 
+	      </div>
+    </div>
+</div>
+
+
+
+   

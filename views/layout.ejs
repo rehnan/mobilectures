@@ -64,22 +64,20 @@
             </ul>
            
             <ul class="nav navbar-nav navbar-right">
-               <!--
-               <li style="list-style-type: none; margin-top: 7%;">
-                  <select class="form-control" id="setLanguage"> 
-                      <option value="two">Two</option>
-                      <option value="three">Three</option>
-                  </select>
+              
+              <li><a href="/speaker/show/<%= req.session.passport.user %>"> <button type="button" class="btn btn-success"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%= i18n("label_edit_account") %></button></a></li>
 
-              </li>
-              -->
-              <li><a href="/logout"> <button type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%= i18n("label_logout") %></button></a></li>
+              <li><a href="/logout"> <button type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <%= i18n("label_logout") %></button></a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
-
+      
+      <div class="panel panel-default">
+         <div class="panel-body">
           <%- body %>
+        </div>
+      </div>
   </div>
 
     <!--

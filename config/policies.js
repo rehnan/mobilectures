@@ -25,12 +25,14 @@ module.exports.policies = {
   * access)                                                                  *
   *                                                                          *
   ***************************************************************************/
-
+   '*' : 'localize' ,
+   '*':  'flash', //Disponibilzando o uso do flash para todos os controllers
   // '*': true,
  //Política de autenticação inclusa em /policies/isAuthenticated
   '*': 'isAuthenticated',
     //Lista branca das ações do controller AuthController
     'auth': {
+        //signin:['flash'], 
         '*': true
     },
 

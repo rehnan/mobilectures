@@ -24,38 +24,55 @@ module.exports = {
       if (req.session.passport.user) {
               return res.redirect('/speaker');
       }
-      return res.view({layout: 'layout_login',  locals:{speaker: SpeakerAccount.new}});
+      return res.view({layout: 'layout_login',  locals:{errors:{}, speaker: SpeakerAccount.new}});
   },
 
   /**
    * `AuthController.signin()`
    */
   signin: function (req, res) {
-        //sails.log.debug('Entrou na action signin');
-        passport.authenticate('local', function(err, user, info)
-        {
-            //Se houver erro renderiza a view login com a mensagem de erro
-            if(err){
-              return res.view('auth/index', {layout: 'layout_login', locals: {message: info.message, speaker:req.params.all()}});
-            }
+      //Validação de campos válidos
+      var errors_messages = {};
+      Messages.signin.clear_errors(errors_messages);
+      Messages.signin.push_error(req.param('email'), 'email', 'Por favor, informe seu email!', errors_messages);
+      Messages.signin.push_error(req.param('password'), 'password', 'Por favor, informe sua senha!', errors_messages);
 
-            //Se houver usuário inexistente renderiza a view login com a mensagem de erro
-            if (!user){
-              sails.log.error(user+' ########### User Error ########'+JSON.stringify(info));
-              info.message = (info.message === 'Missing credentials') ? 'Por favor, informe seu email e sua senha!' : info.message; 
-              return res.view('auth/index', {layout: 'layout_login', locals: {message: info.message, speaker:req.params.all()}});
-            }
+      //req.flash('info', 'Deborah linda');
+      //req.flash('info', ' Deborah fica comigo?');
+    
+      //Verifica se há algum erro antes de iniciar validação da autenticação
+     if(Object.keys(errors_messages).length > 0){
 
-            req.logIn(user, function(err) {
-                  sails.log.debug('########### Login Efetuado ######## '+user);
-                  if (err){
-                      return res.view('auth/index', {layout: 'layout_login', locals: {message: info.message, speaker:req.params.all()}});
-                  }
-                  
-                  return res.redirect('/speaker');
-            });
-        })(req, res);
-    },
+        return res.view('auth/index', {layout: 'layout_login', locals: {errors: errors_messages, speaker:req.params.all()}});
+     
+      }else{
+            //sails.log.debug('Entrou na action signin');
+            passport.authenticate('local', function(err, user, info)
+            {
+                //Se houver erro renderiza a view login com a mensagem de erro
+                if(err){
+                  return res.view('auth/index', {layout: 'layout_login', locals: {errors:{},   speaker:req.params.all()}});
+                }
+
+                //Se houver usuário inexistente renderiza a view login com a mensagem de erro
+                if (!user){
+                  sails.log.error(user+' ########### User Error ########'+JSON.stringify(info));
+                  //info.message = (info.message === 'Missing credentials') ? 'Por favor, informe seu email e sua senha!' : info.message; 
+                  req.flash('error', info.message);
+                  return res.view('auth/index', {layout: 'layout_login', locals: {errors:{}, speaker:req.params.all()}});
+                }
+
+                req.logIn(user, function(err) {
+                      sails.log.debug('########### Login Efetuado ######## '+user);
+                      if (err){
+                          return res.view('auth/index', {layout: 'layout_login', locals: {errors:{}, speaker:req.params.all()}});
+                      }
+                      
+                      return res.redirect('/speaker');
+                });
+            })(req, res);
+          }//End else
+      },
   
 
   /**
@@ -109,7 +126,9 @@ module.exports = {
                       });
                   }else{
                       sails.log.error('[erro] Email já cadastrado!!');
-                      return res.view('auth/signup', {layout: 'layout_login', locals: {message: "Este email já foi cadastrado!", errors: {}, speaker: req.params.all()}});
+                      //SetMessage flash de email já cadastrado
+                      req.flash('error', "Email já cadastrado!");
+                      return res.view('auth/signup', {layout: 'layout_login', locals: {errors: {}, speaker: req.params.all()}});
                   }
 
               });//End findOne Callback

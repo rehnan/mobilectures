@@ -69,11 +69,23 @@ module.exports.routes = {
   },
 
 
-    //SpeakerController Routes:
-    'GET /speaker':{
-        controller: 'SpeakerController',
-        action: 'index'
-    },
+  //Route to renderize the index (inicial page) of application
+  'GET /speaker':{
+      controller: 'SpeakerController',
+      action: 'index'
+  },
+
+  //Route to renderize the index (inicial page) of application
+  'POST /speaker':{
+      controller: 'SpeakerController',
+      action: 'update'
+  },
+
+  //Route to renderize form to new session
+  'GET /speaker/show/:id':{
+      controller: 'SpeakerController',
+      action: 'show'
+  },
 
     
     //################################## Begin SESSIONS Routes
