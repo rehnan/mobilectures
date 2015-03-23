@@ -32,6 +32,41 @@ module.exports = {
       }
   },
 
+  toJSON: function() {
+            var obj = this.toObject();
+            delete obj.password;
+            return obj;
+  },
+
+  //Before save crypt the password attribute
+   beforeCreate: function (attrs, next) {
+
+      var bcrypt = require('bcrypt-nodejs');
+      var salt = bcrypt.genSaltSync(10);
+
+      // Hash the password with the salt
+      attrs.password = bcrypt.hashSync(attrs.password, salt);
+
+       next();
+  },
+  /*
+beforeCreate: function (values, next) {
+
+    // This checks to make sure the password and password confirmation match before creating record
+    if (!values.password || values.password != values.confirmation) {
+      return next({err: ["Password doesn't match password confirmation."]});
+    }
+
+    require('bcrypt').hash(values.password, 10, function passwordEncrypted(err, encryptedPassword) {
+      if (err) return next(err);
+      values.encryptedPassword = encryptedPassword;
+      next();
+    });
+  }
+
+  */
+
+
   validationMessages: {
 
     name: {

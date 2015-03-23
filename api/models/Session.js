@@ -42,7 +42,7 @@ module.exports = {
     }
 
   },
-
+  
   validationMessages: {
     name: {
  	   required: 'Você deve informar o nome da sessão',

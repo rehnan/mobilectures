@@ -25,7 +25,6 @@ passport.use(new LocalStrategy({
     //Função Callback caso seja dado entrada do email e password do formulário
     function(email, password, done) {
 
-      
         //Iniciar procura do usuário pelo método findOne
         SpeakerAccount.findOne({email: email}, function (err, user) {
 
@@ -41,16 +40,17 @@ passport.use(new LocalStrategy({
             return done(null, false, { message: 'Usuário/Senha inválido!' });
           }
 
+          var bcrypt = require('bcrypt-nodejs');
           //Verifica se a senha do usuário encontrado é iguai a senha informada
-          if (user.password != password) { 
-
-            sails.log.error('Senha Incorreta!');
-            return done(null, false, { message: 'Usuário/Senha inválido!' }); 
-          }
-
-          //sails.log.debug('End LocalStrategy');
-          return done(null, user);
-          
+          bcrypt.compare(password, user.password, function(err, isEquals) {
+              // res == true
+              if (!isEquals) { 
+                sails.log.error('Senha Incorreta!');
+                return done(null, false, { message: 'Usuário/Senha inválido!' }); 
+              }else{
+              return done(null, user);
+              }
+          });
         });
     }
 )); 
