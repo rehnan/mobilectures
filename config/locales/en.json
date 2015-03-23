@@ -46,5 +46,10 @@
 	"title_tab_edit": "Edit",
 	"label_my_account": "My Account",
 	"start_page": "start_page",
-	"option_current_session": "Current Session"
+	"option_current_session": "Current Session",
+	"title_update_profile": "Update Profile",
+	"title_update_password": "Update Password",
+	"title_old_password": "Old password",
+	"title_new_password": "New password",
+	"title_confirm_password": "Confirm new password"
 }

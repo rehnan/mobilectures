@@ -1,11 +1,52 @@
 $(document).ready(function() {
   createTableListeners();
 
+  //Abre modal para receber a senha de confirmação para atualização da conta
+  $('.submit_profile_update').on('click', function() {
+     
+        BootstrapDialog.show({
+            title: 'Informe sua senha de autenticação',
+            message: $('<label for="input_pass_confirm">Senha:</label><div class="form-group input_pass_confirm"><input type="password" class="form-control" name="input_pass_confirm" id="input_pass_confirm" placeholder="Senha" autofocus><p><span class="help-block feedBackMessage"></span></p></div>'),
+            buttons:[
+              {
+                  label: 'Cancelar',
+                   action: function(dialogRef){
+                   dialogRef.close();
+                   }
+              }, 
+              {    label: 'Confirmar',
+                    cssClass: 'btn-primary',
+                    hotkey: 13, // Enter.
+                    action: function() {
+                      //Send password to compare
+                     comparePassword($("#input_pass_confirm").val());
+                     dialogRef.close();
+                  }
+            }]
+        });
+  });
+
+  //Compara senha hash
+  function comparePassword(password){
+    $.post("/speaker/compare", {password: password}, function(data) {
+      if(data.response === null){
+         $(".input_pass_confirm").addClass("has-error has-feedback");
+         $(".feedBackMessage").text("Por favor, informe a senha de autenticação");
+      }else if(data.response){
+          $("#form_update_profile").submit();
+        }else{
+          $(".input_pass_confirm").addClass("has-error has-feedback");
+          $(".feedBackMessage").text("Senha incorreta!");
+        }
+        
+    });
+  };
+
   // client side
   $('#tab_edit_account a').click(function (e) {
     e.preventDefault()
     $(this).tab('show')
-  })
+  });
 
     $(".delete_session").on("click", function() {
 

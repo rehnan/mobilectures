@@ -87,6 +87,11 @@ module.exports.routes = {
       action: 'show'
   },
 
+  //Route to compare password
+  'POST /speaker/compare':{
+      controller: 'SpeakerController',
+      action: 'comparePassword'
+  },
     
     //################################## Begin SESSIONS Routes
     //Route to get all Sessions

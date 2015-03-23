@@ -37,9 +37,6 @@ module.exports = {
       Messages.signin.push_error(req.param('email'), 'email', 'Por favor, informe seu email!', errors_messages);
       Messages.signin.push_error(req.param('password'), 'password', 'Por favor, informe sua senha!', errors_messages);
 
-      //req.flash('info', 'Deborah linda');
-      //req.flash('info', ' Deborah fica comigo?');
-    
       //Verifica se há algum erro antes de iniciar validação da autenticação
      if(Object.keys(errors_messages).length > 0){
 
@@ -135,7 +132,6 @@ module.exports = {
           }//End Else validation
       });//Ende Validation function callback
   },
-
 
   /**
    * `AuthController.logout()`

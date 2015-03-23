@@ -1,4 +1,4 @@
-<form  action="/speaker" style="padding-top: 20px" method="POST">
+<form  action="/speaker" style="padding-top: 20px" id="form_update_profile" method="POST">
 	<div class="form-group <%= Messages.errors.form.class("name", errors) %>">
 	  <label for="name"><%= i18n("label_name") %>:</label>
 	  <input type="text" class="form-control" name="name" id="name" value="<%= speaker.name %>" placeholder="<%= i18n('label_name') %>">
@@ -9,13 +9,11 @@
 	  <input type="text" class="form-control" name="email" id="email" value="<%= speaker.email %>" placeholder="<%= i18n('label_email') %>">
 	  <%- Messages.errors.form.message("email", errors) %>
 	</div>
-	<div class="form-group <%= Messages.errors.form.class("password", errors) %>">
-	  <label for="password"><%= i18n("label_password") %>:</label>
-	  <input type="text" class="form-control" name="password" id="password" value="<%= speaker.password %>" placeholder="<%= i18n('label_email') %>">
-	  <%- Messages.errors.form.message("password", errors) %>
-	</div>
 
 	<div class="form-group">
-	    <button type="submit" class="btn btn-primary btn-lg btn-block btn-sm"><%= i18n("label_save") %></button>
+	    <button type="button" class="btn btn-primary btn-lg btn-block btn-sm submit_profile_update"><%= i18n("label_save") %></button>
 	</div>
+
+	<!-- Partial to show flash messages -->
+    <%- partial('../partials/flash') %>
 </form>

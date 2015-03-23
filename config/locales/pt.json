@@ -46,5 +46,10 @@
 	"title_edit_account": "Editar Conta",
 	"title_tab_visualizer": "Visualizar",
 	"title_tab_edit": "Editar",
-	"label_my_account": "Minha Conta"
+	"label_my_account": "Minha Conta",
+	"title_update_profile": "Atualizar Perfil",
+	"title_update_password": "Atualizar Senha",
+	"title_old_password": "Senha antiga",
+	"title_new_password": "Nova senha",
+	"title_confirm_password": "Confirme a nova senha"
 }
