@@ -39,8 +39,11 @@
   </head>
 
   <body>
-
-    <%- body %>
+    <div class="container">
+        <!-- Partial to show flash messages -->
+      <%- partial('partials/flash') %>
+      <%- body %>
+    </div>
 
 
 

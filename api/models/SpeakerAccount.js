@@ -15,8 +15,9 @@ module.exports = {
 	    
       email: {
           type: 'string',
+          unique: true,
           required: true,
-          unique: true
+          email: true
       },
     
       password: {
@@ -32,40 +33,38 @@ module.exports = {
       }
   },
 
-  toJSON: function() {
-            var obj = this.toObject();
-            delete obj.password;
-            return obj;
-  },
-
   //Before save crypt the password attribute
    beforeCreate: function (attrs, next) {
 
+    if(attrs.password != undefined) {
       var bcrypt = require('bcrypt-nodejs');
       var salt = bcrypt.genSaltSync(10);
 
       // Hash the password with the salt
       attrs.password = bcrypt.hashSync(attrs.password, salt);
+      sails.log.debug('[Action: beforeCreate] Password Updated');
+      }
 
-       next();
-  },
-  /*
-beforeCreate: function (values, next) {
-
-    // This checks to make sure the password and password confirmation match before creating record
-    if (!values.password || values.password != values.confirmation) {
-      return next({err: ["Password doesn't match password confirmation."]});
-    }
-
-    require('bcrypt').hash(values.password, 10, function passwordEncrypted(err, encryptedPassword) {
-      if (err) return next(err);
-      values.encryptedPassword = encryptedPassword;
       next();
-    });
-  }
+  },
 
-  */
+  beforeUpdate: function (attrs, next) {
 
+      //sails.log.debug(JSON.stringify(attrs));
+      //A verificação de Object.keys(attrs).length === 1 foi inserida para que não houvesse update da senha
+      if(attrs.password != undefined && Object.keys(attrs).length === 1) {
+        var bcrypt = require('bcrypt-nodejs');
+        var salt = bcrypt.genSaltSync(10);
+
+        sails.log.error(attrs.password);  
+
+        // Hash the password with the salt
+        attrs.password = bcrypt.hashSync(attrs.password, salt);
+      sails.log.debug('[Action: beforeUpdate] Password Updated');
+      }
+
+      next();
+  },
 
   validationMessages: {
 
@@ -75,7 +74,8 @@ beforeCreate: function (values, next) {
 
     email: {
      required: 'você deve informar seu email',
-     unique: 'Email já cadastrado!'
+     unique: 'Email já cadastrado!',
+     email: 'Deve ser um email válido!'
     },
 
     password: {

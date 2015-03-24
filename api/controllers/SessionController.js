@@ -9,7 +9,7 @@ var SessionController = {
 		sails.log.debug('Render sessions index view for user' + req.session.passport.user);
 		application.title = req.__('option_sessions');
 		//Session.find({}).paginate({page: 10, limit: 5}) {id_speaker:req.session.passport.user}
-		Session.find({owner:req.session.passport.user}, {sort: 'createdAt DESC' }).exec(function findCB(err, sessions){
+		Session.find({owner:req.session.passport.user.id}, {sort: 'createdAt DESC' }).exec(function findCB(err, sessions){
 			if(err){return err;}
 		
 			return res.view('speaker/sessions/index',{sessions:sessions});
@@ -35,7 +35,7 @@ var SessionController = {
 				return res.view('speaker/sessions/new', {errors: errors_messages,  session: req.params.all()});
 					                                    
 			}else{
-					SpeakerAccount.findOne({id:req.session.passport.user}).exec(function findSpeaker(err, speaker) {
+					SpeakerAccount.findOne({id:CurrentUserId.get(req)}).exec(function findSpeaker(err, speaker) {
 						if(err) { 
 						    sails.log.debug('Error ==> ' + err);
 						    req.flash('error', err);
@@ -44,9 +44,11 @@ var SessionController = {
 							sails.log.debug('Preparando o modelo para salvar...');
 							speaker.sessions.add(req.params.all());
 							speaker.save(function(err,resp_cb){
-								if(err){sails.log.debug('Erro ao tentar salvar o modelo+ '+err); req.flash('error', err);}
-						    	sails.log.debug('######## Callback Save() Seccess! '+ JSON.stringify(resp_cb));
-						    	req.flash('success', 'Sessão <strong>'+req.param('name')+ '</strong> criada com sucesso!');
+								if(err){
+								sails.log.debug('Erro ao tentar salvar o modelo+ '+err); 
+								req.flash('error', err);}
+						    	//sails.log.debug('######## Callback Save() Seccess! '+ JSON.stringify(resp_cb));
+						    	//req.flash('success', 'Sessão <strong>'+req.param('name')+ '</strong> criada com sucesso!');
 						    	//Depois de tudo criado, redireriona para o index sessions
 						  		return res.redirect('speaker/sessions');
 						  	});
@@ -58,10 +60,16 @@ var SessionController = {
 
 	select: function(req, res) {
 		application.title = req.__('option_current_session');
-
+		sails.log.debug('Selecionando sessão')
+		req.session.current_session = null;
 		//Session.find({}).paginate({page: 10, limit: 5})
-		Session.findOne({id:req.param('id')}).exec(function findCB(err, session){
-			if(err){return err;}
+		Session.findOne({id:req.param('id'), owner: CurrentUserId.get(req)}).exec(function findCB(err, session){
+			if(err){return err;	}
+			if(!session){
+				req.flash('error', 'Sessão inexistente!!!');
+				return res.redirect('speaker/sessions');	
+			}
+			req.session.current_session = session;
 			return res.view('speaker/sessions/current', {layout: 'layout_options', current_session:session});
 		});
 	},

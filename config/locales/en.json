@@ -49,7 +49,7 @@
 	"option_current_session": "Current Session",
 	"title_update_profile": "Update Profile",
 	"title_update_password": "Update Password",
-	"title_old_password": "Old password",
+	"title_current_password": "Current password",
 	"title_new_password": "New password",
 	"title_confirm_password": "Confirm new password"
 }

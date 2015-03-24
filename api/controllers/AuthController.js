@@ -64,7 +64,7 @@ module.exports = {
                       if (err){
                           return res.view('auth/index', {layout: 'layout_login', locals: {errors:{}, speaker:req.params.all()}});
                       }
-                      
+                      req.flash('success', 'Login efetuado com sucesso!');
                       return res.redirect('/speaker');
                 });
             })(req, res);
@@ -88,49 +88,83 @@ module.exports = {
   /**
    * `AuthController.create()`
    */
-  create: function (req, res) {
-      
-      //Efetua validação de campos válidos
+   create: function (req, res) {
       SpeakerAccount.validate(req.params.all(), function validadeAccount(errors){
-          if(errors){
-            errors_messages = SailsValidador(SpeakerAccount, errors);
-            sails.log.debug('Error ==> ' + JSON.stringify(errors_messages));
-            return res.view('auth/signup', {layout: 'layout_login', locals: {errors: errors_messages,  speaker: req.params.all()}});
-          }else{
-              var email = req.param('email');
-              //Verificar se há algum úsuário com o mesmo email
-              SpeakerAccount.findOne({email:email}, function (err, user) {
-                  if(err){return next(err);}
+          sails.log.debug('Error 1 ==> ' + JSON.stringify(errors));
 
-                  if(!user){
-                      //Cria cria nova conta
-                      SpeakerAccount.create(req.params.all(), function (errors, user) {
+          SpeakerAccount.findOne({email: req.param('email') }, function (unique_err, unique_user) {
+             if (unique_err) {return next(unique_err);}
+             
+             if (unique_user) {
+                if (errors == undefined) { 
+                   errors = {"error":"E_VALIDATION","status":400,"summary":"1 attribute is invalid","model":"SpeakerAccount"}  
+                }
+                if (errors['invalidAttributes'] == undefined) { errors['invalidAttributes'] = {} }  
+                if (errors['invalidAttributes']['email'] == undefined) {errors['invalidAttributes']['email'] = Array() }
+                
+                errors['invalidAttributes']['email'].push({"rule":"unique","message":"\"unique\" attribute should be unique: ''"});
+ 
+                if (errors['ValidationError'] == undefined) { errors['ValidationError'] = errors['invalidAttributes'] };    
+             }
 
-                        if (err){
-                        errors_messages = SailsValidador(SpeakerAccount, errors);
-                        sails.log.debug('Error ==> ' + JSON.stringify(errors_messages));
-                        
-                        return res.view('auth/signup', {layout: 'layout_login', locals: {errors: errors_messages,  speaker: req.params.all()}});
-                        }
-                          
-                        sails.log.debug('[Sucesso] Email '+user.email+' cadastrado com sucesso!!');
-                          //Efetua autenticação e redireciona para speaker área
-                          req.login(user, function(err) {
-                              if (err) { return next(err); }
-                               sails.log.debug('Sessão criada! Redirecionando para Speaker Area');
-                              return res.redirect('/speaker');
-                          });
-                      });
-                  }else{
-                      sails.log.error('[erro] Email já cadastrado!!');
-                      //SetMessage flash de email já cadastrado
-                      req.flash('error', "Email já cadastrado!");
-                      return res.view('auth/signup', {layout: 'layout_login', locals: {errors: {}, speaker: req.params.all()}});
-                  }
+             if (errors) {
+                req.flash('error', "Existe dados incorretos no formulário!");
+                errors_messages = SailsValidador(SpeakerAccount, errors);
+                sails.log.debug('Error ==> ' + JSON.stringify(errors_messages));
 
-              });//End findOne Callback
-          }//End Else validation
-      });//Ende Validation function callback
+                return res.view('auth/signup', {layout: 'layout_login', locals: {errors: errors_messages,  speaker: req.params.all()}});
+             }
+
+              SpeakerAccount.create(req.params.all(), function (errors, user) {
+                 sails.log.debug('[Sucesso] Email '+user.email+' cadastrado com sucesso!!');
+                 //Efetua autenticação e redireciona para speaker área
+                 req.login(user, function(err) {
+                    if (err) { return next(err); }
+
+                    sails.log.debug('Sessão criada! Redirecionando para Speaker Area');
+                    return res.redirect('/speaker');
+                 });
+              });
+             
+          });
+      });
+
+
+
+     /* var email = req.param('email');
+      SpeakerAccount.findOne({email:email}, function (err, unique_user) {
+         if(err){return next(err);}
+ 
+         SpeakerAccount.create(req.params.all(), function (errors, user) {
+          
+          sails.log.debug('Error ==> ' + JSON.stringify(errors));
+
+          if (unique_user) {
+            errors['invalidAttributes'].push({'email': [{message: 'adsfasdf'}]});
+          }
+
+//Error ==> {"error":"E_VALIDATION","status":400,"summary":"1 attribute is invalid","model":"SpeakerAccount","invalidAttributes":{"name":[{"rule":"required","message":"\"required\" validation rule failed for input: ''"}]}}
+
+
+          if (errors) {
+             req.flash('error', "Existe dados incorretos no formulário!");
+             errors_messages = SailsValidador(SpeakerAccount, errors);
+             sails.log.debug('Error ==> ' + JSON.stringify(errors_messages));
+
+             return res.view('auth/signup', {layout: 'layout_login', locals: {errors: errors_messages,  speaker: req.params.all()}});
+          }
+
+          sails.log.debug('[Sucesso] Email '+user.email+' cadastrado com sucesso!!');
+             //Efetua autenticação e redireciona para speaker área
+          req.login(user, function(err) {
+             if (err) { return next(err); }
+
+             sails.log.debug('Sessão criada! Redirecionando para Speaker Area');
+             return res.redirect('/speaker');
+          });
+        });
+
+      });*/
   },
 
   /**

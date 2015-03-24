@@ -1,4 +1,4 @@
-<div class="container">
+
     <form class="form-signup jumbotron" action="/signup" method="POST">
         <h2 class="form-signin-heading"><%= i18n("msg_label_signup") %></h2>
         <div class="form-group input-group-lg  <%= Messages.errors.form.class("name", errors) %>">
@@ -23,8 +23,4 @@
         <a href="/login" class="pull-right need-help"> <%= i18n("back_to_login") %> </a><span class="clearfix"></span>
 
         <br>
-        <!-- Partial to show flash messages -->
-        <%- partial('../partials/flash') %>
     </form>
-</div>
-

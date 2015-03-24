@@ -33,6 +33,7 @@ module.exports = {
 
 		clear_errors: function(array){
 			array = {};
-		}	
+		},
+
 	}
 }	

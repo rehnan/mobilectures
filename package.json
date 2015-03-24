@@ -30,7 +30,6 @@
     "sails": "~0.10.5",
     "sails-disk": "~0.10.0",
     "sails-hook-flash": "^0.2.0",
-    "sails-model-new": "^0.1.6",
     "sails-mongo": "^0.10.5"
   },
   "scripts": {

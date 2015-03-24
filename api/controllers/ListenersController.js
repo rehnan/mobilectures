@@ -4,7 +4,13 @@ var ListenersController = {
 	//Renderiza o index da opção Ouvintes Conectados
 	index: function(req, res) {
 		application.title = req.__('option_listeners');
-		return res.view('speaker/listeners/index', {layout: 'layout_options'}); 
+		if(req.session.current_session != undefined){
+			sails.log.debug(req.session.current_session.id);
+			return res.view('speaker/listeners/index', {layout: 'layout_options'}); 
+		}else{
+			req.flash('error', 'Você deve criar/selecionar uma sessão')
+			return res.redirect('speaker/sessions');
+		}
 	},
 
 	create: function(req, res) {
@@ -26,8 +32,12 @@ var ListenersController = {
 	},
 
 	getAll: function(req, res) {
-		Listeners.find({}).exec(function(err, users) {
-			return res.json(users);
+		//Busca todos os ouvintes inscritos na sessão corrente (seleceionada)
+
+		Session.findOne({id:req.session.current_session.id}).populate('ouvintes').exec(function(err, listeners) {
+			sails.log.debug(JSON.stringify(listeners));
+			return res.json(listeners.ouvintes);
+
 		});
 	},
 

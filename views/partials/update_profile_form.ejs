@@ -1,4 +1,4 @@
-<form  action="/speaker" style="padding-top: 20px" id="form_update_profile" method="POST">
+<form  action="/speaker/profile/<%= req.session.passport.user.id %>" style="padding-top: 20px" id="form_update_profile" method="POST">
 	<div class="form-group <%= Messages.errors.form.class("name", errors) %>">
 	  <label for="name"><%= i18n("label_name") %>:</label>
 	  <input type="text" class="form-control" name="name" id="name" value="<%= speaker.name %>" placeholder="<%= i18n('label_name') %>">
@@ -13,7 +13,4 @@
 	<div class="form-group">
 	    <button type="button" class="btn btn-primary btn-lg btn-block btn-sm submit_profile_update"><%= i18n("label_save") %></button>
 	</div>
-
-	<!-- Partial to show flash messages -->
-    <%- partial('../partials/flash') %>
 </form>

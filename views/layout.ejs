@@ -40,7 +40,7 @@
 
   <body>
   <div class="page-header">
-    <h4><center><%= i18n("msg_hello") %>, <span id="id_current_user"><%= req.session.passport.user %></span>. <%= i18n("msg_welcome") %></center></h4>
+    <h4><center><%= i18n("msg_hello") %>, <span id="id_current_user"><%= req.session.passport.user.name %></span>. <%= i18n("msg_welcome") %></center></h4>
   </div>
   <div class="container">
       <!-- Static navbar -->
@@ -65,7 +65,7 @@
            
             <ul class="nav navbar-nav navbar-right">
               
-              <li><a href="/speaker/show/<%= req.session.passport.user %>"> <button type="button" class="btn btn-success"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%= i18n("label_edit_account") %></button></a></li>
+              <li><a href="/speaker/show/<%= req.session.passport.user.id %>/profile"> <button type="button" class="btn btn-success"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <%= i18n("label_edit_account") %></button></a></li>
 
               <li><a href="/logout"> <button type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <%= i18n("label_logout") %></button></a></li>
             </ul>
@@ -75,6 +75,8 @@
       
       <div class="panel panel-default">
          <div class="panel-body">
+          <!-- Partial to show flash messages -->
+          <%- partial('partials/flash') %>
           <%- body %>
         </div>
       </div>
