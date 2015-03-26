@@ -133,12 +133,12 @@ $(document).ready(function() {
    var socket = io.connect();
    socket.on("connect", function () {
               //updateUsers();
-              /*
+              
               url = '/speaker/listeners/subscribe';
               socket.get(url, function (data){
                   console.log(data.msg);
               });
-              */
+              
               /*
               //Create new user from socket method
               socket.post('/user/create', {name:'Mariaaaa'}, function (data, jwres){

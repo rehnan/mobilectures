@@ -39,17 +39,18 @@ var ListenersController = {
 			return res.json(session.listeners);
 		});
 	},
-	/*
+	
 	subscribe: function(req, res) {
 
 		 Listener.find({}).exec(function(e,listeners){
 		      Listener.subscribe(req.socket, listeners, ['create', 'update']);
 		 });
+		 
 		 Listener.watch(req.socket);	
 		 sails.log.debug("Listener: "+req.socket.id+" subscribed!");
 	 	 return res.json({msg:"User: "+req.socket.id+" subscribed!"});
 	},
-	*/
+	
 	update: function(req, res) {
 		//Verificando se há alguma ocorrência do email na base de dados
 		Listener.findOne({id:req.param('id')}).exec(function(err, userFound){
