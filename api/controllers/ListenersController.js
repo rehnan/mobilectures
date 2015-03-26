@@ -5,7 +5,7 @@ var ListenersController = {
 	index: function(req, res) {
 		application.title = req.__('option_listeners');
 		if(req.session.current_session != undefined){
-			sails.log.debug(req.session.current_session.id);
+			//sails.log.debug(req.session.current_session.id);
 			return res.view('speaker/listeners/index', {layout: 'layout_options'}); 
 		}else{
 			req.flash('error', 'Você deve criar/selecionar uma sessão')
@@ -25,17 +25,17 @@ var ListenersController = {
 					sails.log.debug('New listener account crated!');	
 					return res.json({msg:"Usuário criado com sucesso!"});
 				});
+			}else{
+				sails.log.error('Este email já está cadastrado!');	
+				return res.json({msg:"Este email já está cadastrado!"});
 			}
-			sails.log.debug('Este email já está cadastrado!');	
-			return res.json({msg:"Este email já está cadastrado!"});
 		});
 	},
 
 	getAll: function(req, res) {
 		//Busca todos os ouvintes inscritos na sessão corrente (seleceionada)
-		sails.log.debug(req.session.current_session.id);
+		//sails.log.debug(req.session.current_session.id);
 		Session.findOne({id:req.session.current_session.id}).populate('listeners').exec(function(err, session) {
-			sails.log.debug(JSON.stringify(session));
 			return res.json(session.listeners);
 		});
 	},
@@ -123,25 +123,28 @@ var ListenersController = {
 				      		session.listeners.add(listener);
 				      		//EFETUA COMMIT DA INSERÇÃO
 				      		session.save(function(error, s){
-				      			if(error){sails.log.error('Este Listener já está cadastrado na sessão ['+error[0].err+']');}else
+				      			if(error){sails.log.error('Este Listener já está cadastrado na sessão ['+error[0].err+']');}
+				      			else{
 				      				sails.log.debug('Registro de um novo listener na sessão');
+				      			}
 							});
+
 							//INSERE OUVINTE A SALA COM O NOME DA SESSÃO      
-							sails.sockets.join(req.socket, session.name);
+							sails.sockets.join(req.socket, session.key);
 							//sails.log.debug(JSON.stringify('ROOOOOMS: '+sails.sockets.socketRooms(req.socket)));
 							
 							//ENVIA MENSAGEM DE BOAS VINDAS
-							sails.sockets.broadcast(session.name, 'welcome-message', 'Seja bem vindo a palestra '+session.name);
+							sails.sockets.broadcast(session.key, 'welcome-message', 'Seja bem vindo a palestra '+session.key);
 
 					        //UPDATE NO STATUS DE LOGIN DO MODELO LISTENER
-				            Listener.update({email:listener_email},{online:true}).exec(function update(err,updated){
+				            Listener.update({email:listener_email}, {online:true}).exec(function update(err,updated){
 				                if(err){return sails.log.error("ERRO "+err);}
 				                //PUBLICA UPDATE DE LISTENER LOGADO 
 				          	    Listener.publishUpdate(updated[0].id,{online:true});
 				          	});
 
 				          	sails.log.debug('###### Ouvinte autenticado com sucesso! #####');
-		            		return res.json({msg:"Seja Bem-vindo!", authorization:"true", listener:listener});
+		            		return res.json({msg:"Seja Bem-vindo!", authorization:"true", listener:listener, session:session.key});
 				      	}
 
 				 	  });
@@ -151,7 +154,8 @@ var ListenersController = {
 	},
 
 	leave: function(req, res) {
-		Listener.findOne({id:req.param('id')}, function findListener(err, listener) {
+
+		Listener.findOne({id:req.param('userId')}, function findListener(err, listener) {
 			if(err){return sails.log.error("ERRO "+err);}
 
 			if(listener.online == true){
@@ -160,10 +164,8 @@ var ListenersController = {
 	                //Publica logout
 	          	    Listener.publishUpdate(updated[0].id,{online:false});
 	          	    //Deixa a sala (Deixa a sessão)
-	          	    sails.sockets.leave(req.socket, req.session.current_session.name);
+	          	    sails.sockets.leave(req.socket, req.param('sessionkey'));
 	          	    //Cancela assinatura para receber atualizações de instâncias do modelo Listener
-	          	    Listener.unsubscribe (req.socket, updated[0]);
-	          	    sails.log.debug('Rooms: '+ JSON.stringify(sails.sockets.rooms()));
           		});
           		sails.log.debug('###### Ouvinte deixando a sessão #####');
           		return res.json({msg:"Bye!", authorization:"false"});

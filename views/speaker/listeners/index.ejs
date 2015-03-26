@@ -28,6 +28,7 @@
 <br>
 
 <div id="submit-signout">
+	<input type="text" id="sessionName" placeHolder="Session Name">
 	<input type="text" id="user_id" placeHolder="ID User">
 	<button id='signout'>Sign out!</button>
 </div>
@@ -41,7 +42,7 @@
 
 <div id="submit-message">
 	<span id="room_id"><%= req.session.current_session.id %></span> 
-	<span id="room_name"><%= req.session.current_session.name %></span><br>
+	<span id="room_key"><%= req.session.current_session.key %></span><br>
 	<input type="text" id="message" placeHolder="Doubt Description">
 	<button id='sendMessage'>Send Message from server to client</button>
 </div>

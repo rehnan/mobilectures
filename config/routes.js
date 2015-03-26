@@ -208,7 +208,7 @@ module.exports.routes = {
         action: 'join'
     },
 
-    'GET /speaker/listeners/leave/:id':{
+    'POST /speaker/listeners/leave':{
         controller: 'ListenersController',
         action: 'leave'
     },

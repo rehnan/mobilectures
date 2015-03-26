@@ -79,8 +79,9 @@ $(document).ready(function() {
 
   //Method socket para deslogar
   $('#signout').click(function(){
+      var session_key = $('#submit-signout').find('input[id="sessionKey"]').val();
       var user_id = $('#submit-signout').find('input[id="user_id"]').val();
-      socket.get('/speaker/listeners/leave/'+user_id, function (data, jwres){
+      socket.post('/speaker/listeners/leave', {sessionkey:session_key, userId:user_id}, function (data, jwres){
         //Enviar alguma resposta ao usuário 
       });
   });
@@ -115,13 +116,13 @@ $(document).ready(function() {
    //Method to send message from server to client
   $('#sendMessage').click(function(){
       var message = $('#submit-message').find('input[id="message"]').val().trim();;
-      var room_name = $('#room_name').text().trim();
-      alert(message+' '+room_name);
+      var room_key = $('#room_key').text().trim();
+      alert(message+' '+room_key);
       
       $.ajax({ 
         type: "POST", 
         url: '/speaker/listeners/message', 
-        data: {room: room_name, message:message}, 
+        data: {room: room_key, message:message}, 
         success: function(response){ 
            alert('Message sent!');
         }
