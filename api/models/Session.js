@@ -17,7 +17,8 @@ module.exports = {
 		key: {
 			type: 'string',
 			required: true,
-			minLength: 6
+			minLength: 6,
+      unique: true
 		},
 
 		description: {
@@ -36,8 +37,8 @@ module.exports = {
     },
 
     //Tem uma coleção de ouvintes (listeners) participantes conectados
-    ouvintes:{
-      collection:'listeners', //Referente ao modelo Listeners
+    listeners:{
+      collection:'listener', //Referente ao modelo Listeners
       via: 'participants' //Relação estabelecida via atributo owners localizado no modelo Listeners 
     }
 

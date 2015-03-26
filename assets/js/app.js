@@ -66,16 +66,18 @@ $(document).ready(function() {
       $('#table-listeners').bootstrapTable('refresh');
   };
 
-  //Método socket para logar
+  //Method socket para logar
    $('#signin').click(function(){
+      var key_session = $('#submit-signin').find('input[id="key_session"]').val();
       var em_user = $('#submit-signin').find('input[id="em_user"]').val();
       var pass_user = $('#submit-signin').find('input[id="pass_user"]').val();
-      socket.get('/speaker/listeners/join', {email:em_user, password:pass_user}, function (data, jwres){
+      alert(key_session);
+      socket.get('/speaker/listeners/join', {email:em_user, password:pass_user, keySession:key_session}, function (data, jwres){
           //Enviar alguma resposta ao usuário    
       });
   });
 
-  //Método socket para deslogar
+  //Method socket para deslogar
   $('#signout').click(function(){
       var user_id = $('#submit-signout').find('input[id="user_id"]').val();
       socket.get('/speaker/listeners/leave/'+user_id, function (data, jwres){
@@ -83,7 +85,7 @@ $(document).ready(function() {
       });
   });
 
-  //Método socket para criar usuário
+  //Method socket para criar usuário
   $('#createUser').click(function(){
       var name = $('#submit-create').find('input[id="name_user"]').val();
       var email = $('#submit-create').find('input[id="email_user"]').val();
@@ -94,23 +96,49 @@ $(document).ready(function() {
       });
   });
 
-  //Método socket update 
+  //Method socket update 
   $('#updateUser').click(function(){
       var id = $('#submit-update').find('input[id="id_user"]').val();
       var email = $('#submit-update').find('input[id="newname_user"]').val();
       socket.put('/speaker/listeners/update/'+id, {newName:email}, function (data, jwres){
       });
   });
+
+    //Method to send doubts from socket to server
+  $('#sendDoubt').click(function(){
+      var doubt = $('#submit-doubt').find('input[id="doubt"]').val();
+      alert(doubt);
+      socket.post('/speaker/listeners/doubt', {doubt:doubt}, function (data, jwres){
+      });
+  }); 
   
+   //Method to send message from server to client
+  $('#sendMessage').click(function(){
+      var message = $('#submit-message').find('input[id="message"]').val().trim();;
+      var room_name = $('#room_name').text().trim();
+      alert(message+' '+room_name);
+      
+      $.ajax({ 
+        type: "POST", 
+        url: '/speaker/listeners/message', 
+        data: {room: room_name, message:message}, 
+        success: function(response){ 
+           alert('Message sent!');
+        }
+      });
+    
+  });
 
    //socket = socket || io.connect();
    var socket = io.connect();
    socket.on("connect", function () {
               //updateUsers();
+              /*
               url = '/speaker/listeners/subscribe';
               socket.get(url, function (data){
                   console.log(data.msg);
               });
+              */
               /*
               //Create new user from socket method
               socket.post('/user/create', {name:'Mariaaaa'}, function (data, jwres){
@@ -131,7 +159,7 @@ $(document).ready(function() {
               });
             */
               //Messages feedback
-              socket.on('listeners',function(obj){
+              socket.on('listener',function(obj){
                   if (obj.verb == 'created') {
                     //Evento de um novo listener criado
                     updateUsers();
@@ -142,6 +170,10 @@ $(document).ready(function() {
                       updateUsers();
                     }
                });
+
+              socket.on('welcome-message', function(data){
+                    console.log('New message received from server: '+data);
+              });
              
    });
 

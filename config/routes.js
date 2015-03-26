@@ -197,11 +197,12 @@ module.exports.routes = {
       action: 'destroy'
     },
 
+    /*
     'GET /speaker/listeners/subscribe': {
       controller: 'ListenersController',
       action: 'subscribe'
     },
-
+    */
     'GET /speaker/listeners/join':{
         controller: 'ListenersController',
         action: 'join'
@@ -212,5 +213,15 @@ module.exports.routes = {
         action: 'leave'
     },
 
+    //Está ação deve estar no controller DoubtsController
+    'POST /speaker/listeners/doubt':{
+        controller: 'ListenersController',
+        action: 'doubtReceived'
+    },
+
+    'POST /speaker/listeners/message':{
+        controller: 'ListenersController',
+        action: 'sendMessage'
+    }
     //########################################
 };

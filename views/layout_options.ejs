@@ -43,6 +43,7 @@
     <h4><center>
       <%= i18n("msg_hello") %>, <span id="id_current_user"><%= req.session.passport.user.name %></span>. <%= i18n("msg_welcome") %> 
       <p> Sessão Selecionada: <%= (req.session.current_session != null) ? req.session.current_session.name : 'Por favor, selecione uma sessão'  %></p>
+      <p> Chave da sessão: <%= (req.session.current_session != null) ? req.session.current_session.key : 'Por favor, selecione uma sessão'  %></p>
     </center></h4>
   </div>
   <div class="container">

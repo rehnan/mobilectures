@@ -41,10 +41,12 @@ module.exports.policies = {
         getAll: 'isAuthenticated', //Ação liberada apenas para requisiçõe HTTP autenticadas
         create: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
         update: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-        subscribe: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
+       /* subscribe: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets*/
         destroy: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
         join: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-        leave: 'onlySocketReq' //Ação liberada apenas para requisiçõe sockets
+        leave: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
+        sendMessage: 'isAuthenticated',
+
     },
 
   /***************************************************************************

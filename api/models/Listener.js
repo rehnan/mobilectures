@@ -31,7 +31,7 @@ module.exports = {
 
     participants: {
            collection:'session', //Referente ao modelo Session
-           via: 'ouvintes'
+           via: 'listeners'
     }
   }
 };
