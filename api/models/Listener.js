@@ -24,9 +24,9 @@ module.exports = {
         required: true 
     },
 
-    online : { 
-        type: 'boolean',
-        defaultsTo: false 
+    logged_room : { 
+        type: 'string',
+        defaultsTo: null 
     },
 
     participants: {

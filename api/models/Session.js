@@ -32,16 +32,21 @@ module.exports = {
 		},
 
 		//Pertence à um proprietário (palestrante)
-		owner:{
+		owner: {
             model:'speakeraccount' //Referente ao modelo SpeakerAccounts
     },
 
     //Tem uma coleção de ouvintes (listeners) participantes conectados
-    listeners:{
+    listeners: {
       collection:'listener', //Referente ao modelo Listeners
       via: 'participants' //Relação estabelecida via atributo owners localizado no modelo Listeners 
-    }
+    },
 
+    //Possui uma coleção de dúvidas
+    doubts: {
+      collection: 'doubt', //Do modelo doubt
+      via: 'belongs' //Relação estabelecida via atributo belongs localizado no modelo Listeners 
+    }
   },
   
   validationMessages: {

@@ -1,0 +1,69 @@
+<div id="sign-in-partial">
+    <form action="dashboard" method="POST" id="form-signin-listener">
+        <div class="form-signin jumbotron" id="submit-signin">
+            <h3 class="form-signin-heading"><%= i18n("msg_label_login") %></h3>
+            <label for="key" class="sr-only"><%= i18n('label_session_key') %></label>
+            <div class="form-group <%= Messages.errors.form.class("key", errors) %>">
+                <input type="key" id="key_session" name="key_session" class="form-control" placeholder="<%= i18n('ph_session_key') %>" novalidate  autofocus="" value="">
+                <%- Messages.errors.form.message("key", errors) %>
+            </div>
+            <label for="email" class="sr-only"><%= i18n('label_email') %></label>
+            <div class="form-group <%= Messages.errors.form.class("email", errors) %>">
+                <input type="email" id="em_user" name="em_user" class="form-control" placeholder="<%= i18n('label_email') %>" novalidate  autofocus="" value="">
+                <%- Messages.errors.form.message("email", errors) %>
+            </div>
+            <label for="password" class="sr-only"><%= i18n('label_password') %></label>
+            <div class="form-group <%= Messages.errors.form.class("password", errors) %>">
+                <input type="password" id="pass_user" name="pass_user" class="form-control" placeholder="<%= i18n('label_password') %>" novalidate value="">
+                <%- Messages.errors.form.message("password", errors) %>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" id="signin" type="button"><%= i18n("label_signin") %></button>
+            <a href="/signup/new" role="button" class="btn btn-lg btn-success btn-block"><%= i18n("label_signup") %></a>
+            <br>
+        </div>
+    </form>
+</div>
+
+<div id="dashboard-partial">
+    <div class="form-signin jumbotron" id="submit-signin">
+        <ul class="navbar-right" id="submit-signout">
+              <li style="list-style-type: none">
+                <button type="button" class="btn btn-danger" id="signout"> <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <%= i18n("label_logout") %>
+                </button>
+              </li>
+        </ul>
+        <br> <center><strong><span id="welcome-msg"></span></strong></center>
+        <br> Listener Account: <strong><span id="listener_email"></span></strong>
+        <br> Session key: <strong><span id="session_key"></span></strong>
+        <br> Session name: <strong><span id="session_name"></span></strong>
+        <br> <br>
+        <div id="content">
+            <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                <li class="active"><a href="#send_doubt" data-toggle="tab">Send Doubt</a></li>
+                <li><a href="#my_doubts" data-toggle="tab">My Doubts</a></li>
+                <li><a href="#msgs_from_server" data-toggle="tab">Messages</a></li>
+            </ul>
+            <div id="my-tab-content" class="tab-content">
+                <div class="tab-pane active" id="send_doubt">
+                    <br>
+                    <div class='form-group'>
+                        <label for='doubt'>Doubt:</label><br>
+                        <textarea class='form-control' name='doubt-description' id="doubt-description" rows='6' style='width: 100%;' placeholder='Doubt description...'></textarea>
+                    </div>
+
+                    <div class='form-group'>
+                        <button type="button" id="sendDoubt" class="btn btn-primary btn-lg btn-block btn-sm">Send</button>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="my_doubts">
+                    <h4>Show my doubts</h4>
+                </div>
+                <div class="tab-pane" id="msgs_from_server">
+                    <br>
+                    <div id="msgs-from-server"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

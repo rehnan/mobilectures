@@ -222,6 +222,17 @@ module.exports.routes = {
     'POST /speaker/listeners/message':{
         controller: 'ListenersController',
         action: 'sendMessage'
+    },
+
+    'GET /speaker/listeners/signin':{
+        controller: 'ListenersController',
+        action: 'signin'
+    },
+
+    'POST /speaker/listeners/dashboard':{
+        controller: 'ListenersController',
+        action: 'dashboard'
     }
+
     //########################################
 };

@@ -1,6 +1,9 @@
 $(document).ready(function() {
   createTableListeners();
 
+  //Ocualtando div dashboard do ouvinte
+  $("#dashboard-partial").hide();
+
   //Abre modal para receber a senha de confirmação para atualização da conta
   $('.submit_profile_update').on('click', function() {
      
@@ -71,18 +74,31 @@ $(document).ready(function() {
       var key_session = $('#submit-signin').find('input[id="key_session"]').val();
       var em_user = $('#submit-signin').find('input[id="em_user"]').val();
       var pass_user = $('#submit-signin').find('input[id="pass_user"]').val();
-      alert(key_session);
-      socket.get('/speaker/listeners/join', {email:em_user, password:pass_user, keySession:key_session}, function (data, jwres){
-          //Enviar alguma resposta ao usuário    
+      
+      socket.get('/speaker/listeners/join', {email:em_user, password:pass_user, keySession:key_session}, function (data, resp){
+          //Enviar alguma resposta ao usuário 
+          if(data.authorization){
+            alert(JSON.stringify(data));
+            $("#listener_email").text(data.listener.email);
+            $("#session_key").text(data.session.key);
+            $("#session_name").text(data.session.name);
+            $("#dashboard-partial").show('slow');
+            $("#sign-in-partial").hide('slow');
+          }
       });
   });
 
+   
   //Method socket para deslogar
   $('#signout').click(function(){
-      var session_key = $('#submit-signout').find('input[id="sessionKey"]').val();
-      var user_id = $('#submit-signout').find('input[id="user_id"]').val();
-      socket.post('/speaker/listeners/leave', {sessionkey:session_key, userId:user_id}, function (data, jwres){
-        //Enviar alguma resposta ao usuário 
+      //Limpando div de mensagens enviadas pelo servidor
+      $("#msgs-from-server").empty();
+      
+      var session_key = $('#session_key').text(); 
+      var listener_email = $('#listener_email').text();
+      socket.post('/speaker/listeners/leave', {session_key:session_key, listener_email:listener_email}, function (data, jwres){
+         $("#dashboard-partial").hide('slow');
+         $("#sign-in-partial").show('slow');
       });
   });
 
@@ -93,7 +109,6 @@ $(document).ready(function() {
       var password = $('#submit-create').find('input[id="password_user"]').val();
 
       socket.post('/speaker/listeners/create', {name:name, email:email, password:password}, function (data, jwres){
-       //Enviar alguma resposta ao usuário 
       });
   });
 
@@ -107,8 +122,7 @@ $(document).ready(function() {
 
     //Method to send doubts from socket to server
   $('#sendDoubt').click(function(){
-      var doubt = $('#submit-doubt').find('input[id="doubt"]').val();
-      alert(doubt);
+      var doubt = $('#doubt-description').val();
       socket.post('/speaker/listeners/doubt', {doubt:doubt}, function (data, jwres){
       });
   }); 
@@ -130,14 +144,22 @@ $(document).ready(function() {
     
   });
 
-   //socket = socket || io.connect();
-   var socket = io.connect();
+   
    socket.on("connect", function () {
               //updateUsers();
               
               url = '/speaker/listeners/subscribe';
               socket.get(url, function (data){
-                  console.log(data.msg);
+                  //console.log(data.msg);
+              });
+
+              socket.on('messages-from-server', function(data){
+                    console.log('From server: '+data);
+                    $("#msgs-from-server").append("<p>Server say: "+data+"</p>");
+              });
+
+              socket.on('welcome-msg', function(data){
+                    $("#welcome-msg").text(data);
               });
               
               /*
@@ -172,19 +194,17 @@ $(document).ready(function() {
                     }
                });
 
-              socket.on('welcome-message', function(data){
-                    console.log('New message received from server: '+data);
-              });
-             
+              
    });
 
-
+  var current_session = null;
   //Método para mudar a imagem de usuário online/offline de acordo com seu status
   function statusChange(value, row) {
-        var status = value === true ? '<img src="/images/icon_user_online.gif" class="img-responsive" alt="Listener online">' : '<img src="/images/icon_user_offline.gif" class="img-responsive" alt="Listener offline">'
+
+        var status = (value !== null && value === current_session.key) ? '<img src="/images/icon_user_online.gif" class="img-responsive" alt="Listener online">' : '<img src="/images/icon_user_offline.gif" class="img-responsive" alt="Listener offline">'
 
         return status;
-    }
+  }
 
     //Gera a lista de ouvintes conectados
   function createTableListeners() {
@@ -199,6 +219,11 @@ $(document).ready(function() {
                     showRefresh: true,
                     minimumCountColumns: 2,
                     clickToSelect: true,
+                    responseHandler: function (res) {
+                        //Recuperando chave de sessão empilhada na resposta de requisição
+                        current_session = res.pop();
+                        return res;
+                    },
                     columns: [{
                         field: 'id',
                         title: 'ID',
@@ -224,7 +249,7 @@ $(document).ready(function() {
                         valign: 'middle',
                         clickToSelect: false,
                     }, {
-                        field: 'online',
+                        field: 'logged_room',
                         title: 'Online',
                         align: 'center',
                         valign: 'middle',

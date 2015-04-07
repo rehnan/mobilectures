@@ -46,7 +46,9 @@ module.exports.policies = {
         join: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
         leave: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
         sendMessage: 'isAuthenticated',
-
+        signin:'isAuthenticated',
+        dashboard:'isAuthenticated',
+        doubtReceived:'onlySocketReq'
     },
 
   /***************************************************************************
