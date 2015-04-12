@@ -31,11 +31,6 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-  /*
-  '/': {
-    view: 'homepage'
-  }
-  */
 
   //Routes Authentication
   '/': {

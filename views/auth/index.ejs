@@ -1,16 +1,21 @@
-<form class="form-signin jumbotron" action="/login" method="POST">
-    <h3 class="form-signin-heading"><%= i18n("msg_label_login") %></h3>
-    <label for="email" class="sr-only"><%= i18n('label_email') %></label>
-    <div class="form-group <%= Messages.errors.form.class("email", errors) %>">
-        <input type="email" id="email" name="email" class="form-control" placeholder="<%= i18n('label_email') %>" novalidate  autofocus="" value="<%= speaker.email %>">
-        <%- Messages.errors.form.message("email", errors) %>
-    </div>
-    <label for="password" class="sr-only"><%= i18n('label_password') %></label>
-    <div class="form-group <%= Messages.errors.form.class("password", errors) %>">
-        <input type="password" id="password" name="password" class="form-control" placeholder="<%= i18n('label_password') %>" novalidate value="<%= speaker.password %>">
-        <%- Messages.errors.form.message("password", errors) %>
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" id="action_login" type="submit"><%= i18n("label_signin") %></button>
-    <a href="/signup/new" role="button" class="btn btn-lg btn-success btn-block"><%= i18n("label_signup") %></a>
-    <br>
+<form class="form-signin jumbotron" action="/login" method="POST" novalidate>
+  
+  <h3 class="form-signin-heading"><%= i18n("speaker.login.index.header") %></h3>
+  
+  <label for="email" class="sr-only"><%= i18n('global.label.email') %></label>
+  <div class="form-group">
+    <input type="email" id="email" name="email" class="form-control" 
+           placeholder="<%= i18n('global.input.email.placeholder') %>" autofocus="">
+  </div>
+
+  <label for="password" class="sr-only"><%= i18n('global.label.pwd') %></label>
+  <div class="form-group">
+    <input type="password" id="password" name="password" class="form-control"
+           placeholder="<%= i18n('global.input.pwd.placeholder') %>" >
+  </div>
+
+  <button class="btn btn-lg btn-primary btn-block" id="action_login"
+          type="submit"><%= i18n("speaker.login.submit") %></button>
+  <a href="/signup/new" role="button" 
+     class="btn btn-lg btn-success btn-block"><%= i18n("speaker.login.sig_nup") %></a>
 </form>

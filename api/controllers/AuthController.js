@@ -9,7 +9,7 @@ var passport = require('passport');
 
 module.exports = {
 
-   /**
+  /**
    * `AuthController.login()`
    */
   root: function(req, res) {
@@ -20,57 +20,46 @@ module.exports = {
    * `AuthController.login()`
    */
   index: function (req, res) {
-      application.title = req.__('title_login');
-      if (req.session.passport.user) {
-              return res.redirect('/speaker');
-      }
-      return res.view({layout: 'layout_login',  locals:{errors:{}, speaker: SpeakerAccount.new}});
+     application.title = req.__('speaker.login.title');
+
+     if (req.session.passport.user) {
+        return res.redirect('/speaker');
+     }
+
+     return res.view({layout: 'layouts/login',
+                     locals:{errors:{}, speaker: SpeakerAccount.new}});
   },
 
   /**
    * `AuthController.signin()`
    */
   signin: function (req, res) {
-      //Validação de campos válidos
-      var errors_messages = {};
-      Messages.signin.clear_errors(errors_messages);
-      Messages.signin.push_error(req.param('email'), 'email', 'Por favor, informe seu email!', errors_messages);
-      Messages.signin.push_error(req.param('password'), 'password', 'Por favor, informe sua senha!', errors_messages);
+     application.title = req.__('speaker.login.title');
 
-      //Verifica se há algum erro antes de iniciar validação da autenticação
-     if(Object.keys(errors_messages).length > 0){
+     passport.authenticate('local', function(err, user, info) {
+        // Se houver erro renderiza a view login com a mensagem de erro
+        if(err) {
+           sails.log.error(user + ' ########### Login Error ########' + JSON.stringify(info));
+           return res.view('auth/index', {layout: 'layouts/login'});
+        }
 
-        return res.view('auth/index', {layout: 'layout_login', locals: {errors: errors_messages, speaker:req.params.all()}});
-     
-      }else{
-            //sails.log.debug('Entrou na action signin');
-            passport.authenticate('local', function(err, user, info)
-            {
-                //Se houver erro renderiza a view login com a mensagem de erro
-                if(err){
-                  return res.view('auth/index', {layout: 'layout_login', locals: {errors:{},   speaker:req.params.all()}});
-                }
+        //Se houver usuário inexistente renderiza a view login com a mensagem de erro
+        if (!user){
+           sails.log.error(user + ' ########### User Error ########' + JSON.stringify(info));
+           req.flash('error', req.__('global.login.error'));
+           return res.view('auth/index', {layout: 'layouts/login'});
+        }
 
-                //Se houver usuário inexistente renderiza a view login com a mensagem de erro
-                if (!user){
-                  sails.log.error(user+' ########### User Error ########'+JSON.stringify(info));
-                  //info.message = (info.message === 'Missing credentials') ? 'Por favor, informe seu email e sua senha!' : info.message; 
-                  req.flash('error', info.message);
-                  return res.view('auth/index', {layout: 'layout_login', locals: {errors:{}, speaker:req.params.all()}});
-                }
-
-                req.logIn(user, function(err) {
-                      sails.log.debug('########### Login Efetuado ######## '+user);
-                      if (err){
-                          return res.view('auth/index', {layout: 'layout_login', locals: {errors:{}, speaker:req.params.all()}});
-                      }
-                      req.flash('success', 'Login efetuado com sucesso!');
-                      return res.redirect('/speaker');
-                });
-            })(req, res);
-          }//End else
-      },
-  
+        req.logIn(user, function(err) {
+           sails.log.debug('########### Logged in ######## ' + user);
+           if (err) {
+              return res.view('auth/index', {layout: 'layouts/login'});
+           }
+           req.flash('success', req.__('global.login.success'));
+           return res.redirect('/speaker');
+        });
+     })(req, res);
+  },
 
   /**
    * `AuthController.signup()`
