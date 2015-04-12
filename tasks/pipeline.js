@@ -8,40 +8,33 @@
  * for matching multiple files.)
  */
 
-
-
 // CSS files to inject in order
 //
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
-  'bootstrap/dist/css/bootstrap.css',
-  'bootstrap/dist/css/bootstrap.min.css',
-  'bootstrap/dist/css/bootstrap-table.css',
+  'bootstrap/css/bootstrap.min.css',
+  'bootstrap/css/bootstrap-theme.min.css',
   'styles/**/*.css'
 ];
-
 
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
-  
-  //Load Jquery
-  'jquery/dist/jquery.js',
-  'jquery/dist/jquery.min.js', 
-  //Load Bootstrap
-  'bootstrap/dist/js/bootstrap.js',
-  'bootstrap/dist/js/bootstrap.min.js',
-  'bootstrap/dist/js/bootstrap-table.js',
+
   // Load sails.io before everything else
   'js/dependencies/sails.io.js',
+  'js/dependencies/jquery.2.1.3.min.js',
+  'bootstrap/js/bootstrap.min.js',
+  'js/dependencies/socket.io.connection.js',
+  'js/app.js',
 
   // Dependencies like jQuery, or Angular are brought in here
-  'js/dependencies/**/*.js',
+  // 'js/dependencies/**/*.js',
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
-  'js/**/*.js'
+  // 'js/**/*.js'
 ];
 
 
@@ -57,7 +50,6 @@ var jsFilesToInject = [
 var templateFilesToInject = [
   'templates/**/*.html'
 ];
-
 
 
 // Prefix relative paths to source files so they point to the proper locations
