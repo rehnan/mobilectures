@@ -15,6 +15,7 @@
 var cssFilesToInject = [
   'bootstrap/css/bootstrap.min.css',
   'bootstrap/css/bootstrap-theme.min.css',
+  'bootstrap/css/bootstrap-table.min.css',
   'styles/**/*.css'
 ];
 
@@ -26,7 +27,10 @@ var jsFilesToInject = [
   'js/dependencies/sails.io.js',
   'js/dependencies/jquery.2.1.3.min.js',
   'bootstrap/js/bootstrap.min.js',
+  'bootstrap/js/bootstrap-table.min.js',
+  'bootstrap/js/bootstrap-dialog.min.js',
   'js/dependencies/socket.io.connection.js',
+  'js/speaker_profile.js',
   'js/app.js',
 
   // Dependencies like jQuery, or Angular are brought in here

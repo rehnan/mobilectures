@@ -19,56 +19,56 @@
 
 module.exports.policies = {
 
-  /***************************************************************************
-  *                                                                          *
-  * Default policy for all controllers and actions (`true` allows public     *
-  * access)                                                                  *
-  *                                                                          *
-  ***************************************************************************/
+   /***************************************************************************
+    *                                                                          *
+    * Default policy for all controllers and actions (`true` allows public     *
+    * access)                                                                  *
+    *                                                                          *
+    ***************************************************************************/
    '*' : 'localize' ,
    '*':  'flash', //Disponibilzando o uso do flash para todos os controllers
-  // '*': true,
- //Política de autenticação inclusa em /policies/isAuthenticated
-  '*': 'isAuthenticated',
-    //Lista branca das ações do controller AuthController
-    'auth': {
-        //signin:['flash'], 
-        '*': true
-    },
+   // '*': true,
+   //Política de autenticação inclusa em /policies/isAuthenticated
+   '*': 'isAuthenticated',
 
-     //Lista branca das ações do controller AuthController
-    listeners: {
-        getAll: 'isAuthenticated', //Ação liberada apenas para requisiçõe HTTP autenticadas
-        create: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-        update: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-        subscribe: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-        destroy: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-        join: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-        leave: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-        sendMessage: 'isAuthenticated',
-        signin:'isAuthenticated',
-        dashboard:'isAuthenticated',
-        doubtReceived:'onlySocketReq'
-    },
+   //Lista branca das ações do controller AuthController
+   'auth': {
+      '*': true
+   },
 
-  /***************************************************************************
-  *                                                                          *
-  * Here's an example of mapping some policies to run before a controller    *
-  * and its actions                                                          *
-  *                                                                          *
-  ***************************************************************************/
-	// RabbitController: {
+   //Lista branca das ações do controller AuthController
+   listeners: {
+      getAll: 'isAuthenticated', //Ação liberada apenas para requisiçõe HTTP autenticadas
+      create: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
+      update: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
+      subscribe: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
+      destroy: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
+      join: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
+      leave: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
+      sendMessage: 'isAuthenticated',
+      signin:'isAuthenticated',
+      dashboard:'isAuthenticated',
+      doubtReceived:'onlySocketReq'
+   },
 
-		// Apply the `false` policy as the default for all of RabbitController's actions
-		// (`false` prevents all access, which ensures that nothing bad happens to our rabbits)
-		// '*': false,
+   /***************************************************************************
+    *                                                                          *
+    * Here's an example of mapping some policies to run before a controller    *
+    * and its actions                                                          *
+    *                                                                          *
+    ***************************************************************************/
+   // RabbitController: {
 
-		// For the action `nurture`, apply the 'isRabbitMother' policy
-		// (this overrides `false` above)
-		// nurture	: 'isRabbitMother',
+   // Apply the `false` policy as the default for all of RabbitController's actions
+   // (`false` prevents all access, which ensures that nothing bad happens to our rabbits)
+   // '*': false,
 
-		// Apply the `isNiceToAnimals` AND `hasRabbitFood` policies
-		// before letting any users feed our rabbits
-		// feed : ['isNiceToAnimals', 'hasRabbitFood']
-	// }
+   // For the action `nurture`, apply the 'isRabbitMother' policy
+   // (this overrides `false` above)
+   // nurture	: 'isRabbitMother',
+
+   // Apply the `isNiceToAnimals` AND `hasRabbitFood` policies
+   // before letting any users feed our rabbits
+   // feed : ['isNiceToAnimals', 'hasRabbitFood']
+   // }
 };

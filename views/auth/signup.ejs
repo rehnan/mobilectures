@@ -1,26 +1,39 @@
+<form class="form-signup jumbotron" action="/signup" method="POST" novalidate>
+  
+  <h2 class="form-signin-heading"><%= i18n("speaker.sign_up.header") %></h2>
+  
+  <div class="form-group input-group-lg  <%= Messages.errors.form.class("name", errors) %>">
+    <input type="text" name="name" class="form-control" id="name" 
+                       placeholder="<%= i18n('speaker.sign_up.input.name.placeholder') %>"
+                       value="<%= speaker.name %>" autofocus>
+     <%- Messages.errors.form.message("name", errors) %>
+  </div>
 
-    <form class="form-signup jumbotron" action="/signup" method="POST">
-        <h2 class="form-signin-heading"><%= i18n("msg_label_signup") %></h2>
-        <div class="form-group input-group-lg  <%= Messages.errors.form.class("name", errors) %>">
-             <input type="text" name="name" class="form-control" id="name" placeholder="<%= i18n('label_name') %>" value="<%= speaker.name %>" autofocus>
-             <%- Messages.errors.form.message("name", errors) %>
-        </div>
+  <br/>
+  <div class="form-group input-group-lg  <%= Messages.errors.form.class("email", errors) %>">
+    <input type="text" name="email" class="form-control" id="email"
+           placeholder="<%= i18n('global.input.email.placeholder') %>"
+           value="<%= speaker.email %>">
 
-        <br/>
-        <div class="form-group input-group-lg  <%= Messages.errors.form.class("email", errors) %>">
-             <input type="text" name="email" class="form-control" id="email" placeholder="<%= i18n('label_email') %>" value="<%= speaker.email %>">
-             <%- Messages.errors.form.message("email", errors) %>
-        </div>
+    <%- Messages.errors.form.message("email", errors) %>
+  </div>
 
-        <br/>
-        <div class="form-group input-group-lg  <%= Messages.errors.form.class("password", errors) %>">
-            <input type="password" name="password" class="form-control" id="password" placeholder="<%= i18n('label_password') %>" value="<%= speaker.password %>">
-            <%- Messages.errors.form.message("password", errors) %>
-        </div>
-        
-        <br/>
-        <input type="submit" value="<%= i18n('label_register') %>" class="btn btn-lg btn-primary btn-block"/> <br>
-        <a href="/login" class="pull-right need-help"> <%= i18n("back_to_login") %> </a><span class="clearfix"></span>
+  <br/>
+  <div class="form-group input-group-lg  <%= Messages.errors.form.class("password", errors) %>">
+    <input type="password" name="password" class="form-control" id="password"
+           placeholder="<%= i18n('global.input.pwd.placeholder') %>"
+           value="<%= speaker.password %>">
 
-        <br>
-    </form>
+    <%- Messages.errors.form.message("password", errors) %>
+  </div>
+
+  <br/>
+  <input type="submit" value="<%= i18n('speaker.sign_up.submit') %>"
+        class="btn btn-lg btn-primary btn-block"/> <br>
+
+  <a href="/login" class="pull-right need-help">
+    <%= i18n("speaker.sign_up.back") %>
+  </a>
+
+  <br>
+</form>

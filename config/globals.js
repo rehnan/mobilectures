@@ -61,7 +61,7 @@ module.exports.globals = {
 
 	// models: true
   
-  title: 'Título do Projeto',
+  title: 'Mobile Lectures',
   message: undefined,
   current_session: undefined,
 };

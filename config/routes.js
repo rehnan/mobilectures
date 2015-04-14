@@ -64,41 +64,39 @@ module.exports.routes = {
   },
 
 
-  //Route to renderize the index (inicial page) of application
+  // Route to renderize the index (inicial page) of application
   'GET /speaker':{
       controller: 'SpeakerController',
       action: 'index'
   },
 
-  //Route to renderize form to new session
-  'GET /speaker/show/:id/profile':{
+  /*
+   * Routes to change current user perfil
+   */
+  'GET /speaker/:id/profile':{
       controller: 'SpeakerController',
-      action: 'getFormProfile'
+      action: 'editProfile'
   },
-
-  //Route to renderize form to new session
-  'POST /speaker/show/:id/profile':{
+  'POST /speaker/:id/profile':{
       controller: 'SpeakerController',
       action: 'updateProfile'
   },
-
-  //Route to compare password
-  'POST /speaker/compare':{
+  'GET /speaker/:id/password':{
       controller: 'SpeakerController',
-      action: 'comparePassword'
+      action: 'editPassword'
   },
-
-  //Route to compare password
-  'POST /speaker/show/:id/password':{
+  'POST /speaker/:id/password':{
       controller: 'SpeakerController',
       action: 'updatePassword'
   },
 
-  //Route to compare password
-  'GET /speaker/show/:id/password':{
-      controller: 'SpeakerController',
-      action: 'getFormPassword'
-  },
+
+
+  //Route to renderize form to new session
+
+
+
+
     
     //################################## Begin SESSIONS Routes
     //Route to get all Sessions

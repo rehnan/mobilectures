@@ -1,16 +1,49 @@
 {
+  "global.label.name": "Nome",
+  "global.input.name.placeholder": "Digite seu nome",
   "global.label.email": "Email",
   "global.input.email.placeholder": "Digite seu email",
   "global.label.pwd": "Senha",
   "global.input.pwd.placeholder": "Digite sua senha",
-  
+  "global.label.current_pwd": "Senha atual",
+  "global.input.current_pwd.placeholder": "Digite sua senha atual",
+  "global.label.new_pwd": "Nova senha",
+  "global.input.new_pwd.placeholder": "Digite sua nova senha",
+  "global.label.confirm_pwd": "Confirme sua senha",
+  "global.input.confirm_pwd.placeholder": "Digite sua nova senha novamente",
+
   "global.login.error":  "Usuário e/ou senha incorretos!",
   "global.login.success":  "Login realizado com sucesso!",
+  "global.login.link.sing_out":  "Sair",
+
+  "global.form.submit.update":  "Salvar",
+  
+  "global.flash.update.success":  "Dados atualizados com sucesso!",
+  "global.flash.form.error":  "Existe dados incorretos!",
 
   "speaker.login.title": "Entrar no sistema",
   "speaker.login.index.header":  "Por favor, entre com seu login!",
   "speaker.login.submit":  "Fazer login",
-  "speaker.login.sig_nup":  "Resgistrar-se",
+  "speaker.login.btn.sign_up":  "Resgistrar-se",
+
+  "speaker.sign_up.title": "Registre-se no sistema",
+  "speaker.sign_up.header": "Registre-se no sistema",
+  "speaker.sign_up.input.name.placeholder": "Digite seu nome",
+  "speaker.sign_up.submit": "Registrar-se",
+  "speaker.sign_up.back": "Voltar para login",
+
+  "speaker.profile.title": "Meu perfil",
+   
+  "speaker.dashboard.link.home": "Painel de Opções",
+  "speaker.dashboard.link.sessions": "Gerenciar Sessões",
+  "speaker.dashboard.link.profile": "Meu Perfil",
+
+  "speaker.profile.link.update_profile": "Atualizar Perfil",
+  "speaker.profile.link.update_password": "Atualizar Senha",
+
+  "validator.messages.empty_field": "Este campo não deve ser vazio!",
+  "validator.messages.wrong_password": "Senha incorreta",
+  "validator.messages.password_match": "Senha não confere",
 
 
   "label_signin": "Fazer Login",
