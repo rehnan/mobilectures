@@ -22,210 +22,203 @@
 
 module.exports.routes = {
 
-  /***************************************************************************
-  *                                                                          *
-  * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
-  * etc. depending on your default view engine) your home page.              *
-  *                                                                          *
-  * (Alternatively, remove this and add an `index.html` file in your         *
-  * `assets` directory)                                                      *
-  *                                                                          *
-  ***************************************************************************/
+   /***************************************************************************
+    *                                                                          *
+    * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
+    * etc. depending on your default view engine) your home page.              *
+    *                                                                          *
+    * (Alternatively, remove this and add an `index.html` file in your         *
+    * `assets` directory)                                                      *
+    *                                                                          *
+    ***************************************************************************/
 
-  //Routes Authentication
-  '/': {
-    controller: 'AuthController',
-    action: 'root'
-  },
+   //Routes Authentication
+   '/': {
+      controller: 'AuthController',
+      action: 'root'
+   },
 
-  'GET /login': {
-    controller: 'AuthController',
-    action: 'index'
-  },
+   'GET /login': {
+      controller: 'AuthController',
+      action: 'index'
+   },
 
-  'POST /login': {
-    controller: 'AuthController',
-    action: 'signin'
-  },
+   'POST /login': {
+      controller: 'AuthController',
+      action: 'signin'
+   },
 
-  'GET /signup/new': {
-    controller: 'AuthController',
-    action: 'signup'
-  },
+   'GET /signup/new': {
+      controller: 'AuthController',
+      action: 'signup'
+   },
 
-  'POST /signup': {
-    controller: 'AuthController',
-    action: 'create'
-  },
+   'POST /signup': {
+      controller: 'AuthController',
+      action: 'create'
+   },
 
-  '/logout': {
-    controller: 'AuthController',
-    action: 'logout'
-  },
+   '/logout': {
+      controller: 'AuthController',
+      action: 'logout'
+   },
 
 
-  // Route to renderize the index (inicial page) of application
-  'GET /speaker':{
+   // Route to renderize the index (inicial page) of application
+   'GET /speaker':{
       controller: 'SpeakerController',
       action: 'index'
-  },
+   },
 
-  /*
-   * Routes to change current user perfil
-   */
-  'GET /speaker/:id/profile':{
+   /*
+    * Routes to change current user perfil
+    */
+   'GET /speaker/:id/profile':{
       controller: 'SpeakerController',
       action: 'editProfile'
-  },
-  'POST /speaker/:id/profile':{
+   },
+   'POST /speaker/:id/profile':{
       controller: 'SpeakerController',
       action: 'updateProfile'
-  },
-  'GET /speaker/:id/password':{
+   },
+   'GET /speaker/:id/password':{
       controller: 'SpeakerController',
       action: 'editPassword'
-  },
-  'POST /speaker/:id/password':{
+   },
+   'POST /speaker/:id/password':{
       controller: 'SpeakerController',
       action: 'updatePassword'
-  },
+   },
 
+   /*
+    * ### Begin Sessions Routes
+    */  
+   'GET /speaker/sessions':{
+      controller: 'SessionController',
+      action: 'index'
+   },
 
+   //Route to renderize form to new session
+   'GET /speaker/sessions/new':{
+      controller: 'SessionController',
+      action: 'new'
+   },
 
-  //Route to renderize form to new session
-
-
-
-
-    
-    //################################## Begin SESSIONS Routes
-    //Route to get all Sessions
-    'GET /speaker/sessions':{
-        controller: 'SessionController',
-        action: 'index'
-    },
-
-    //Route to renderize form to new session
-    'GET /speaker/sessions/new':{
-        controller: 'SessionController',
-        action: 'new'
-    },
-
-    //Route to action create the new session
-    'POST /speaker/sessions':{
-        controller: 'SessionController',
-        action: 'create'
-    },
-
-    //Route to renderize edit form some one session
-    'GET /speaker/sessions/edit/:id':{
-        controller: 'SessionController',
-        action: 'edit'
-    },
-
-    //Route to action update the session in edit
-    'POST /speaker/sessions/:id':{
-        controller: 'SessionController',
-        action: 'update'
-    },
-
-    //Route to delete some one session
-    'GET /speaker/sessions/delete/:id':{
-        controller: 'SessionController',
-        action: 'destroy'
-    },
-
-    //Route to select some one session
-    'GET /speaker/sessions/:id':{
-        controller: 'SessionController',
-        action: 'select'
-    },
-
-    //################################## End SESSIONS Routes
-
-
+   //Route to select some one session
+   'GET /speaker/sessions/:id':{
+      controller: 'SessionController',
+      action: 'show'
+   },
    
-    //Rest to session quiz
-    'GET /speaker/sessions/:id/quiz':{
-        controller: 'QuizController',
-        action: 'show'
-    },
+   //Route to action create the new session
+   'POST /speaker/sessions':{
+      controller: 'SessionController',
+      action: 'create'
+   },
 
-    //Rest to session doubts
-    'GET /speaker/sessions/:id/doubts':{
-        controller: 'DoubtsController',
-        action: 'show'
-    },
+   //Route to renderize edit form some one session
+   'GET /speaker/sessions/edit/:id':{
+      controller: 'SessionController',
+      action: 'edit'
+   },
 
-    //Rest to session polls
-    'GET /speaker/sessions/:id/polls':{
-        controller: 'PollsController',
-        action: 'show'
-    },
+   //Route to action update the session in edit
+   'POST /speaker/sessions/:id':{
+      controller: 'SessionController',
+      action: 'update'
+   },
 
-    //######################################## REST TO LISTENERS
+   //Route to delete some one session
+   'GET /speaker/sessions/delete/:id':{
+      controller: 'SessionController',
+      action: 'destroy'
+   },
 
-    'GET /speaker/sessions/:id/listeners':{
-        controller: 'ListenersController',
-        action: 'index'
-    },
+   //################################## End SESSIONS Routes
 
-    'GET /speaker/listeners/find': {
+
+
+   //Rest to session quiz
+   'GET /speaker/sessions/:id/quiz':{
+      controller: 'QuizController',
+      action: 'show'
+   },
+
+   //Rest to session doubts
+   'GET /speaker/sessions/:id/doubts':{
+      controller: 'DoubtsController',
+      action: 'show'
+   },
+
+   //Rest to session polls
+   'GET /speaker/sessions/:id/polls':{
+      controller: 'PollsController',
+      action: 'show'
+   },
+
+   //######################################## REST TO LISTENERS
+
+   'GET /speaker/sessions/:id/listeners':{
+      controller: 'ListenersController',
+      action: 'index'
+   },
+
+   'GET /speaker/listeners/find': {
       controller: 'ListenersController',
       action: 'getAll'
-    },
+   },
 
-    'POST /speaker/listeners/create': {
+   'POST /speaker/listeners/create': {
       controller: 'ListenersController',
       action: 'create'
-    },
+   },
 
-    'PUT /speaker/listeners/update/:id': {
+   'PUT /speaker/listeners/update/:id': {
       controller: 'ListenersController',
       action: 'update'
-    },
+   },
 
-    'DELETE /speaker/listeners/delete/:id': {
+   'DELETE /speaker/listeners/delete/:id': {
       controller: 'ListenersController',
       action: 'destroy'
-    },
+   },
 
-    
-    'GET /speaker/listeners/subscribe': {
+
+   'GET /speaker/listeners/subscribe': {
       controller: 'ListenersController',
       action: 'subscribe'
-    },
-    
-    'GET /speaker/listeners/join':{
-        controller: 'ListenersController',
-        action: 'join'
-    },
+   },
 
-    'POST /speaker/listeners/leave':{
-        controller: 'ListenersController',
-        action: 'leave'
-    },
+   'GET /speaker/listeners/join':{
+      controller: 'ListenersController',
+      action: 'join'
+   },
 
-    //Está ação deve estar no controller DoubtsController
-    'POST /speaker/listeners/doubt':{
-        controller: 'ListenersController',
-        action: 'doubtReceived'
-    },
+   'POST /speaker/listeners/leave':{
+      controller: 'ListenersController',
+      action: 'leave'
+   },
 
-    'POST /speaker/listeners/message':{
-        controller: 'ListenersController',
-        action: 'sendMessage'
-    },
+   //Está ação deve estar no controller DoubtsController
+   'POST /speaker/listeners/doubt':{
+      controller: 'ListenersController',
+      action: 'doubtReceived'
+   },
 
-    'GET /speaker/listeners/signin':{
-        controller: 'ListenersController',
-        action: 'signin'
-    },
+   'POST /speaker/listeners/message':{
+      controller: 'ListenersController',
+      action: 'sendMessage'
+   },
 
-    'POST /speaker/listeners/dashboard':{
-        controller: 'ListenersController',
-        action: 'dashboard'
-    }
+   'GET /speaker/listeners/signin':{
+      controller: 'ListenersController',
+      action: 'signin'
+   },
 
-    //########################################
+   'POST /speaker/listeners/dashboard':{
+      controller: 'ListenersController',
+      action: 'dashboard'
+   }
+
+   //########################################
 };

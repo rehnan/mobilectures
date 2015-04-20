@@ -74,34 +74,22 @@ module.exports = {
     * Thinking about extract to plugin
     */
    createIfValid: function (params, callback) {
-      SpeakerAccount.validate(params, function validadeAccount(errors) {
+      SpeakerAccount.validate(params, function (errors) {
          sails.log.debug('Speaker Errors ==> ' + JSON.stringify(errors));
 
-         SpeakerAccount.findOne({email: params.email }, function (unique_err, unique_user) {
-            if (unique_err) {return next(unique_err);}
-
-            if (unique_user) {
-               if (errors == undefined) { 
-                  errors = {"error":"E_VALIDATION","status":400,"summary":"1 attribute is invalid","model":"SpeakerAccount"}  
-               }
-               if (errors['invalidAttributes'] == undefined) { errors['invalidAttributes'] = {} }  
-               if (errors['invalidAttributes']['email'] == undefined) {errors['invalidAttributes']['email'] = Array() }
-
-               errors['invalidAttributes']['email'].push({"rule":"unique","message":"\"unique\" attribute should be unique: ''"});
-
-               if (errors['ValidationError'] == undefined) { errors['ValidationError'] = errors['invalidAttributes'] };
-            }
+         Validator.unique(SpeakerAccount, 'email', params.email, errors, function (errors) {
 
             if (errors) {
-               errors_messages = SailsValidador(SpeakerAccount, errors);
-               sails.log.debug('Speaker Errors ==> ' + JSON.stringify(errors_messages));
-               return callback(errors);
+               pretty_errors = SailsValidador(SpeakerAccount, errors);
+               sails.log.debug('Speaker Errors ==> ' + JSON.stringify(pretty_errors));
+               return callback(pretty_errors);
             }
 
-            SpeakerAccount.create(params, function (errors, record) {
+            SpeakerAccount.create(params, function (err, record) {
                sails.log.debug('Speaker valid');
                return callback(null, record);
             });
+
          });
       });
    },

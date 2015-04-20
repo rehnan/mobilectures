@@ -1,0 +1,64 @@
+<% var globals = sails.config.globals %>
+
+<!-- Static navbar -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/speaker"><%= i18n("speaker.dashboard.link.home") %></a>
+    </div>
+
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav" id="menu_options"> <!-- class="active" -->
+        <li class="<%= ViewHelpers.active_link("/speaker/sessions/" + req.param('id'), req.url) %>">
+          <a href="/speaker/sessions/<%= req.param('id') %>">
+            <button class="btn" type="button" ><%= i18n("session.link.home") %></button>
+          </a>
+        </li>
+        <li>
+          <a href="/speaker/sessions">
+            <button class="btn" type="button" ><%= i18n("session.link.index") %></button>
+          </a>
+        </li>
+        <li class="<%= ViewHelpers.active_link("/speaker/sessions/" + req.param('id') + "/quizzes", req.url) %>">
+          <a href="/speaker/sessions/<%= req.param('id') %>/quiz">
+            <button class="btn" type="button" ><%= i18n("quiz.link.index") %></button>
+          </a>
+        </li>
+        <li class="<%= ViewHelpers.active_link("/speaker/sessions/" + req.param('id') + "/doubts", req.url) %>">
+          <a href="/speaker/sessions/<%= req.param('id') %>/doubts"> 
+            <button class="btn" type="button" ><%= i18n("doubt.link.index") %>
+              <span class="badge">0</span>
+            </button>
+          </a>
+        </li>
+        <li class="<%= ViewHelpers.active_link("/speaker/sessions/" + req.param('id') + "/polls", req.url) %>">
+          <a href="/speaker/sessions/<%= req.param('id') %>/polls">
+            <button class="btn" type="button" ><%= i18n("poll.link.index") %></button>
+          </a>
+        </li>
+        <li class="<%= ViewHelpers.active_link("/speaker/sessions/" + req.param('id') + "/listeners", req.url) %>">
+          <a href="/speaker/sessions/<%= req.param('id') %>/listeners">
+            <button class="btn" type="button" ><%= i18n("listener.link.index") %></button>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="/logout">
+            <button type="button" class="btn btn-danger">
+              <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <%= i18n("global.login.link.sing_out") %>
+            </button>
+          </a>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</nav>

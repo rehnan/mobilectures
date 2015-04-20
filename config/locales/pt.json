@@ -17,9 +17,23 @@
   "global.login.link.sing_out":  "Sair",
 
   "global.form.submit.update":  "Salvar",
+  "global.form.cancel":  "Cancelar",
+  "global.link.actions":  "Acões",
   
   "global.flash.update.success":  "Dados atualizados com sucesso!",
   "global.flash.form.error":  "Existe dados incorretos!",
+  "global.flash.create.success":  "{{name}} criada com sucesso!",
+  "global.flash.destroy.error":  "Não foi possível remover este registro!",
+  "global.flash.destroy.success":  "{{name}} removida com sucesso!",
+
+  "global.status.active": "Ativo",
+  "global.status.inactive": "Inativo",
+  
+  "global.link.show": "Visualizar",
+  "global.link.edit": "Editar",
+  "global.link.destroy": "Remover",
+
+  "global.messages.welcome": "Olá {{name}}, seja bem vindo área do palestrante!",
 
   "speaker.login.title": "Entrar no sistema",
   "speaker.login.index.header":  "Por favor, entre com seu login!",
@@ -44,6 +58,36 @@
   "validator.messages.empty_field": "Este campo não deve ser vazio!",
   "validator.messages.wrong_password": "Senha incorreta",
   "validator.messages.password_match": "Senha não confere",
+
+  "session.index.title": "Gerenciar Sessões",
+  "session.index.header": "Gerenciar Sessões",
+  "session.show.title": "Sessão {{name}}",
+
+  "session.edit.title": "Editar sessão {{name}}",
+  
+  "session.id": "ID",
+  "session.name": "Nome",
+  "session.key": "Chave",
+  "session.status": "Estado",
+  "session.description": "Descrição",
+
+  "session.link.new": "Nova sessão",
+  "session.link.home": "Dashboard da Sessão",
+  "session.link.index": "Todas Sessões",
+
+  "session.input.placeholder.name": "Digite o nome da sessão", 
+  "session.input.placeholder.key": "Digite a chave da sessão", 
+
+  "quiz.link.index": "Quizes",
+  
+  
+  "doubt.link.index": "Dúvidas",
+
+  
+  "poll.link.index": "Enquetes",
+
+  
+  "listener.link.index": "Ouvintes",
 
 
   "label_signin": "Fazer Login",

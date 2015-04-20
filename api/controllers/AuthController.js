@@ -85,7 +85,7 @@ module.exports = {
         if (errors) {
            sails.log.debug('Error ==> ' + JSON.stringify(errors));
            return res.view('auth/signup', {layout: 'layouts/login',
-                           locals: {errors: errors_messages,  speaker: req.params.all()}});
+                           locals: {errors: errors,  speaker: req.params.all()}});
         } else {
            req.login(record, function(err) {
               if (err) { return next(err); }

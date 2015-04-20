@@ -4,5 +4,12 @@ module.exports = {
       var rg = new RegExp(path);
 
       return (str.match(rg)) ? 'active' : '';
+   },
+   status:  function($bollean) {
+      return ($bollean) ? sails.__('global.status.active') : sails.__('global.status.inactive');
+   },
+
+   disableUnless: function($bollean) {
+      return ($bollean) ? '' : "disabled='disabled'";
    }
 }

@@ -22,17 +22,21 @@
     <%- partial('partials/page_header') %>
 
     <div class="container">
+      <div class="well">
+        <strong>Você está na sessão <%= session.name %></strong>
+      </div>
 
-      <%- partial('partials/main_navbar') %>
+      <%- partial('partials/session_navbar') %>
 
-      <div class="panel panel-default">
+      <div class="panel panel-default">        
         <div class="panel-body">
-          <!-- Partial to show flash messages -->
           <%- partial('../partials/flash') %>
           <%- body %>
         </div>
+
       </div>
     </div>
+
 
     <!--TEMPLATES-->
     
