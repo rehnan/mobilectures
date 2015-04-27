@@ -75,6 +75,7 @@ module.exports = {
     * Thinking about extract to plugin
     */
    createIfValid: function (params, callback) {
+      params.status = (params.status === "true");
       Session.validate(params, function (errors) {
          sails.log.debug('Session Errors ==> ' + JSON.stringify(errors));
 

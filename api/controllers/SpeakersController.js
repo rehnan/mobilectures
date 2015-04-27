@@ -13,12 +13,12 @@ module.exports = {
     */
    index: function (req, res) {
       application.title = req.__('speaker.profile.title');
-      return res.view();
+      return res.view('speaker/index');
    },
 
    editProfile: function(req, res) {
       application.title = req.__('speaker.profile.title');
-   
+
       var current_user = req.session.passport.user;
       return res.view('speaker/profile/update_profile', 
                       {locals: { speaker: current_user, errors: {} }});

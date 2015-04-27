@@ -79,15 +79,21 @@
   "session.input.placeholder.key": "Digite a chave da sessão", 
 
   "quiz.link.index": "Quizes",
+  "quiz.show.title": "Gerenciar Quizzes",
   
   
   "doubt.link.index": "Dúvidas",
+  "doubt.show.title": "Gerenciar Dúvidas",
 
-  
   "poll.link.index": "Enquetes",
+  "poll.index.title": "Gerenciar enquetes",
 
-  
   "listener.link.index": "Ouvintes",
+  "listener.index.title": "Ouvintes Conectados",
+  "liseter.auth.error": "Usuário e/ou senha incorretos!",
+
+  "api.listener.auth.session_not_found": "Sessão não encontrada",
+  "api.listener.auth.session_closed": "Sessão fechada, aguarde a notificação do palestrante",
 
 
   "label_signin": "Fazer Login",

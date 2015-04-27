@@ -30,11 +30,11 @@
             <td><%= ViewHelpers.status(session.status) %></td>
             <td class="text-right">
               <a class="btn btn-sm btn-success" href="/speaker/sessions/<%= session.id %>" 
-                title="<%= i18n('global.link.show') %>" role="button" <%= ViewHelpers.disableUnless(!session.status) %> >
+                title="<%= i18n('global.link.show') %>" role="button" >
                 <%= i18n("global.link.show") %>
               </a>
               <a class="btn btn-sm btn-primary" href="/speaker/sessions/edit/<%= session.id %>" 
-                title="<%= i18n('lglobal.link.edit') %>" role="button" <%= ViewHelpers.disableUnless(!session.status) %> >
+                title="<%= i18n('lglobal.link.edit') %>" role="button" >
                 <%= i18n("global.link.edit") %>
               </a>
               <a class="btn btn-sm btn-danger" href="/speaker/sessions/delete/<%= session.id %>"

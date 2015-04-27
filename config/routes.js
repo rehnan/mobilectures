@@ -31,8 +31,16 @@ module.exports.routes = {
     * `assets` directory)                                                      *
     *                                                                          *
     ***************************************************************************/
+   /*
+    * Force default locale
+    */ 
+   '/*': function(req, res, next) {
+      req.setLocale('pt');
+      res.setLocale('pt');
+      return next();
+   },
 
-   //Routes Authentication
+   /* ################# BEGIN AUTHENTICATION ROUTES ####################### */
    '/': {
       controller: 'AuthController',
       action: 'root'
@@ -62,163 +70,135 @@ module.exports.routes = {
       controller: 'AuthController',
       action: 'logout'
    },
+   /* ################# END AUTHENTICATION ROUTES ####################### */
 
 
-   // Route to renderize the index (inicial page) of application
+   /* ################# BEGIN SPEAKER ROUTES ####################### */
    'GET /speaker':{
-      controller: 'SpeakerController',
+      controller: 'SpeakersController',
       action: 'index'
    },
-
    /*
     * Routes to change current user perfil
     */
    'GET /speaker/:id/profile':{
-      controller: 'SpeakerController',
+      controller: 'SpeakersController',
       action: 'editProfile'
    },
    'POST /speaker/:id/profile':{
-      controller: 'SpeakerController',
+      controller: 'SpeakersController',
       action: 'updateProfile'
    },
    'GET /speaker/:id/password':{
-      controller: 'SpeakerController',
+      controller: 'SpeakersController',
       action: 'editPassword'
    },
    'POST /speaker/:id/password':{
-      controller: 'SpeakerController',
+      controller: 'SpeakersController',
       action: 'updatePassword'
    },
-
-   /*
-    * ### Begin Sessions Routes
-    */  
+   /* ################# END SPEAKER ROUTES ####################### */
+   
+   /* ################# BEGIN SESSIONS ROUTES ####################### */
    'GET /speaker/sessions':{
-      controller: 'SessionController',
+      controller: 'SessionsController',
       action: 'index'
    },
 
    //Route to renderize form to new session
    'GET /speaker/sessions/new':{
-      controller: 'SessionController',
+      controller: 'SessionsController',
       action: 'new'
    },
 
    //Route to select some one session
    'GET /speaker/sessions/:id':{
-      controller: 'SessionController',
+      controller: 'SessionsController',
       action: 'show'
    },
-   
+
    //Route to action create the new session
    'POST /speaker/sessions':{
-      controller: 'SessionController',
+      controller: 'SessionsController',
       action: 'create'
    },
 
    //Route to renderize edit form some one session
    'GET /speaker/sessions/edit/:id':{
-      controller: 'SessionController',
+      controller: 'SessionsController',
       action: 'edit'
    },
 
    //Route to action update the session in edit
    'POST /speaker/sessions/:id':{
-      controller: 'SessionController',
+      controller: 'SessionsController',
       action: 'update'
    },
 
    //Route to delete some one session
    'GET /speaker/sessions/delete/:id':{
-      controller: 'SessionController',
+      controller: 'SessionsController',
       action: 'destroy'
    },
 
-   //################################## End SESSIONS Routes
-
-
 
    //Rest to session quiz
-   'GET /speaker/sessions/:id/quiz':{
-      controller: 'QuizController',
+   'GET /speaker/sessions/:session_id/quizzes':{
+      controller: 'QuizzesController',
       action: 'show'
    },
 
    //Rest to session doubts
-   'GET /speaker/sessions/:id/doubts':{
+   'GET /speaker/sessions/:session_id/doubts':{
       controller: 'DoubtsController',
       action: 'show'
    },
 
    //Rest to session polls
-   'GET /speaker/sessions/:id/polls':{
+   'GET /speaker/sessions/:session_id/polls':{
       controller: 'PollsController',
       action: 'show'
    },
+   /* ################# END SESSIONS ROUTES ####################### */
 
-   //######################################## REST TO LISTENERS
 
-   'GET /speaker/sessions/:id/listeners':{
+   /* ################# BEGIN LISTENERS ROUTES ####################### */
+   'GET /speaker/sessions/:session_id/listeners':{
       controller: 'ListenersController',
       action: 'index'
    },
-
-   'GET /speaker/listeners/find': {
-      controller: 'ListenersController',
-      action: 'getAll'
-   },
-
-   'POST /speaker/listeners/create': {
-      controller: 'ListenersController',
-      action: 'create'
-   },
-
-   'PUT /speaker/listeners/update/:id': {
-      controller: 'ListenersController',
-      action: 'update'
-   },
-
-   'DELETE /speaker/listeners/delete/:id': {
-      controller: 'ListenersController',
-      action: 'destroy'
-   },
-
-
-   'GET /speaker/listeners/subscribe': {
+   'GET /speaker/listeners/subscribe':{
       controller: 'ListenersController',
       action: 'subscribe'
    },
+   /* ################# END LISTENERS ROUTES ####################### */
 
-   'GET /speaker/listeners/join':{
-      controller: 'ListenersController',
+
+   /* ################# MOBILE API ####################### */
+   'POST /api/listeners':{
+      controller: 'api/AuthApiController',
+      action: 'create'
+   },
+   
+   'POST /api/listeners/join':{
+      controller: 'api/AuthApiController',
       action: 'join'
    },
 
-   'POST /speaker/listeners/leave':{
-      controller: 'ListenersController',
-      action: 'leave'
+   'GET /api/listeners/leave':{
+      controller: 'api/AuthApiController',
+      action: 'leave',
    },
 
-   //Está ação deve estar no controller DoubtsController
-   'POST /speaker/listeners/doubt':{
-      controller: 'ListenersController',
-      action: 'doubtReceived'
+   'GET /api/sessions/:session_id/listeners': {
+      controller: 'api/ListenersApiController',
+      action: 'index'
    },
 
-   'POST /speaker/listeners/message':{
-      controller: 'ListenersController',
-      action: 'sendMessage'
+   'GET /api/doubts':{
+      controller: 'api/DoubtsApiController',
+      action: 'index'
    },
+   /* ################# END MOBILE API ################### */
 
-   'GET /speaker/listeners/signin':{
-      controller: 'ListenersController',
-      action: 'signin'
-   },
-
-   'POST /speaker/listeners/dashboard':{
-      controller: 'ListenersController',
-      action: 'dashboard'
-   }
-
-   //########################################
 };

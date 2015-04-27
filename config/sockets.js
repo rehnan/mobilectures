@@ -34,7 +34,9 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
   onDisconnect: function(session, socket) {
-    sails.log.debug('Socket ID: '+socket.id+ ' disconnected!'); 
+    // TODO: With more time
+    // Listener.leave(session, socket);
+    // sails.log.debug('Socket ID: '+socket.id+ ' disconnected!'); 
   },
 
 
@@ -245,5 +247,5 @@ module.exports.sockets = {
 
   // The entry point where Socket.IO starts looking for incoming connections.
   // This should be the same between the client and the server.
-  resource: '/socket.io'
+  resource: '/socket.io',
 };

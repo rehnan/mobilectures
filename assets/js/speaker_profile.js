@@ -1,2 +1,1 @@
-$(document).ready(function() {
-});
+ml.speaker_profile = {};

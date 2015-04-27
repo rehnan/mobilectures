@@ -36,6 +36,15 @@ module.exports.policies = {
       '*': true
    },
 
+   /* ################# API POLICES ####################### */
+   'api/authApi': {
+      '*': true
+   },
+   'api/doubts': {
+      '*': true
+   },
+   /* ################# END API POLICES ####################### */
+
    //Lista branca das ações do controller AuthController
    listeners: {
       getAll: 'isAuthenticated', //Ação liberada apenas para requisiçõe HTTP autenticadas

@@ -1,8 +1,8 @@
- //Inserir IP do servidor
- //Produção
+// Inserir IP do servidor
+// Produção
 //var socket = io.connect('https://mobilectures.herokuapp.com');
 
- //Development
+// Development
 var socket = io.connect();
 
 socket.on('error', function(){

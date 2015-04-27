@@ -20,6 +20,19 @@
     <%- Messages.errors.form.message("description", errors) %>
   </div>
 
+  <div class="radio">
+    <label>
+      <input type="radio" name="status" value="true" <%= ViewHelpers.checked(session.status, true) %>>
+      Sessão Aberta
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="status" value="false" <%= ViewHelpers.checked(session.status, false) %>>
+      Sessão Fechada
+    </label>
+  </div>
+
   <hr />
   <div class="form-group">
     <button type="submit" class="btn btn-primary btn-block btn-sm"><%= i18n("global.form.submit.update") %></button>

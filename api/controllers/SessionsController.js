@@ -2,7 +2,7 @@
 var application = sails.config.globals;
 var ObjectID = require('sails-mongo/node_modules/mongodb').ObjectID;
 
-var SessionController = {
+var SessionsController = {
 
    /* Action index | Method: GET -
     * Renderiza view do formulário listando todas as sessões
@@ -22,7 +22,7 @@ var SessionController = {
     * Renderiza view do formulário
     */ 
    new: function(req, res) {
-      sails.log.debug('Rendering new sessions view form for user: ' + req.session.passport.user);
+      sails.log.debug('Rendering new sessions view form for user: ' + req.session.passport.user.id);
       application.title = req.__('session.index.title');
       return res.view('speaker/sessions/new', {errors: {}, session: Session.new });
    },
@@ -51,15 +51,6 @@ var SessionController = {
                   return res.redirect('speaker/sessions');
                }
             });
-            //speaker.sessions.add( req.params.all() );
-            //speaker.save(function(err, resp_cb) {
-            //   if(err) {
-            //      sails.log.debug('Erro ao tentar salvar sessão ' + JSON.stringify(err)); 
-            //      req.flash('error', 'Não foi possível criar essa sessão')
-            //   }
-            //   req.flash('success', req.__('global.flash.create.success', {name: req.param('name')}));
-            //   return res.redirect('speaker/sessions');
-            //});
          }
       });
    },
@@ -114,6 +105,7 @@ var SessionController = {
 
          session.name = req.param('name');
          session.description = req.param('description');
+         session.status = req.param('status');
 
          session.save(function (errors, record) {
             if (errors) {
@@ -151,7 +143,7 @@ var SessionController = {
    },
 }
 
-module.exports = SessionController;
+module.exports = SessionsController;
 
 /*
    Examplo consulta nativa mongodb

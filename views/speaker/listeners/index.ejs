@@ -1,47 +1,8 @@
-<h3><center>Ouvintes Conectados</center></h3>
+<section id="listeners" data-session_id="<%= session.id %>">
+  <header class="page-header">
+    <h3>Ouvintes Conectados</h3>
+  </header>
 
-<hr>
-<table id="table-listeners"  data-show-refresh="true" ></table>
+  <table id="table-listeners"  data-show-refresh="true" ></table>
 
-<h4> Ações para teste </h4> 
-<div id="submit-create">
-	<input type="email" id="name_user" placeHolder="Name">
-	<input type="text" id="email_user" placeHolder="Email">
-	<input type="text" id="password_user" placeHolder="Password">
-	<button id='createUser' class="btn btn-default">Create</button>
-</div>
-<br>
-<div id="submit-update">
-	<input type="text" id="id_user" placeHolder="ID">
-	<input type="text" id="newname_user" placeHolder="Novo nome">
-	<button id='updateUser'>Update</button>
-</div>
-<br>
-<div id="submit-signin">
-	<input type="text" id="key_session" placeHolder="Chave de Sessão">
-	<input type="text" id="em_user" placeHolder="Email">
-	<input type="password" id="pass_user" placeHolder="Senha">
-	<button id='signin'>Sign in!</button>
-</div>
-<br>
-
-<div id="submit-signout">
-	<input type="text" id="sessionName" placeHolder="Session Name">
-	<input type="text" id="user_id" placeHolder="ID User">
-	<button id='signout'>Sign out!</button>
-</div>
-<br>
-
-<div id="submit-doubt">
-	<input type="text" id="doubt" placeHolder="Doubt Description">
-	<button id='sendDoubt'>Send Doubt from client to server</button>
-</div>
-<br>
-
-<div id="submit-message">
-	<span id="room_id"><%= req.session.current_session.id %></span> 
-	<span id="room_key"><%= req.session.current_session.key %></span><br>
-	<input type="text" id="message" placeHolder="Doubt Description">
-	<button id='sendMessage'>Send Message from server to client</button>
-</div>
-
+</section>

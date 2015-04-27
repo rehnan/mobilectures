@@ -1,11 +1,11 @@
 var application = sails.config.globals;
 
-var PollsController = {
+var QuizController = {
 
    show: function(req, res) {
-      PollsController.beforeAction(req, res, function (session) {
-         application.title = req.__('poll.show.title');
-         res.view('speaker/polls/show', {layout: 'layouts/session', session: session});
+      QuizController.beforeAction(req, res, function (session) {
+         application.title = req.__('quiz.show.title');
+         return res.view('speaker/quizzes/show', {layout: 'layouts/session', session: session});
       });
    },
 
@@ -16,7 +16,7 @@ var PollsController = {
     */
    beforeAction: function(req, res, callback) {
       var conditions = {id: req.param('session_id'), owner: req.session.passport.user.id};
-      sails.log.debug('Polls conditions ==> ' + JSON.stringify(conditions));
+      sails.log.debug('Quiz show conditions ==> ' + JSON.stringify(conditions));
       Session.findOne(conditions).exec(function (err, session){
          if(err){return err;}
          if(!session) {
@@ -24,11 +24,10 @@ var PollsController = {
             return res.redirect('speaker/sessions');
          }
 
-         sails.log.debug('Polls session ==> ' + JSON.stringify(session));
+         sails.log.debug('Quiz show session ==> ' + JSON.stringify(session));
          callback(session);
       });
    },
-
 };
 
-module.exports = PollsController;
+module.exports = QuizController;

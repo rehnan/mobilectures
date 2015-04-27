@@ -148,7 +148,7 @@ module.exports = {
    updatePassword: function (params, callback) {
 
       SpeakerAccount.findOne({id: params.user_id}).exec(function(err, speaker) {
-         if(err){return sails.log.deug(err);}
+         if(err){return sails.log.debug(err);}
 
          var bcrypt = require('bcrypt-nodejs');
          bcrypt.compare(params.current_password, speaker.password, function(err, isEquals) {

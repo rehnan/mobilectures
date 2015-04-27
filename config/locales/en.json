@@ -1,6 +1,5 @@
 {
-  "speaker.login.title": "Login",
-
+	"speaker.login.title": "Login",
 	"label_signin": "Sign in",
 	"label_signup": "Sign up",
 	"msg_label_login": "Please, inform your login",
@@ -52,5 +51,12 @@
 	"title_update_password": "Update Password",
 	"title_current_password": "Current password",
 	"title_new_password": "New password",
-	"title_confirm_password": "Confirm new password"
+	"title_confirm_password": "Confirm new password",
+	"speaker.login.index.header": "speaker.login.index.header",
+	"global.label.email": "global.label.email",
+	"global.input.email.placeholder": "global.input.email.placeholder",
+	"global.label.pwd": "global.label.pwd",
+	"global.input.pwd.placeholder": "global.input.pwd.placeholder",
+	"speaker.login.submit": "speaker.login.submit",
+	"speaker.login.btn.sign_up": "speaker.login.btn.sign_up"
 }
