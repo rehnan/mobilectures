@@ -67,6 +67,7 @@ ml.listeners = {
       console.log('Statuts change: ')
       console.log(value);
       console.log(row);
+      console.log('Isso é: '+row.logged_room+' = '+$('#listeners').data('session_id'));
       var status = (row !== null && row.logged_room === $('#listeners').data('session_id')) ? 'Online' : 'Offline'
       return status;
    },
@@ -88,8 +89,7 @@ ml.listeners = {
       });
 
       io.socket.on('listener',function(obj){
-         console.log('Listener in/out');
-         console.log(obj);
+         console.log('Listener in/out '+ obj.verb);
          $('#table-listeners').bootstrapTable('refresh');
       });
    }
