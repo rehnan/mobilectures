@@ -1,0 +1,55 @@
+/*
+* Imagem gravatar
+*/
+.circle-mask {
+  height: 56px;
+  width: 56px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  z-index: 100;
+  background-size: 56px;
+  background-repeat: no-repeat;
+  -webkit-transition: opacity 0.075s;
+  -moz-transition: opacity 0.075s;
+  -ms-transition: opacity 0.075s;
+  -o-transition: opacity 0.075s;
+  transition: opacity 0.075s;
+  margin-bottom: 10px;
+}
+
+.circle_on {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  border: 5px solid #35AC19;
+  position: absolute;
+  z-index: 101;
+  height: 56px;
+  width: 56px;
+  border-radius: 50%;
+  opacity: 0.99;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.circle_off {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  position: absolute;
+  z-index: 101;
+  height: 56px;
+  width: 56px;
+  border-radius: 50%;
+  opacity: 0.99;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+
+

@@ -71,6 +71,7 @@ var AuthApiController = {
              .publishRemove
               Sobrescrevendo lista de sessoes e dúvidas            
             */
+            
             Listener.subscribe(req.socket, session.listeners, ['update', 'create']);
 
             // Subscribes a socket to a generic room.

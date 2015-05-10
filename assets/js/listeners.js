@@ -27,11 +27,12 @@ ml.listeners = {
             return res;
          },
          columns: [{
-            field: 'id',
-            title: 'ID',
+            field: 'avatar',
+            title: 'Avatar',
             align: 'center',
             valign: 'middle',
-            sortable: true
+            formatter: ml.listeners.showAvatarImage,
+            clickToSelect: false,
          }, {
             field: 'name',
             title: 'Nome',
@@ -45,14 +46,14 @@ ml.listeners = {
             valign: 'middle',
             sortable: true,
          }, {
-            field: 'password',
-            title: 'Senha',
+            field: 'id',
+            title: 'ID',
             align: 'center',
             valign: 'middle',
-            clickToSelect: false,
+            sortable: true
          }, {
             field: 'logged_room',
-            title: 'Online',
+            title: 'Status',
             align: 'center',
             valign: 'middle',
             formatter: ml.listeners.listenerJoinOrLeave,
@@ -66,8 +67,14 @@ ml.listeners = {
       console.log('Statuts change: ')
       console.log(value);
       console.log(row);
-      var status = (row !== null && row.logged_room === $('#listeners').data('session_id')) ? '<img src="/images/icon_user_online.gif" class="img-responsive" alt="Listener online">' : '<img src="/images/icon_user_offline.gif" class="img-responsive" alt="Listener offline">'
+      var status = (row !== null && row.logged_room === $('#listeners').data('session_id')) ? 'Online' : 'Offline'
       return status;
+   },
+
+   showAvatarImage: function showAvatar(value, row) {
+         var class_status = (row !== null && row.logged_room === $('#listeners').data('session_id')) ? 'circle_on' : 'circle_off'
+         var img_avatar = "<div class='circle-mask'><img align='middle' src='"+value+"' alt='Smiley face' class='"+class_status+"' width='56' height='56'></image></div>";
+         return img_avatar;
    },
 
    subscribeAndListen: function () {

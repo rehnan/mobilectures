@@ -1,10 +1,11 @@
 var application = sails.config.globals;
 
+
 var DoubtsController = {
 
 	show: function(req, res) {
 		DoubtsController.beforeAction(req, res, function (session) {
-
+	
 			application.title = req.__('doubt.show.title');
 			var conditions = {id: session.id, owner: req.session.passport.user.id};
 			var join1 = {sort: 'createdAt DESC', enabled:true};

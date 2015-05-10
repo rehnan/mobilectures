@@ -26,6 +26,11 @@ module.exports = {
          required: true 
       },
 
+      avatar : {
+         type: 'text',
+         defaultsTo: null 
+      },
+
       logged_room : { 
          type: 'string',
          defaultsTo: null 
@@ -58,16 +63,28 @@ module.exports = {
 
    //Before save crypt the password attribute
    beforeCreate: function (attrs, next) {
+      //Gerando url do avatar
+      Gravatar.getImgUrl(attrs.email, function(err, url){
+         if(err){ Log.error(err);}
+         
+         attrs.avatar = url;
 
-      if(attrs.password != undefined) {
-         var bcrypt = require('bcrypt-nodejs');
-         var salt = bcrypt.genSaltSync(10);
+         if(attrs.password != undefined) {
+            var bcrypt = require('bcrypt-nodejs');
+            var salt = bcrypt.genSaltSync(10);
 
-         // Hash the password with the salt
-         attrs.password = bcrypt.hashSync(attrs.password, salt);
-         sails.log.debug('[Action: beforeCreate] Password Updated');
-      }
-      next();
+            // Hash the password with the salt
+            attrs.password = bcrypt.hashSync(attrs.password, salt);
+            sails.log.debug('[Action: beforeCreate] Password Updated');
+         }
+
+         next();
+      });
+
+   },
+
+   gravatarUrl: function () {
+      return null;
    },
 
    /*
