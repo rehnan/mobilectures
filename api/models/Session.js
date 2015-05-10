@@ -45,7 +45,7 @@ module.exports = {
       //Possui uma coleção de dúvidas
       doubts: {
          collection: 'doubt', //Do modelo doubt
-         via: 'belongs' //Relação estabelecida via atributo belongs localizado no modelo Listeners 
+         via: 'session' //Relação estabelecida via atributo belongs localizado no modelo Listeners 
       }
    },
 

@@ -29,7 +29,7 @@
         <li class="<%= ViewHelpers.active_link("/speaker/sessions/" + session.id + "/doubts", req.url) %>">
           <a href="/speaker/sessions/<%= session.id %>/doubts"> 
             <button class="btn" type="button" ><%= i18n("doubt.link.index") %>
-              <span class="badge">0</span>
+              <span class="badge" id="badge_doubt_count"></span>
             </button>
           </a>
         </li>
@@ -62,3 +62,4 @@
     </div><!--/.nav-collapse -->
   </div><!--/.container-fluid -->
 </nav>
+<section id="session-open" data-session_id="<%= session.id %>"></section>

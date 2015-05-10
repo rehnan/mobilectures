@@ -3,25 +3,25 @@ $(document).ready(function (){  ml.listeners.load() });
 ml.listeners = {
 
    load: function () {
-     ml.listeners.createTableListeners();
-     ml.listeners.subscribeAndListen();
-   },
+    ml.listeners.createTableListeners();
+    ml.listeners.subscribeAndListen();
+ },
 
-   createTableListeners: function () {
-      var url = '/api/sessions/' + $('#listeners').data('session_id')  +  '/listeners/';
+ createTableListeners: function () {
+   var url = '/api/sessions/' + $('#listeners').data('session_id')  +  '/listeners/';
 
-      $('#table-listeners').bootstrapTable({
-         method: 'GET',
-         url: url,
-         cache: false,
-         height: 400,
-         striped: true,
-         search: true,
-         showColumns: true,
-         showRefresh: true,
-         minimumCountColumns: 2,
-         clickToSelect: true,
-         responseHandler: function (res) {
+   $('#table-listeners').bootstrapTable({
+      method: 'GET',
+      url: url,
+      cache: false,
+      height: 400,
+      striped: true,
+      search: true,
+      showColumns: true,
+      showRefresh: true,
+      minimumCountColumns: 2,
+      clickToSelect: true,
+      responseHandler: function (res) {
             // Recuperando chave de sessão empilhada na resposta de requisição
             // console.log(res);
             return res;
@@ -59,7 +59,7 @@ ml.listeners = {
             clickToSelect: false,
          }]
       });  
-   }, 
+}, 
 
    // Método para mudar a imagem de usuário online/offline de acordo com seu status
    listenerJoinOrLeave: function statusChange(value, row) {
@@ -72,9 +72,10 @@ ml.listeners = {
 
    subscribeAndListen: function () {
       if ($('#table-listeners').length <= 0) {return;}
+      var session_id = $('#session-open').attr('data-session_id');
 
-      url = '/speaker/listeners/subscribe';
-      io.socket.get(url, function (data){
+      url = '/speaker/sessions/'+session_id+'/listeners/subscribe';
+      io.socket.post(url, function (data){
          console.log('Subscribe Listeners');
          console.log(data);
       });

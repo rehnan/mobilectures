@@ -8,7 +8,7 @@ var SessionsController = {
     * Renderiza view do formulário listando todas as sessões
     */
    index: function(req, res) {
-      sails.log.debug('Render sessions index view for user' + req.session.passport.user);
+      //Log.debug('Render sessions index view for user' + req.session.passport.user);
       application.title = req.__('session.index.title');
 
       //Session.find({}).paginate({page: 10, limit: 5}) {id_speaker:req.session.passport.user}
@@ -22,7 +22,7 @@ var SessionsController = {
     * Renderiza view do formulário
     */ 
    new: function(req, res) {
-      sails.log.debug('Rendering new sessions view form for user: ' + req.session.passport.user.id);
+      //Log.debug('Rendering new sessions view form for user: ' + req.session.passport.user.id);
       application.title = req.__('session.index.title');
       return res.view('speaker/sessions/new', {errors: {}, session: Session.new });
    },
@@ -59,13 +59,16 @@ var SessionsController = {
       //sails.log.debug('Selecionando sessão')
       //req.session.current_session = null;
       //Session.find({}).paginate({page: 10, limit: 5})
-      Session.findOne({id:req.param('id'), owner: req.session.passport.user.id}).exec(function (err, session){
+      var condition = {id:req.param('id'), owner: req.session.passport.user.id};
+
+      Session.findOne(condition).exec(function (err, session){
          if(err){return err;}
          if(!session) {
             req.flash('error', 'Sessão inexistente!!!');
             return res.redirect('speaker/sessions');
          }
          application.title = req.__('session.show.title', {name: session.name});
+
          //req.session.current_session = session;
          return res.view('speaker/sessions/show', {layout: 'layouts/session', session: session});
       });

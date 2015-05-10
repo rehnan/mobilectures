@@ -34,6 +34,11 @@ module.exports = {
       participants: {
          collection:'session', //Referente ao modelo Session
          via: 'listeners'
+      },
+
+      doubts: {
+         collection: 'doubt',
+         via: 'listener'
       }
    },
 
@@ -107,6 +112,7 @@ module.exports = {
          }
       });
    },
+   
    leave: function (session, socket) {
       if (session.listener) {
          var conditions = { id: session.listener.id }
@@ -124,7 +130,6 @@ module.exports = {
                Listener.publishUpdate(listener.id, {logged_room:null});
                sails.sockets.leave(socket, session_id);
                Listener.unsubscribe(socket, listener);
-
                session.listener = undefined;
                sails.log.error('Listener logged out ['+JSON.stringify(session)+']');
             });

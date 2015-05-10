@@ -32,33 +32,46 @@ module.exports.policies = {
    '*': 'isAuthenticated',
 
    //Lista branca das ações do controller AuthController
+   /* #################  POLICES ####################### */
    'auth': {
       '*': true
    },
+
+   'doubts': {
+      '*': true
+   },
+   
+   /* ################# END POLICES ####################### */
 
    /* ################# API POLICES ####################### */
    'api/authApi': {
       '*': true
    },
-   'api/doubts': {
+
+   'api/doubtsApi': {
       '*': true
    },
+
    /* ################# END API POLICES ####################### */
 
+   
+
+   
+
+   
    //Lista branca das ações do controller AuthController
    listeners: {
-      getAll: 'isAuthenticated', //Ação liberada apenas para requisiçõe HTTP autenticadas
-      create: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-      update: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
       subscribe: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-      destroy: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-      join: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-      leave: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
-      sendMessage: 'isAuthenticated',
-      signin:'isAuthenticated',
-      dashboard:'isAuthenticated',
-      doubtReceived:'onlySocketReq'
    },
+
+   /*
+   doubts: {
+    beforeAction: 'isAuthenticated',
+    show: 'isAuthenticated',
+    destroy: 'isAuthenticated',
+    check: 'isAuthenticated',
+    subscribe: ['isAuthenticated', 'onlySocketReq'],
+   }*/
 
    /***************************************************************************
     *                                                                          *

@@ -154,6 +154,26 @@ module.exports.routes = {
       action: 'show'
    },
 
+   'POST /speaker/sessions/:session_id/doubts/check/:doubt_id':{
+      controller: 'DoubtsController',
+      action: 'check'
+   },
+
+   'DELETE /speaker/sessions/:session_id/doubts/:doubt_id':{
+      controller: 'DoubtsController',
+      action: 'destroy'
+   },
+
+   'POST /speaker/sessions/:session_id/doubts/subscribe':{
+      controller: 'DoubtsController',
+      action: 'subscribe'
+   },
+
+   'GET /speaker/sessions/:session_id/doubts/count':{
+      controller: 'DoubtsController',
+      action: 'count'
+   },
+
    //Rest to session polls
    'GET /speaker/sessions/:session_id/polls':{
       controller: 'PollsController',
@@ -167,7 +187,8 @@ module.exports.routes = {
       controller: 'ListenersController',
       action: 'index'
    },
-   'GET /speaker/listeners/subscribe':{
+
+   'POST /speaker/sessions/:session_id/listeners/subscribe':{
       controller: 'ListenersController',
       action: 'subscribe'
    },
@@ -198,6 +219,11 @@ module.exports.routes = {
    'GET /api/doubts':{
       controller: 'api/DoubtsApiController',
       action: 'index'
+   },
+
+   'POST /api/doubts':{
+      controller: 'api/DoubtsApiController',
+      action: 'create'
    },
    /* ################# END MOBILE API ################### */
 

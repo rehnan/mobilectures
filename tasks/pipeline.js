@@ -33,6 +33,7 @@ var jsFilesToInject = [
   'js/app.js',
   'js/lib/functions.js',
   'js/listeners.js',
+  'js/doubts.js',
   'js/speaker_profile.js',
 
   // Dependencies like jQuery, or Angular are brought in here
