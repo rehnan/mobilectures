@@ -62,7 +62,7 @@ module.exports.connections = {
     port: 27017,
     user: '',
     password: '',
-    database: process.env.MONGOLAB_URI || 'mobilecturesdb',
+    database: 'mobilecturesdb',
     schema: true
   },
 
