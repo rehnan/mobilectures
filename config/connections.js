@@ -62,13 +62,13 @@ module.exports.connections = {
     port: 27017,
     user: '',
     password: '',
-    database: 'mobilecturesdb',
+    database: process.env.MONGOLAB_URI || 'mobilecturesdb',
     schema: true
   },
 
   'production': {
     adapter: 'sails-mongo',
-    url: process.env.DB_URL,
+    url: process.env.MONGOLAB_URI = 'mongodb://rehnan:a1275704@ds041871.mongolab.com:41871/mobilecturesdb',
     schema: true
   },
 
