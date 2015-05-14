@@ -36,7 +36,7 @@ module.exports = {
       enabled: {
          type: 'boolean',
          defaultsTo: true
-      }
+      },
    },
 
    validationMessages: {
@@ -62,23 +62,42 @@ module.exports = {
            Log.debug('Doubt Errors ==> ' + JSON.stringify(errors));
            pretty_errors = SailsValidador(Doubt, errors);
            Log.debug('Pretty Errors ==> ' + JSON.stringify(pretty_errors));
-           return callback(pretty_errors);
+           return callback(pretty_errors, null, null);
         }
 
         Session.findOne({id:params.session}).populate('doubts').exec(function (err, session) {
-           if(err){return callback(err, null);}
-           Log.debug(JSON.stringify(session));
+           if(err){return callback(err, null, null);}
            session.doubts.add(params);
            session.save(function(err, record){
-             if(err){return callback(err, null);}
+             if(err){return callback(err, null, null);}
              Log.debug('Doubt created');
                   //Publicando novo objeto doubt criado
+                  var index = record.doubts.length;
+                  var doubt = record.doubts[index-1];
+                  
                   Doubt.publishCreate(record);
-                  callback(null, record);
+                  callback(null, doubt, index);
                });
         });
-
      });
+   },
+
+   show: function (params, callback){
+      
+      Session.findOne({id:params.session_id}).populate('doubts', {listener:params.listener_id}).exec(function (err, session) {
+           if(err){return callback(err, null);}
+
+           var response = {};
+
+           if(session && session.doubts.length > 0) {
+             response.doubts = session.doubts;
+             response.status = true;
+           } else {
+             response.doubts = {};
+             response.status = false;
+           }
+           callback(null, response);
+        });
    },
 
    update_answered:function (conditions, doubt_id, callback) {
@@ -87,7 +106,7 @@ module.exports = {
        Session.findOne(conditions).populate('doubts', {id:doubt_id, enabled:true}).exec(function (err, session){
          if(err){return callback(err, response);}
          response.session_id = session.id;
-         if(session.doubts.length > 0) {
+         if(session && session.doubts.length > 0) {
               //Atribuindo à variável o objeto dúvida encontrado  
               var doubt = session.doubts[0];
 
@@ -129,7 +148,7 @@ module.exports = {
       Session.findOne(conditions).populate('doubts', {id:doubt_id, enabled:true}).exec(function (err, session){
         if(err){return callback(err, response);}
         response.session_id = session.id;
-        if(session.doubts.length > 0) {
+        if(session && session.doubts.length > 0) {
                        //Atribuindo à variável o objeto dúvida encontrado  
                        var doubt = session.doubts[0];
 

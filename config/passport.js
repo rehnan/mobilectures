@@ -10,6 +10,7 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(user, done) {
    //sails.log.debug('deserializeUser User ID: ');
+   
    SpeakerAccount.findOne({id:user.id}, function (err, user) {
       done(err, user);
    });

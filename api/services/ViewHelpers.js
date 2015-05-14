@@ -28,7 +28,7 @@ module.exports = {
    },
 
    change_class_label: function($bollean) {
-      return ($bollean) ? 'Respondida <span class="glyphicon glyphicon-ok"></span>' : 'Responder <span class="glyphicon glyphicon-check"></span>';
+      return ($bollean) ? 'Respondida <span class="glyphicon glyphicon-check"></span>' : 'Responder <span class="glyphicon glyphicon-question-sign"></span>';
    }
 
    /*

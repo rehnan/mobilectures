@@ -8,9 +8,18 @@ var DoubtsController = {
 	
 			application.title = req.__('doubt.show.title');
 			var conditions = {id: session.id, owner: req.session.passport.user.id};
-			var join1 = {sort: 'createdAt DESC', enabled:true};
-			Session.findOne(conditions).populate('doubts', join1).exec(function (err, session){
+			//var join1 = {sort: 'createdAt DESC', enabled:true};
+			var orders_by = {sort: { answered:1, createdAt: -1}, enabled:true};
+			//var orders_by = {sort: 'answered ASC'};
+			Session.findOne(conditions).populate('doubts', orders_by).exec(function (err, session){
 				if(err){return err;}
+				Log.info(session.doubts);
+				/*
+				_.each(session.doubts, function(doubt){
+
+					Log.info(doubt.listener);
+				});
+				*/
 				var doubts = session.doubts;
 				res.view('speaker/doubts/show', {layout: 'layouts/session', session: session, doubts: doubts});
 			});
