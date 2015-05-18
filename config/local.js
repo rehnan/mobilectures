@@ -79,8 +79,7 @@ module.exports = {
    * variable.  If NODE_ENV is not set, Sails will run in the                *
    * 'development' environment.                                              *
    ***************************************************************************/
-   port: process.env.PORT || 1337,
-   environment: process.env.NODE_ENV || 'development',
-   connection: 'development',
+   environment: process.env.NODE_ENV || 'production',
+   connection: 'production',
    
 };
