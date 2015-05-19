@@ -96,6 +96,13 @@ count: function(req, res) {
     */
     beforeAction: function(req, res, callback) {
 
+
+    	if(!req.session.passport.user) {
+    		req.flash('error', 'Você deve estar logado!!!');
+    		return res.redirect('/login');
+    	}
+
+
     	var conditions = {id: req.param('session_id'), owner: req.session.passport.user.id};
 
     	Session.findOne(conditions).exec(function (err, session){

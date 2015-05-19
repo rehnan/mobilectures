@@ -18,7 +18,7 @@
 			<tbody>
 				<% _.each(doubts, function (doubt) { %>
 					<tr class="<%= ViewHelpers.change_class_row(doubt.answered) %>">
-					<td>Nome Ouvinte</td>
+					<td><%= doubt.owner %></td>
 					<td><%= doubt.private %></td>
 					<td><%= DateHelper.formatDate(doubt.createdAt) %></td>
 					<td><%= doubt.answered %></td>

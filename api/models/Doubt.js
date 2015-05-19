@@ -37,6 +37,16 @@ module.exports = {
          type: 'boolean',
          defaultsTo: true
       },
+
+      findOwner: function(cb) {
+        if (this.private) {
+          return cb( {name: "Anônimo"} );
+        }
+        
+        Listener.findOne({id: this.listener}).exec(function (error, record) {
+          return cb(record);
+        });
+      },
    },
 
    validationMessages: {
