@@ -7,8 +7,11 @@ module.exports = {
       return (str.match(rg)) ? 'active' : '';
    },
 
-   status:  function($bollean) {
-      return ($bollean) ? sails.__('global.status.active') : sails.__('global.status.inactive');
+   status:  function($boolean) {
+      return ($boolean) ? sails.__('global.status.active') : sails.__('global.status.inactive');
+   },
+   bool:  function($boolean) {
+      return ($boolean) ? sails.__('global.boolean.true') : sails.__('global.boolean.false');
    },
 
    disableUnless: function($bollean) {

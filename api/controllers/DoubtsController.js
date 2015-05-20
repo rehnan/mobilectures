@@ -3,6 +3,9 @@ var application = sails.config.globals;
 
 var DoubtsController = {
 
+   // References
+   // https://github.com/balderdashy/waterline
+   // http://stackoverflow.com/questions/23446484/sails-js-populate-nested-associations/26452990#26452990
 	show: function(req, res) {
 		DoubtsController.beforeAction(req, res, function (session) {
 	
@@ -10,21 +13,41 @@ var DoubtsController = {
 			var conditions = {id: session.id, owner: req.session.passport.user.id};
 			//var join1 = {sort: 'createdAt DESC', enabled:true};
 			var orders_by = {sort: { answered:1, createdAt: -1}, enabled:true};
-			//var orders_by = {sort: 'answered ASC'};
-			Session.findOne(conditions).populate('doubts', orders_by).exec(function (err, session){
-				if(err){return err;}
-				Log.info(session.doubts);
-				/*
-				_.each(session.doubts, function(doubt){
+			Session.findOne(conditions).populate('doubts', orders_by)
+            .then(function (session){
+				   var doubtsUser = Listener.find({
+                  id: _.pluck(session.doubts, 'listener')
+               })
+               .then(function (doubtsUser){
+                  return doubtsUser;
+               });
 
-					Log.info(doubt.listener);
-				});
-				*/
-				var doubts = session.doubts;
-				res.view('speaker/doubts/show', {layout: 'layouts/session', session: session, doubts: doubts});
-			});
-		});
-	},
+               return [session, doubtsUser];
+            })
+            .spread(function(session, doubtsUsers){
+               var doubtsUsers = _.indexBy(doubtsUsers, 'id');
+               //_.indexBy: Creates an object composed of keys generated from
+               //the results of running each element of the collection through
+               //the given callback. The corresponding value of each key is the
+               //last element responsible for generating the key
+               session.doubts = _.map(session.doubts, function(doubt) {
+                  if (doubt.private){
+                     doubt.listener = {name: req.__('doubt.name.anonymous')};
+                  } else {
+                     doubt.listener = doubtsUsers[doubt.listener];
+                  }
+                  return doubt;
+               });
+
+               var doubts = session.doubts;
+               res.view('speaker/doubts/show', {layout: 'layouts/session', session: session, doubts: doubts});
+            })
+            .catch(function(err){
+          		req.flash('error', 'Erro na consulta das dúvidas!!!');
+    	         return res.redirect('/speaker');
+            });
+      });
+   },
 
 	check: function (req, res) {
 		DoubtsController.beforeAction(req, res, function (session) {

@@ -9,7 +9,6 @@
 			<thead>
 				<tr>
 					<th>Ouvinte</th>
-					<th>Modo Anônimo</th>
 					<th>Data de Envio</th>
 					<th>Respondida</th>
 					<th class="text-center">Ações</th>
@@ -18,16 +17,14 @@
 			<tbody>
 				<% _.each(doubts, function (doubt) { %>
 					<tr class="<%= ViewHelpers.change_class_row(doubt.answered) %>">
-					<td><%= doubt.owner %></td>
-					<td><%= doubt.private %></td>
+					<td><%= doubt.listener.name %></td>
 					<td><%= DateHelper.formatDate(doubt.createdAt) %></td>
-					<td><%= doubt.answered %></td>
+					<td><%= ViewHelpers.bool(doubt.answered) %></td>
 					<td class="text-right">
 					<button class="show_doubt btn btn-sm btn-primary" name="<%= doubt.id %>" title="Visualizar Dúvida" href="#<%= doubt.id %>">Visualizar <span class="glyphicon glyphicon-search"></span></button>
 
 					<button class="check_doubt btn btn-sm <%= ViewHelpers.change_class_btn(doubt.answered) %>" doubt_id="<%= doubt.id %>" title="Marcar como respondida"> <%- ViewHelpers.change_class_label(doubt.answered) %></button>
 
-					<button class="destroy_doubt btn btn-sm btn-danger"	name="<%= doubt.id %>" title="Excluir Dúvida">  Excluir <span class="glyphicon glyphicon-remove"></span></button>
 					</td>
 					</tr>
 					<tr id="<%= doubt.id %>" class="message hidden">

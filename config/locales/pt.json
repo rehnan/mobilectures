@@ -28,6 +28,8 @@
 
   "global.status.active": "Ativo",
   "global.status.inactive": "Inativo",
+  "global.boolean.true": "Verdadeiro",
+  "global.boolean.false": "Falso",
   
   "global.link.show": "Visualizar",
   "global.link.edit": "Editar",
@@ -84,6 +86,7 @@
   
   "doubt.link.index": "Dúvidas",
   "doubt.show.title": "Gerenciar Dúvidas",
+  "doubt.name.anonymous": "Anônimo",
 
   "poll.link.index": "Enquetes",
   "poll.index.title": "Gerenciar enquetes",
