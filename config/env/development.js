@@ -10,5 +10,20 @@
  *
  */
 
-module.exports = {
-};
+ module.exports = {
+ 	connections: {
+ 		development_database: {
+ 			adapter: 'sails-mongo',
+ 			host: 'localhost',
+ 			port: 27017,
+ 			user: '',
+ 			password: '',
+ 			database: 'mobilecturesdb',
+ 			schema: true
+ 		}
+ 	},
+
+ 	models: {
+ 		connection: 'development_database'
+ 	}
+ };
