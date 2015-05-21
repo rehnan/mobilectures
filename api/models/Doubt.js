@@ -92,7 +92,7 @@ module.exports = {
      });
    },
 
-   show: function (params, callback){
+   findAll: function (params, callback){
       
       Session.findOne({id:params.session_id}).populate('doubts', {listener:params.listener_id}).exec(function (err, session) {
            if(err){return callback(err, null);}

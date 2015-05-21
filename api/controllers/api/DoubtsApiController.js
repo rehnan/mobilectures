@@ -11,7 +11,7 @@ var DoubtsApiController = {
              params.listener_id = req.session.listener.id;
              params.session_id  = req.session.listener.logged_room;
 
-         Doubt.show(params, function (err, response) {
+         Doubt.findAll(params, function (err, response) {
             if(err){return res.json([401], {error:err});}
 
             if(response.status){
