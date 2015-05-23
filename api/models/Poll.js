@@ -76,7 +76,25 @@ module.exports = {
     			});
     		});
     	});
-    }
+    },
+
+    findAll: function (session, callback){
+      
+      Session.findOne({id:session.id, owner:session.owner}).populate('polls').exec(function (err, session) {
+           if(err){return callback(err, null);}
+
+           var response = {};
+
+           if(session && session.polls.length > 0) {
+             response.polls = session.polls;
+             response.status = true;
+           } else {
+             response.polls = {};
+             response.status = false;
+           }
+           callback(null, response);
+        });
+   },
 
  };
 

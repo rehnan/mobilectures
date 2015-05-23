@@ -208,6 +208,12 @@ module.exports.routes = {
       action: 'new'
     },
 
+    //Rest to session polls
+   'GET /speaker/sessions/:session_id/polls/:poll_id':{
+      controller: 'PollsController',
+      action: 'show'
+   },
+
 
     /* ################# END POLL ROUTES   ####################### */
 

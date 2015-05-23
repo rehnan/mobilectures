@@ -10,6 +10,7 @@
 
 	<div class="row">
 		<!-- Generate this dynamical -->
+		<% _.each(polls, function (poll) { %>
 		<div class="col-sm-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -20,35 +21,14 @@
 						<button type="button" class="btn btn-default" aria-label="Right Align"><span class="glyphicon glyphicon glyphicon-stats" aria-hidden="true"></span></button>
 					</div>
 					<br><br>
-					<h3 class="panel-title text-center"><strong>Título da enquete</strong></h3> 
+					<h3 class="panel-title text-center"><strong><%= poll.title %></strong></h3> 
 				</div>
 				<div class="panel-body">
-					Descrição da enquete...
+					<%= poll.description %>
 				</div>
 			</div>
 		</div>
-
-		<div class="col-sm-4">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Panel title</h3>
-				</div>
-				<div class="panel-body">
-					Panel content
-				</div>
-			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Panel title</h3>
-				</div>
-				<div class="panel-body">
-					Panel content
-				</div>
-			</div>
-		</div>
+		<% }) %>
 		<!-- Generate this dynamical -->
 	</div>
 
