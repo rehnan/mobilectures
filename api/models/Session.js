@@ -46,7 +46,13 @@ module.exports = {
       doubts: {
          collection: 'doubt', //Do modelo doubt
          via: 'session' //Relação estabelecida via atributo belongs localizado no modelo Listeners 
-      }
+      },
+
+      
+      polls: {
+         collection:'poll',
+         via: 'session' 
+      },
    },
 
    validationMessages: {

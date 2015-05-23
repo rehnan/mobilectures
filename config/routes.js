@@ -177,7 +177,7 @@ module.exports.routes = {
    //Rest to session polls
    'GET /speaker/sessions/:session_id/polls':{
       controller: 'PollsController',
-      action: 'show'
+      action: 'index'
    },
    /* ################# END SESSIONS ROUTES ####################### */
 
@@ -193,6 +193,23 @@ module.exports.routes = {
       action: 'subscribe'
    },
    /* ################# END LISTENERS ROUTES ####################### */
+
+
+
+    /* ################# BEGIN POLL ROUTES ####################### */
+
+    'POST /speaker/sessions/:session_id/polls':{
+      controller: 'PollsController',
+      action: 'create'
+    },
+
+    'GET /speaker/sessions/:session_id/polls/new':{
+      controller: 'PollsController',
+      action: 'new'
+    },
+
+
+    /* ################# END POLL ROUTES   ####################### */
 
 
    /* ################# MOBILE API ####################### */

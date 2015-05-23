@@ -35,7 +35,7 @@
   "global.link.edit": "Editar",
   "global.link.destroy": "Remover",
 
-  "global.messages.welcome": "Olá {{name}}, seja bem vindo área do palestrante!",
+  "global.messages.welcome": "Olá {{name}}, seja bem vindo à área do palestrante!",
 
   "speaker.login.title": "Entrar no sistema",
   "speaker.login.index.header":  "Por favor, entre com seu login!",
@@ -89,7 +89,15 @@
   "doubt.name.anonymous": "Anônimo",
 
   "poll.link.index": "Enquetes",
+  "poll.show.title": "Gerenciar Enquetes",
+
+  "poll.link.index": "Enquetes",
   "poll.index.title": "Gerenciar enquetes",
+  "poll.link.new": "Nova Enquete",
+  "poll.title": "Título",
+  "poll.description": "Descrição",
+  "poll.input.placeholder.title": "Informe o título da enquete",
+  "poll.input.placeholder.description": "Informe uma descrição sobre a enquete",
 
   "listener.link.index": "Ouvintes",
   "listener.index.title": "Ouvintes Conectados",

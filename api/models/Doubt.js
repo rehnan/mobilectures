@@ -19,7 +19,7 @@ module.exports = {
          required: true  
       },
 
-        //Uma ou mais dúvida pertence há uma sessão
+      //Uma ou mais dúvida pertence há uma sessão
       session: {
         	model: 'Session'
       },
