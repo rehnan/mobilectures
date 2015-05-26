@@ -40,7 +40,11 @@ var DoubtsController = {
                });
 
                var doubts = session.doubts;
-               res.view('speaker/doubts/show', {layout: 'layouts/session', session: session, doubts: doubts});
+              // Log.info(JSON.stringify(doubts));
+               _.each(doubts, function (doubt) {  
+                   Log.info(doubt.listener);
+               }); 
+               return res.view('speaker/doubts/show', {layout: 'layouts/session', session: session, doubts: doubts});
             })
             .catch(function(err){
           		req.flash('error', 'Erro na consulta das dúvidas!!!');

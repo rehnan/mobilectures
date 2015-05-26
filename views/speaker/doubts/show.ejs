@@ -8,8 +8,8 @@
 		<table class="table table-hover table-striped">
 			<thead>
 				<tr>
-					<th class="text-center">Avatar</th>
 					<th>Ouvinte</th>
+					<th>Nome</th>
 					<th>Data de Envio</th>
 					<th>Respondida</th>
 					<th class="text-center">Ações</th>
@@ -18,8 +18,8 @@
 			<tbody>
 				<% _.each(doubts, function (doubt) { %>
 					<tr class="<%= ViewHelpers.change_class_row(doubt.answered) %>">
-					<td><%- Gravatar.getImage(doubt.listener.avatar) %></td>
-					<td><%= doubt.listener.name %></td>
+					<td><%- Gravatar.getImage(doubt.listener) %></td>
+					<td><%= doubt.listener.name%></td>
 					<td><%= DateHelper.formatDate(doubt.createdAt) %></td>
 					<td><%= ViewHelpers.bool(doubt.answered) %></td>
 					<td class="text-right">
