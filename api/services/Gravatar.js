@@ -16,10 +16,8 @@ module.exports = {
 	},
 
 	getImage: function(listener) {
-		Log.info(listener);
 		var defaut = '/images/default_avatar.jpg';
 		if(listener.avatar === undefined) {
-		Log.error('It is indefined!');
 		return "<div class='circle-mask'><img id='canvas' src='"+defaut+"' alt='Smiley face' class='circle' width='56' height='56'></image></div>";
 		}
 		return "<div class='circle-mask'><img id='canvas' src='"+listener.avatar+"' alt='Smiley face' class='circle' width='56' height='56'></image></div>";

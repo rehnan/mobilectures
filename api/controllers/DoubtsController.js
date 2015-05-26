@@ -40,10 +40,7 @@ var DoubtsController = {
                });
 
                var doubts = session.doubts;
-              // Log.info(JSON.stringify(doubts));
-               _.each(doubts, function (doubt) {  
-                   Log.info(doubt.listener);
-               }); 
+              
                return res.view('speaker/doubts/show', {layout: 'layouts/session', session: session, doubts: doubts});
             })
             .catch(function(err){
