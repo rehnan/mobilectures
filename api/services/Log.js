@@ -14,4 +14,8 @@ module.exports = {
 	debug: function(message) {
 		sails.log(message);
 	},
+
+	json: function(object_json) {
+		sails.log.info(JSON.stringify(object_json));
+	}
 }

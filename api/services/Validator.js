@@ -40,5 +40,12 @@ module.exports = {
          }
          callback(errors)
       }); 
+   },
+
+   objectIsEmpty: function(object) {
+      if(Object.keys(object).length === 0) {
+         return true;
+      } 
+      return false;
    }
 }

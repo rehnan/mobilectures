@@ -32,6 +32,11 @@ module.exports = {
 
    change_class_label: function($bollean) {
       return ($bollean) ? 'Respondida <span class="glyphicon glyphicon-check"></span>' : 'Responder <span class="glyphicon glyphicon-question-sign"></span>';
+   },
+
+   show_initial_chars: function(start, end, string) {
+      var str = string.trim();
+      return str.substring(start, end)+'...';
    }
 
    /*

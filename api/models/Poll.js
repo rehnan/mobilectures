@@ -17,7 +17,7 @@ module.exports = {
 		description : { 
 			type: 'string',
 			required: true,
-			minLength: 10
+			minLength: 15
 		},
 
 		enabled: {
@@ -30,34 +30,34 @@ module.exports = {
     	model: 'Session'
     },
 
-    question: {
+   question: {
       type: 'text',
       defaultsTo: ''
-    },
+   },
 
-    alternatives: {
+   alternatives: {
       type: 'array',
       defaultsTo: []
-    }
-   },
+   }
+},
 
-   validationMessages: {
+validationMessages: {
 
-   	title: {
-   		required: 'Você deve informar o título da enquete!',
-   		maxLength: 'O Título deve possuir no máximo 30 caracteres!'
-   	},
+  title: {
+    required: 'Você deve informar o título da enquete!',
+    maxLength: 'O Título deve possuir no máximo 30 caracteres!'
+ },
 
-   	description: {
-   		required: 'Você deve informar a descrição da enquete!',
-   		minLength: 'A descrição deve possuir no mínimo 10 caracteres'
-   	}, 
-   },
+ description: {
+    required: 'Você deve informar a descrição da enquete!',
+    minLength: 'A descrição deve possuir no mínimo 15 caracteres'
+ }, 
+},
 
-   new: {
-   	title: '',
-   	description: ''
-   },
+new: {
+  title: '',
+  description: ''
+},
 
     /*
     * Validates unique and custom messages
@@ -88,23 +88,54 @@ module.exports = {
     	});
     },
 
-    findAll: function (session, callback){
-      
-      Session.findOne({id:session.id, owner:session.owner}).populate('polls').exec(function (err, session) {
-           if(err){return callback(err, null);}
+    updateIfValid: function (params, callback) {
 
-           var response = {};
+      var response = {};
+      response.errors = null
+      response.validation_errors = null;
+      response.poll_error = null; 
 
-           if(session && session.polls.length > 0) {
-             response.polls = session.polls;
-             response.status = true;
-           } else {
-             response.polls = {};
-             response.status = false;
-           }
-           callback(null, response);
-        });
+      Poll.validate(params, function (errors) {
+
+         if (errors) {
+            Log.debug('Poll Errors ==> ' + JSON.stringify(errors));
+            pretty_errors = SailsValidador(Poll, errors);
+            Log.debug('Pretty Errors ==> ' + JSON.stringify(pretty_errors));
+            response.validation_errors = pretty_errors;
+            return callback(null, response);
+         }
+         
+         Poll.update({id:params.session, id:params.poll_id}, params).exec(function (err, updated) {
+               if(err) { return callback(err, null) }
+
+                if(Validator.objectIsEmpty(updated)){
+                 response.poll_error = 'Enquete não encontrada para atualização!';
+                 return callback(null, response);
+                } 
+               
+               response.poll = updated
+               return callback(null, response);
+         });
+      });
    },
 
- };
+   findAll: function (session, callback){
+
+      Session.findOne({id:session.id, owner:session.owner}).populate('polls').exec(function (err, session) {
+       if(err){return callback(err, null);}
+
+       var response = {};
+
+       if(session && session.polls.length > 0) {
+        response.polls = session.polls;
+        response.status = true;
+     } else {
+        response.polls = {};
+        response.status = false;
+     }
+     callback(null, response);
+  });
+   },
+
+};
 
