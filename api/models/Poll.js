@@ -25,10 +25,20 @@ module.exports = {
 			defaultsTo: true
 		},
 
-      //Uma ou mais enquetes pertence há uma sessão
-      session: {
-      	model: 'Session'
-      }
+    //Uma ou mais enquetes pertence há uma sessão
+    session: {
+    	model: 'Session'
+    },
+
+    question: {
+      type: 'text',
+      defaultsTo: ''
+    },
+
+    alternatives: {
+      type: 'array',
+      defaultsTo: []
+    }
    },
 
    validationMessages: {
