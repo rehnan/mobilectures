@@ -16,6 +16,6 @@ module.exports = {
 	},
 
 	json: function(object_json) {
-		sails.log.info(JSON.stringify(object_json));
+		sails.log.info("JSON OBJECT: "+JSON.stringify(object_json));
 	}
 }

@@ -53,6 +53,7 @@ var PollsController = {
 
          var conditions = {id: session.id, owner: req.session.passport.user.id };
          var poll_id = req.param('poll_id');
+         var session_id = req.param('session_id')
 
          Session.findOne(conditions).populate('polls', {id: poll_id}).exec(function (err, session){
             if(!session) {
@@ -67,24 +68,27 @@ var PollsController = {
 
             var poll = session.polls[0];
             application.title = req.__('session.edit.title');
-            return res.view('speaker/polls/edit', {errors: {}, poll: poll, session:session});
+            return res.view('speaker/polls/edit', {errors: {}, poll: poll, poll_id: poll_id, session_id:session_id, session:session});
          });
       });
    },
 
    update: function(req, res) {
       Log.info('Action: update called!');
+
       PollsController.beforeAction(req, res, function (session) {
 
          var params = req.params.all();
          params.session = session.id;
+         var poll_id = req.param('poll_id');
+         var session_id = req.param('session_id')
 
          Poll.updateIfValid(params, function (errors, response) {
             if(response.errors){return Log.error(response.errors);}
             if (response.validation_errors) {
                sails.log.debug('Error ==> ' + JSON.stringify(errors));
                req.flash('error', req.__('global.flash.form.error'));
-               return res.view('speaker/polls/edit', {errors: response.validation_errors, poll: req.params.all(), session:session});
+               return res.view('speaker/polls/edit', {errors: response.validation_errors, poll: req.params.all(), poll_id: poll_id, session_id:session_id, session:session});
             }
 
             if(response.poll_error){
