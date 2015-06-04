@@ -1,9 +1,20 @@
-.entry:not(:first-of-type)
+.alternative
 {
-    margin-top: 10px;
+  min-height: 20px;
+  padding: 7px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
 }
 
 .glyphicon
 {
-    font-size: 12px;
+	font-size: 12px;
+}
+
+.blank {
+	background-color: #2B65EC;
+	width: 900px;
+	height: 20px;
 }

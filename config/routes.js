@@ -230,7 +230,7 @@ module.exports.routes = {
 
    'POST /speaker/sessions/:session_id/polls/:poll_id/questions':{
       controller: 'PollsController',
-      action: 'edit_questions'
+      action: 'questions_update'
    },
 
     /* ################# END POLL ROUTES   ####################### */

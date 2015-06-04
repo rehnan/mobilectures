@@ -30,7 +30,7 @@ module.exports = {
     	model: 'Session'
     },
 
-   question: {
+    question: {
       type: 'text',
       defaultsTo: ''
    },
@@ -38,7 +38,12 @@ module.exports = {
    alternatives: {
       type: 'array',
       defaultsTo: []
-   }
+   },
+
+   choice_multiple: {
+      type: 'boolean',
+      defaultsTo: false
+   } 
 },
 
 validationMessages: {
@@ -105,17 +110,17 @@ new: {
             return callback(null, response);
          }
          
-         Poll.update({id:params.session, id:params.poll_id}, params).exec(function (err, updated) {
-               if(err) { return callback(err, null) }
+         Poll.update({session:params.session, id:params.poll_id}, params).exec(function (err, updated) {
+            if(err) { return callback(err, null) }
 
-                if(Validator.objectIsEmpty(updated)){
-                 response.poll_error = 'Enquete não encontrada para atualização!';
-                 return callback(null, response);
-                } 
-               
-               response.poll = updated
-               return callback(null, response);
-         });
+             if(Validator.objectIsEmpty(updated)){
+              response.poll_error = 'Enquete não encontrada para atualização!';
+              return callback(null, response);
+           } 
+
+           response.poll = updated;
+           return callback(null, response);
+        });
       });
    },
 
@@ -136,6 +141,45 @@ new: {
      callback(null, response);
   });
    },
+
+   find: function (params, callback) {
+
+      Session.findOne({id:params.session_id, owner:params.owner}).populate('polls', {id:params.poll_id}).exec(function (err, session) {
+       if(err){return callback(err, null);}
+
+       var response = {};
+       var index = session.polls.length;
+
+       if(session && index > 0) {
+        response.poll = session.polls[index-1];
+        response.status = true;
+     } else {
+        response.poll = {};
+        response.status = false;
+     }
+
+     callback(null, response);
+  });
+   },
+
+   updateQuestionIfValid: function (params, callback) {
+      
+      Poll.update({id:params.poll_id, session:params.session_id}, params).exec(function (err, updated) {
+            if(err) { return callback(err, null) }
+            var response = {};
+               /*
+             if(Validator.objectIsEmpty(updated)){
+              response.poll_error = 'Enquete não encontrada para atualização!';
+              return callback(null, response);
+               } 
+            */
+            
+           response.poll_id = updated[0].id;
+           
+           return callback(null, response);
+        });
+      
+   }
 
 };
 

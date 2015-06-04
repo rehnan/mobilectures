@@ -26,6 +26,7 @@ var jsFilesToInject = [
   // Load sails.io before everything else
   'js/dependencies/sails.io.js',
   'js/dependencies/jquery.2.1.3.min.js',
+  'js/dependencies/jquery-ui.js',
   'bootstrap/js/bootstrap.min.js',
   'bootstrap/js/bootstrap-table.min.js',
   'bootstrap/js/bootstrap-dialog.min.js',
@@ -34,6 +35,7 @@ var jsFilesToInject = [
   'js/lib/functions.js',
   'js/listeners.js',
   'js/doubts.js',
+  'js/polls.js',
   'js/speaker_profile.js',
 
   // Dependencies like jQuery, or Angular are brought in here

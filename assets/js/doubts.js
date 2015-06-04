@@ -107,7 +107,6 @@ ml.doubts = {
 			dataType: 'json',
 			url: url,
 			success: function(doubts, status) { 
-				console.log(JSON.stringify(doubts.count));
 				doubt_badge.text(doubts.count);
 			},
 			error: function(doubts, status) {

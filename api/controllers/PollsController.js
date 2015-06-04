@@ -111,9 +111,36 @@ show: function(req, res) {
 
 
 questions: function(req, res) {
-   Log.info('Questions');
+   
    PollsController.beforeAction(req, res, function (session) {
-       return res.view('speaker/polls/questions', {errors: {}, poll: {}, session:session});
+      var params = req.params.all();
+      params.owner = session.owner;
+
+      Poll.find(params, function(err, response){
+         if(err) {Log.error(err);}
+
+         if(response.status){
+            return res.view('speaker/polls/questions', {layout: 'layouts/session', errors: {}, poll: response.poll, session:session});
+         }
+
+         req.flash('error', 'Enquete inexistente!!!');
+         return res.redirect('/speaker/sessions/'+session.id+'/polls');
+      });
+
+      
+   });
+},
+
+questions_update: function (req, res) {
+
+   Log.json(req.params.all());
+   PollsController.beforeAction(req, res, function (session) {
+      Poll.updateQuestionIfValid(req.params.all(), function(err, response){
+         if(err) {Log.error(err);}
+         req.flash('success', 'Questão e alternativas atualizadas com sucesso!');
+         Log.info('/speaker/sessions/'+session.id+'/polls/'+response.poll_id+'/questions');
+         return res.redirect('/speaker/sessions/'+session.id+'/polls/'+response.poll_id+'/questions');
+      });
    });
 },
 
