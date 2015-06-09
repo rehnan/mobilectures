@@ -1,0 +1,18 @@
+<form action="<%= action %>" method="POST">
+	<div class="input-group">
+		<span class="input-group-addon" id="sizing-addon2">Questão: </span>
+		<input type="text" value="<%= poll.question %>" class="form-control" name="question" placeholder="Descrição da questão" aria-describedby="sizing-addon2">
+	</div><br>
+
+	<div class="input_fields_wrap question"> 
+		<%- PollsHelper.least_one(poll.alternatives.length) %>
+		<% _.each(poll.alternatives, function (alternative) { %>
+			<%- PollsHelper.show(alternative) %>
+		<% }); %>
+	</div>
+		
+	<div class="input-group pull-right">
+		<button type="button" class="btn btn-success btn-sm add_field_button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nova Alternativa</button>
+	</div> <br><br>
+	<button type="submit" class="btn btn-sm btn-primary btn-block">Salvar Questões</button>
+</form>

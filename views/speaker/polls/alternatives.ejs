@@ -1,0 +1,20 @@
+<section>
+	<header class="page-header text-center"><h3>Questões</h3></header>
+</section>
+<article>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3 ">
+				<div class="form-group question-group well">
+					<label>Título Enquete: <%= poll.title %> </label>
+					<p>
+						<small>Description: <%= poll.description %></small>
+					</p>
+				</div>
+				
+				<%- partial('_form_to_alternatives', {action: '/speaker/sessions/'+session.id+'/polls/'+poll.id+'/alternatives', disabledKey: ''}) %>
+				</div>
+			</div>
+		</div>
+	</article>
+

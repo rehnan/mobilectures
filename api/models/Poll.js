@@ -163,7 +163,7 @@ new: {
    },
 
    updateQuestionIfValid: function (params, callback) {
-      
+
       Poll.update({id:params.poll_id, session:params.session_id}, params).exec(function (err, updated) {
             if(err) { return callback(err, null) }
             var response = {};
