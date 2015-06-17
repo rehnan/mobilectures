@@ -28,6 +28,13 @@ module.exports = {
 		return 'panel-warning';
 	},
 
+	link_action_poll: function (link_to, icon, title, data_confirm) {
+		if(data_confirm){
+			return '<a href="'+link_to+'" class="btn btn-default" title="'+title+'" data-confirm="'+data_confirm+'" rule="button"><span class="glyphicon glyphicon-'+icon+'" aria-hidden="true"></span></a>';
+		}
+		return '<a href="'+link_to+'" class="btn btn-default" title="'+title+'" rule="button"><span class="glyphicon glyphicon-'+icon+'" aria-hidden="true"></span></a>';
+	},
+
 	check_radio_true: function (option) {
 		var check = null;
 		(option) ? check ='checked=checked' : check = '';
