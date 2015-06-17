@@ -8,44 +8,73 @@
 module.exports = {
 
 	attributes: {
+     /*
+   * Attribute to set title a poll 
+   */
 		title : { 
 			type: 'string',
 			required: true ,
 			maxLength: 30
 		},
 
+    /*
+   * Attribute to set description a poll 
+   */
 		description : { 
 			type: 'string',
 			required: true,
 			minLength: 15
 		},
 
+   /*
+   * Attribute to disable/enable poll (In case of delete poll action) 
+   */
 		enabled: {
 			type: 'boolean',
 			defaultsTo: true
 		},
 
-    //Uma ou mais enquetes pertence há uma sessão
+    //Association attribute (One or more polls, belongs to one session)
     session: {
     	model: 'Session'
     },
 
+  /*
+   * Attribute to set description question from a poll
+  */
     question: {
       type: 'text',
       defaultsTo: ''
    },
 
+   /*
+   * Attribute to add array of alternatives 
+   */
    alternatives: {
       type: 'array',
       defaultsTo: []
    },
 
+   /*
+   * Attribute to set if poll is multiple choice 
+   */
    choice_multiple: {
       type: 'boolean',
       defaultsTo: false
    },
 
+  /*
+   * Attribute to check if poll is valid 
+   */
    valid: {
+      type: 'boolean',
+      defaultsTo: false
+   },
+
+   /*
+   * Attribute to check if poll was sent to listeners 
+   */
+   status: {
       type: 'boolean',
       defaultsTo: false
    }

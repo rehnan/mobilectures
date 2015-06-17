@@ -1,6 +1,21 @@
 <section>
 	<header class="page-header text-center">
 		<h3> Enquetes </h3>
+		<hr>
+		<div class="row">
+		  <div class="col-xs-4">
+		    <label>Legenda:</label>
+		   </div>
+		</div>
+		<div class="row">
+		    <div class="col-xs-5">
+				<ul class="legend">
+				    <li><span class="sent"></span> Enviada(s) </li>
+				    <li><span class="pending"></span> Pendente(s) </li>
+				    <li><span class="ready"></span> Pronta(s) pra envio </li>
+				</ul>
+			</div>
+		</div>
 		<div class="clearfix">
 			<a href="/speaker/sessions/<%= session.id %>/polls/new" class="btn btn-default pull-right" ><%= i18n("poll.link.new") %></a>
 		</div>
@@ -12,7 +27,7 @@
 		<!-- Generate this dynamical -->
 		<% _.each(polls, function (poll) { %>
 		<div class="col-sm-4">
-			<div class="panel panel-default">
+			<div class="panel <%- PollsHelper.manage_status(poll) %>">
 				<div class="panel-heading">
 					<div class="btn-group pull-right"> 
 					<a href="#" class="btn btn-default" aria-label="Center Align" rule="button"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
