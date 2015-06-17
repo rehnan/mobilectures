@@ -160,7 +160,7 @@ new: {
 
    findAll: function (session, callback){
 
-      Session.findOne({id:session.id, owner:session.owner}).populate('polls').exec(function (err, session) {
+      Session.findOne({id:session.id, owner:session.owner}).populate('polls', {enabled:true}).exec(function (err, session) {
        if(err){return callback(err, null);}
 
        var response = {};
@@ -213,6 +213,22 @@ new: {
          if(err) { return callback(err, null) }
          response.poll_id = updated[0].id;
          return callback(null, response);
+      });
+   },
+
+   disable: function (params, callback) {
+      var response = {};
+      Poll.update({id:params.poll_id, session:params.session_id}, {enabled:false}).exec(function(err, poll){
+         if(err) {callback(err, null);}
+         if(!Validator.objectIsEmpty(poll)) {
+          response.status = true;
+          Log.info('Enquete desabilitada!');  
+          callback(null, response);
+         } else {
+           response.status = false;
+           Log.error('Enquete Não encontrada!');  
+           callback(null, response);
+         }
       });
    }
 };

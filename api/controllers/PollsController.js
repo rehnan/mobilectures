@@ -40,7 +40,7 @@ create: function(req, res) {
         return res.view('speaker/polls/new', {errors: pretty_errors,  poll: req.params.all(), session:session});
      } else {
         req.flash('success', req.__('global.flash.create.success', {name: req.param('title')}));
-        return res.redirect('speaker/sessions/'+session.id+'/polls');
+        return res.redirect('speaker/sessions/'+session.id+'/polls/'+record.id+'/alternatives');
      }
   });
  });
@@ -104,6 +104,30 @@ update: function(req, res) {
      });
 },
 
+destroy: function(req, res) {
+
+    PollsController.beforeAction(req, res, function (session) {
+      var params = req.params.all();
+      params.owner = session.owner;
+      Poll.disable(params, function(err, response){
+         if(err) {Log.error(err);}
+
+         if(!response) {
+            req.flash('error', 'Erro ao excluir enquete!');
+            return res.redirect('/speaker/sessions/'+session.id+'/polls');
+         }
+
+         if(response.status){
+            req.flash('error', 'Enquete excluída com sucesso!');
+            return res.redirect('/speaker/sessions/'+session.id+'/polls');
+         }
+
+         req.flash('error', 'Enquete inexistente!!!');
+         return res.redirect('/speaker/sessions/'+session.id+'/polls');
+      });
+   });
+},
+
 show: function(req, res) {
   Log.info('Action: show called!');
 
@@ -125,8 +149,6 @@ new_alternatives: function(req, res) {
          req.flash('error', 'Enquete inexistente!!!');
          return res.redirect('/speaker/sessions/'+session.id+'/polls');
       });
-
-      
    });
 },
 

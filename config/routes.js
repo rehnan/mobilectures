@@ -223,6 +223,11 @@ module.exports.routes = {
       action: 'update'
    },
 
+   'GET /speaker/sessions/:session_id/polls/delete/:poll_id':{
+      controller: 'PollsController',
+      action: 'destroy'
+   },
+
    'GET /speaker/sessions/:session_id/polls/:poll_id/alternatives':{
       controller: 'PollsController',
       action: 'new_alternatives'
