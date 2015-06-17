@@ -20,7 +20,7 @@ ml.polls = {
 		    	e.preventDefault();
 		        if(x < max_fields){ //max input box allowed
 		            x++; //text box increment
-		            $(wrapper).append('<div class="input-group alternative glyphicon glyphicon-move order_alternative"><input style="max-width:95%;float:right" class="form-control" name="alternatives[]" type="text" placeholder="Descrição da alternativa..." /><span class="input-group-btn remove_field"><button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>'); //add input box
+		            $(wrapper).append('<div class="input-group alternative glyphicon glyphicon-move order_alternative"><input style="max-width:93%;float:right" class="form-control" name="alternatives[]" type="text" placeholder="Descrição da alternativa..." /><span class="input-group-btn remove_field"><button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>'); //add input box
 		         }
 		      });
 		    

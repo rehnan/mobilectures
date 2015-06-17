@@ -9,7 +9,7 @@ module.exports = {
 			btn_disabled = '';
 			remove_field_class = 'remove_field';
 		}   
-		return '<div class="input-group alternative glyphicon glyphicon-move order_alternative"><input style="max-width:95%;float:right" class="form-control" name="alternatives[]" type="text" value="'+alternative+'" placeholder="Descrição da alternativa..." /><span class="input-group-btn '+remove_field_class+'"><button class="btn btn-danger" '+btn_disabled+' type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>';
+		return '<div class="input-group alternative glyphicon glyphicon-move order_alternative"><input style="max-width:93%;float:right" class="form-control" name="alternatives[]" type="text" value="'+alternative+'" placeholder="Descrição da alternativa..." /><span class="input-group-btn '+remove_field_class+'"><button class="btn btn-danger" '+btn_disabled+' type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>';
 	},
 
 	check_radio_true: function (option) {
@@ -40,7 +40,7 @@ module.exports = {
 				btn_disabled = '';
 				remove_field_class = 'remove_field';
 			}   
-			html_alter += '<div class="input-group alternative glyphicon glyphicon-move order_alternative"><input style="max-width:95%;float:right" class="form-control" name="alternatives[]" type="text" placeholder="Descrição da alternativa..." /><span class="input-group-btn '+remove_field_class+'"><button class="btn btn-danger" '+btn_disabled+' type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>';
+			html_alter += '<div class="input-group alternative glyphicon glyphicon-move order_alternative"><input style="max-width:93%;float:right" class="form-control" name="alternatives[]" type="text" placeholder="Descrição da alternativa..." /><span class="input-group-btn '+remove_field_class+'"><button class="btn btn-danger" '+btn_disabled+' type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>';
 			amount_alters++;
 		}
 		return html_alter;
