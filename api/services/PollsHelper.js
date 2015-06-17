@@ -1,10 +1,48 @@
 module.exports = {
-	show: function(alternative) {
-		return '<div class="input-group alternative"><input class="form-control" name="alternatives[]" type="text" value="'+alternative+'" placeholder="Descrição da alternativa..." /><span class="input-group-btn remove_field"><button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>';
-    },
+	input_foreah: function(alternative, i) {
+		var btn_disabled;
+		var remove_field_class;
+		if (i < 2) {
+			btn_disabled = 'disabled="disabled"';
+			remove_field_class = '';	
+		} else {
+			btn_disabled = '';
+			remove_field_class = 'remove_field';
+		}   
+		return '<div class="input-group alternative glyphicon glyphicon-move order_alternative"><input style="max-width:95%;float:right" class="form-control" name="alternatives[]" type="text" value="'+alternative+'" placeholder="Descrição da alternativa..." /><span class="input-group-btn '+remove_field_class+'"><button class="btn btn-danger" '+btn_disabled+' type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>';
+	},
 
-    least_one: function (length) {
-    	var html_alter = '<div class="input-group alternative"><input class="form-control" name="alternatives[]" type="text" placeholder="Descrição da alternativa..." /><span class="input-group-btn remove_field"><button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>'
-    	return (length === 0) ? html_alter : '';
-    }
+	check_radio_true: function (option) {
+		var check = null;
+		(option) ? check ='checked=checked' : check = '';
+		return check;
+	},
+
+	check_radio_false: function (option) {
+		var check = null;
+		(!option) ? check = 'checked=checked' : check ='';
+		return check;
+	},
+
+	input_for_missing: function (alternative) {
+		var amount_min = 2;
+		var amount_alters = 0;
+		var html_alter = '';
+		var btn_disabled;
+		var remove_field_class;
+
+		(typeof alternative !== 'undefined') ? amount_alters = alternative.length : '';
+		while(amount_alters < amount_min) {
+			if (amount_alters < 2) {
+				btn_disabled = 'disabled="disabled"';
+				remove_field_class = '';	
+			} else {
+				btn_disabled = '';
+				remove_field_class = 'remove_field';
+			}   
+			html_alter += '<div class="input-group alternative glyphicon glyphicon-move order_alternative"><input style="max-width:95%;float:right" class="form-control" name="alternatives[]" type="text" placeholder="Descrição da alternativa..." /><span class="input-group-btn '+remove_field_class+'"><button class="btn btn-danger" '+btn_disabled+' type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>';
+			amount_alters++;
+		}
+		return html_alter;
+	}
 };

@@ -1,18 +1,33 @@
-<form action="<%= action %>" method="POST">
-	<div class="input-group">
-		<span class="input-group-addon" id="sizing-addon2">Questão: </span>
-		<input type="text" value="<%= poll.question %>" class="form-control" name="question" placeholder="Descrição da questão" aria-describedby="sizing-addon2">
-	</div><br>
+<form action="<%= action %>" method="POST" id="form_update_altvs">
+	<div class="well">
+		<div class="form-inline">
+			<label class="control-label">Múltipla escolha? </label>
+				<label class="radio">
+					<input value="false" <%- PollsHelper.check_radio_false(poll.choice_multiple) %> name="choice_multiple" type="radio">Não.
+				</label>
+				<label class="radio">
+					<input value="true" <%- PollsHelper.check_radio_true(poll.choice_multiple) %> name="choice_multiple" type="radio">Sim.
+				</label>
+			</div>
+		</div>
+		<div class="input-group class='form-group <%= Messages.errors.form.class('question', errors) %>'">
+			<input type="hidden" name="title" value="<%= poll.title %>">
+			<input type="hidden" name="description" value="<%= poll.description %>">
+			<span class="input-group-addon" id="sizing-addon2">Questão: </span>
+			<input type="text" value="<%= poll.question %>" class="form-control" name="question" placeholder="Descrição da questão" aria-describedby="sizing-addon2">
+		</div>
+		<%- Messages.errors.form.message("question", errors) %>
+		<br>
 
-	<div class="input_fields_wrap question"> 
-		<%- PollsHelper.least_one(poll.alternatives.length) %>
-		<% _.each(poll.alternatives, function (alternative) { %>
-			<%- PollsHelper.show(alternative) %>
-		<% }); %>
-	</div>
-		
-	<div class="input-group pull-right">
-		<button type="button" class="btn btn-success btn-sm add_field_button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nova Alternativa</button>
-	</div> <br><br>
-	<button type="submit" class="btn btn-sm btn-primary btn-block">Salvar Questões</button>
-</form>
+		<div class="input_fields_wrap question"> 
+			<% _.each(poll.alternatives, function (alternative, interator) { %>
+				<%- PollsHelper.input_foreah(alternative, interator) %>
+				<% }); %>
+				<%- PollsHelper.input_for_missing(poll.alternatives) %>
+			</div>
+
+			<div class="input-group pull-right">
+				<button type="button" class="btn btn-success btn-sm add_field_button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nova Alternativa</button>
+			</div> <br><br>
+			<button type="submit" class="btn btn-sm btn-primary btn-block btn_save_altvs">Salvar Alternativas</button>
+		</form>

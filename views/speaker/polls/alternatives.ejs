@@ -11,8 +11,8 @@
 						<small>Description: <%= poll.description %></small>
 					</p>
 				</div>
-				
-				<%- partial('_form_to_alternatives', {action: '/speaker/sessions/'+session.id+'/polls/'+poll.id+'/alternatives', disabledKey: ''}) %>
+				<% var poll_id = poll.id || poll.poll_id %>
+				<%- partial('_form_to_alternatives', {action: '/speaker/sessions/'+session.id+'/polls/'+poll_id+'/alternatives', disabledKey: ''}) %>
 				</div>
 			</div>
 		</div>

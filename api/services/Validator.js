@@ -1,13 +1,17 @@
 module.exports = {
-   
+
    verifyEmptyParams: function(json){
       var errors = {};
       if(Object.keys(json).length > 0){
-
          Object.keys(json).forEach(function(key) {
-            if(json[key].trim() === ''){
-               errors[key] = new Array();
-               errors[key].push(sails.__('validator.messages.empty_field'));
+            try {
+               if(json[key].trim() === ''){
+                  errors[key] = new Array();
+                  errors[key].push(sails.__('validator.messages.empty_field'));
+               }
+            }
+            catch(err) {
+              Log.error('TypeError: undefined is not a function!');
             }
          });
       }
@@ -17,7 +21,7 @@ module.exports = {
    /*
     * TODO: Extract to lib/plugin
     */ 
-   unique: function(model, field, value, errors, callback) {
+    unique: function(model, field, value, errors, callback) {
       sails.log.debug('Validator unique for ==> ' + model.globalId);
       sails.log.debug('Validator Errors ==> ' + JSON.stringify(errors));
 

@@ -110,12 +110,11 @@ show: function(req, res) {
 },
 
 
-alternatives: function(req, res) {
+new_alternatives: function(req, res) {
    
    PollsController.beforeAction(req, res, function (session) {
       var params = req.params.all();
       params.owner = session.owner;
-
       Poll.find(params, function(err, response){
          if(err) {Log.error(err);}
 
@@ -131,15 +130,21 @@ alternatives: function(req, res) {
    });
 },
 
-alternatives_update: function (req, res) {
+update_alternatives: function (req, res) {
 
-   Log.json(req.params.all());
    PollsController.beforeAction(req, res, function (session) {
+
       Poll.updateQuestionIfValid(req.params.all(), function(err, response){
+        Log.json(req.params.all());
          if(err) {Log.error(err);}
-         req.flash('success', 'Questão e alternativas atualizadas com sucesso!');
-         Log.info('/speaker/sessions/'+session.id+'/polls/'+response.poll_id+'/alternatives');
-         return res.redirect('/speaker/sessions/'+session.id+'/polls/'+response.poll_id+'/alternatives');
+         if(response.has_errors) {
+
+          req.flash('error', 'Você deve informar a questão de enquete!');
+          return res.view('speaker/polls/alternatives', {layout: 'layouts/session', errors: response.errors, poll: req.params.all(), session:session});
+         } else {
+           req.flash('success', 'Questão e alternativas atualizadas com sucesso!');
+           return res.redirect('/speaker/sessions/'+session.id+'/polls/'+response.poll_id+'/alternatives');
+        }
       });
    });
 },
@@ -156,7 +161,6 @@ alternatives_update: function (req, res) {
  }
 
  var conditions = {id: req.param('session_id'), owner: req.session.passport.user.id};
- sails.log.debug('Polls conditions ==> ' + JSON.stringify(conditions));
  Session.findOne(conditions).exec(function (err, session){
   if(err){return err;}
   if(!session) {
@@ -164,7 +168,6 @@ alternatives_update: function (req, res) {
     return res.redirect('speaker/sessions');
  }
 
- sails.log.debug('Polls session ==> ' + JSON.stringify(session));
  callback(session);
 });
 },

@@ -225,12 +225,12 @@ module.exports.routes = {
 
    'GET /speaker/sessions/:session_id/polls/:poll_id/alternatives':{
       controller: 'PollsController',
-      action: 'alternatives'
+      action: 'new_alternatives'
    },
 
    'POST /speaker/sessions/:session_id/polls/:poll_id/alternatives':{
       controller: 'PollsController',
-      action: 'alternatives_update'
+      action: 'update_alternatives'
    },
 
     /* ################# END POLL ROUTES   ####################### */

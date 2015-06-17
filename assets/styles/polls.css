@@ -1,6 +1,5 @@
 .alternative
 {
-  min-height: 20px;
   padding: 7px;
   margin-bottom: 20px;
   background-color: #f5f5f5;
@@ -8,9 +7,15 @@
   border-radius: 4px;
 }
 
-.glyphicon
+.glyphicon-move.order_alternative
 {
-	font-size: 12px;
+  cursor: move;
+}
+
+.input_alternative 
+{
+  max-width:95%;
+  float:right
 }
 
 .blank {
@@ -18,3 +23,4 @@
 	width: 900px;
 	height: 20px;
 }
+

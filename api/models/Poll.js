@@ -43,7 +43,12 @@ module.exports = {
    choice_multiple: {
       type: 'boolean',
       defaultsTo: false
-   } 
+   },
+
+   valid: {
+      type: 'boolean',
+      defaultsTo: false
+   }
 },
 
 validationMessages: {
@@ -163,23 +168,23 @@ new: {
    },
 
    updateQuestionIfValid: function (params, callback) {
+      var response = {};
+      var quantity_altvs = params.alternatives.length;
+      response.errors = Validator.verifyEmptyParams(params);
 
+      if (!Validator.objectIsEmpty(response.errors)) {
+         response.has_errors = true;
+         return callback(null, response);
+      }
+
+      response.has_errors = false;
+      (params.alternatives[0] === '') ? params.alternatives = [] : '';
+      (quantity_altvs >= 2 && params.question.trim() !== '') ? params.valid = true : params.valid = false; 
       Poll.update({id:params.poll_id, session:params.session_id}, params).exec(function (err, updated) {
-            if(err) { return callback(err, null) }
-            var response = {};
-               /*
-             if(Validator.objectIsEmpty(updated)){
-              response.poll_error = 'Enquete não encontrada para atualização!';
-              return callback(null, response);
-               } 
-            */
-            
-           response.poll_id = updated[0].id;
-           
-           return callback(null, response);
-        });
-      
+         if(err) { return callback(err, null) }
+         response.poll_id = updated[0].id;
+         return callback(null, response);
+      });
    }
-
 };
 
