@@ -238,6 +238,11 @@ module.exports.routes = {
       action: 'update_alternatives'
    },
 
+   'GET /speaker/sessions/:session_id/polls/:poll_id/send':{
+      controller: 'PollsController',
+      action: 'send'
+   },
+
     /* ################# END POLL ROUTES   ####################### */
 
 

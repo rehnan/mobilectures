@@ -30,7 +30,7 @@
 			<div class="panel <%- PollsHelper.manage_status(poll) %>">
 				<div class="panel-heading">
 					<div class="btn-group pull-right"> 
-						<%- (!poll.valid || poll.status) ? '' : PollsHelper.link_action_poll('#', 'send', 'Enviar', false) %>
+						<%- (!poll.valid || poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/send', 'send', 'Enviar', false) %>
 						<%- (poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/edit/'+poll.id, 'pencil', 'Editar Enquete', false) %>
 						<%- (poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/delete/'+poll.id, 'remove', 'Excluir', 'Tem certeza que deseja excluir a enquete:'+poll.title) %>
 						<%- (poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/alternatives', 'list-alt', 'Editar Alternativas', false) %>
