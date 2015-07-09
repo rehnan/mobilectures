@@ -118,7 +118,7 @@ destroy: function(req, res) {
       }
 
       if(response.status){
-         req.flash('error', 'Enquete excluída com sucesso!');
+         req.flash('success', 'Enquete excluída com sucesso!');
          return res.redirect('/speaker/sessions/'+session.id+'/polls');
       }
 

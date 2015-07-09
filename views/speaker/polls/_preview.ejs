@@ -8,11 +8,15 @@
  				<button type="button" class="close" data-dismiss="modal">&times;</button>
  				<h4 class="modal-title"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Preview Enquete</h4>
  			</div>
- 			<div class="modal-body center-block" style="max-width: 400px;">
+ 			<div class="modal-body center-block limit-width">
  				<div class="row text-center">
  					<p><strong>Título: </strong><%= poll.title %> </p>
  				</div>
+
  				<hr>
+ 				<div class="row">
+ 					<%= poll.question %>
+ 				</div>
  				<% if(poll.choice_multiple) { %>
  				<div class="row ">
 	 				<% _.each(poll.alternatives, function (alternative) { %>
@@ -35,8 +39,8 @@
 					<% } %>
 				
  				<br>
- 				<div class="row">
-					<button type="button" class="btn btn-primary btn-sm btn-block">Enviar Resposta</button>
+ 				<div class="row limit-width">
+					<button type="button" class="btn btn-default btn-sm btn-block">Responder Enquete</button>
  				</div>
  			</div>
  			<div class="modal-footer">

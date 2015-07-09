@@ -26,28 +26,29 @@
 	<div class="row">
 		<!-- Generate this dynamical -->
 		<% _.each(polls, function (poll) { %>
-
-		<div class="col-sm-4">
-			<div class="panel <%- PollsHelper.manage_status(poll) %>">
-				<div class="panel-heading">
-					<div class="btn-group pull-right"> 
-						<%- (!poll.valid || poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/send', 'send', 'Enviar', false) %>
+			<div class="col-sm-4">
+				<div class="panel <%- PollsHelper.manage_status(poll) %>">
+					<div class="panel-heading">
+						<div class="btn-group pull-right"> 
+						<%- (!poll.valid || poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/send', 'send', 'Enviar', 'Clique em Ok para confirmar o envio desta enquete') %>
 						<%- (poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/edit/'+poll.id, 'pencil', 'Editar Enquete', false) %>
 						<%- (poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/delete/'+poll.id, 'remove', 'Excluir', 'Tem certeza que deseja excluir a enquete:'+poll.title) %>
 						<%- (poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/alternatives', 'list-alt', 'Editar Alternativas', false) %>
 						<%- (!poll.status || !poll.valid) ? '' : PollsHelper.link_action_poll('#', 'stats', 'Estatística', false) %>
 						<%- (!poll.valid) ? '' : PollsHelper.modal_poll_preview(poll.id) %>
 					</div>
+					
 					<br><br>
 					<h3 class="panel-title text-center"><strong><%= poll.title %></strong></h3> 
+					
+					</div>
+					<div class="panel-body">
+						<%= ViewHelpers.show_initial_chars(0, 31, poll.description) %>
+					</div>
+					</div>
 				</div>
-				<div class="panel-body">
-					<%= ViewHelpers.show_initial_chars(0, 31, poll.description) %>
-				</div>
+				<%- partial ('preview', {poll:poll}) %>
 			</div>
-		</div>
-		
-		<%- partial ('preview', {poll:poll}) %>
 		<% }) %>
 		<!-- Generate this dynamical -->
 	</div>

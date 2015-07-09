@@ -18,6 +18,10 @@
   float:right
 }
 
+.limit-width {
+  max-width: 400px;
+}
+
 .blank {
 	background-color: #2B65EC;
 	width: 900px;
