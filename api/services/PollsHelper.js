@@ -16,13 +16,13 @@ module.exports = {
 		if (poll.valid) {
 			switch(poll.status) {
 				case true:
-					return 'panel-success';
-					break;
+				return 'panel-success';
+				break;
 				case false:
-					return 'panel-info';
-					break;
+				return 'panel-info';
+				break;
 				default:
-					return 'panel-danger';
+				return 'panel-danger';
 			}
 		}
 		return 'panel-warning';
@@ -33,6 +33,14 @@ module.exports = {
 			return '<a href="'+link_to+'" class="btn btn-default" title="'+title+'" data-confirm="'+data_confirm+'" rule="button"><span class="glyphicon glyphicon-'+icon+'" aria-hidden="true"></span></a>';
 		}
 		return '<a href="'+link_to+'" class="btn btn-default" title="'+title+'" rule="button"><span class="glyphicon glyphicon-'+icon+'" aria-hidden="true"></span></a>';
+	},
+
+	modal_poll_preview: function(poll_id) {
+		return '<a type="button" class="btn btn-default" rule="button" data-toggle="modal" title="Preview" data-target="#modal-'+ poll_id +'"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>';
+	},
+
+	form_poll_preview:function(poll) {
+		
 	},
 
 	check_radio_true: function (option) {
