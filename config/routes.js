@@ -277,6 +277,11 @@ module.exports.routes = {
       action: 'create'
    },
 
+   'POST /api/poll_answers':{
+      controller: 'api/PollAnswersApiController',
+      action: 'create'
+   }
+
    /* ################# END MOBILE API ################### */
 
 };

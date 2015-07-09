@@ -175,17 +175,26 @@ send: function (req, res) {
    PollsController.beforeAction(req, res, function (session) {
       var params = req.params.all();
       params.owner = session.owner;
+
       Poll.find(req.params.all(), function (err, response) {
-      //if response.poll: enabled? and valid?
-      if (response.status) {
-         if(response.poll.enabled && response.poll.valid) {
-            //Sending questions poll to connected listeners 
-            return sails.sockets.broadcast(session.id, 'polls-receive', response.poll);
+         if (response.status) {
+            if(response.poll.enabled && response.poll.valid) {
+               Poll.update({id:response.poll.id}, {status:true}).exec(function (err, updated){
+                  if (err) { return Log.error(err); }
+                     //Sending questions poll to connected listeners 
+                     sails.sockets.broadcast(session.id, 'polls-receive', updated[0]);
+               });
+               req.flash('success', 'Enquete enviada com sucesso!');
+               return res.redirect('/speaker/sessions/'+session.id+'/polls');
+            }
+             req.flash('error', 'Esta enquete é inválida/inexistente!!');
+             return res.redirect('/speaker/sessions/'+session.id+'/polls');
          }
-      }
-      return 0;
+         req.flash('error', 'Enquete inexistente!!');
+          return res.redirect('/speaker/sessions/'+session.id+'/polls/');
+      });
+      
    });
-  });
 },
 
 /**
