@@ -12,20 +12,24 @@ module.exports = {
 		return '<div class="input-group alternative glyphicon glyphicon-move order_alternative"><input style="max-width:93%;float:right" class="form-control" name="alternatives[]" type="text" value="'+alternative+'" placeholder="Descrição da alternativa..." /><span class="input-group-btn '+remove_field_class+'"><button class="btn btn-danger" '+btn_disabled+' type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>';
 	},
 
-	manage_status: function (poll) {
-		if (poll.valid) {
-			switch(poll.status) {
-				case true:
-				return 'panel-success';
-				break;
-				case false:
-				return 'panel-info';
-				break;
-				default:
-				return 'panel-danger';
-			}
+	check_sent: function (poll) {
+		Log.debug(poll.status);
+		switch(poll.status) {
+			case 'open':
+			return 'panel-success';
+			break;
+			case 'closed':
+			return 'panel-default';
+			break;
+			case 'pending':
+			return 'panel-warning';
+			break;
+			case 'ready':
+			return 'panel-info';
+			break;
+			default:
+			return 'panel-error';
 		}
-		return 'panel-warning';
 	},
 
 	link_action_poll: function (link_to, icon, title, data_confirm) {

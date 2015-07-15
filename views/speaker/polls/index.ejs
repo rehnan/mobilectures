@@ -10,9 +10,10 @@
 		<div class="row">
 		    <div class="col-xs-5">
 				<ul class="legend">
-				    <li><span class="sent"></span> Enviada(s) </li>
+				    <li><span class="sent"></span> Aberta(s) </li>
 				    <li><span class="pending"></span> Pendente(s) </li>
 				    <li><span class="ready"></span> Pronta(s) pra envio </li>
+				    <li><span class="closed"></span> Encerrada(s) </li>
 				</ul>
 			</div>
 		</div>
@@ -27,16 +28,19 @@
 		<!-- Generate this dynamical -->
 		<% _.each(polls, function (poll) { %>
 			<div class="col-sm-4">
-				<div class="panel <%- PollsHelper.manage_status(poll) %>">
+				<div class="panel <%- PollsHelper.check_sent(poll) %>">
 					<div class="panel-heading">
 						<div class="btn-group pull-right"> 
-						<%- (!poll.valid || poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/send', 'send', 'Enviar', 'Clique em Ok para confirmar o envio desta enquete') %>
-						<%- (poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/edit/'+poll.id, 'pencil', 'Editar Enquete', false) %>
-						<%- (poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/delete/'+poll.id, 'remove', 'Excluir', 'Tem certeza que deseja excluir a enquete:'+poll.title) %>
-						<%- (poll.status) ? '' : PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/alternatives', 'list-alt', 'Editar Alternativas', false) %>
-						<%- (!poll.status || !poll.valid) ? '' : PollsHelper.link_action_poll('#', 'stats', 'Estatística', false) %>
-						<%- (!poll.valid) ? '' : PollsHelper.modal_poll_preview(poll.id) %>
+						<%- (poll.status === "ready" && !poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/send', 'send', 'Enviar', 'Clique em Ok para confirmar o envio desta enquete') : '' %>
+						<%- (!poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/edit/'+poll.id, 'pencil', 'Editar Enquete', false) : '' %>
+						<%- (poll.status !== "open") ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/delete/'+poll.id, 'trash', 'Excluir', 'Tem certeza que deseja excluir a enquete:'+poll.title) : '' %>
+						<%- (!poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/alternatives', 'list-alt', 'Editar Alternativas', false) : '' %>
+						<%- (poll.status === "closed") ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/chart', 'stats', 'Estatística', false) : ''  %>
+						<%- (poll.status === "open" && poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/close', 'off', 'Finalizar Enquete', 'Clique em Ok para finalizar esta enquete')  : '' %>
+						<%- (poll.status !== "pending") ? PollsHelper.modal_poll_preview(poll.id) : '' %> 
 					</div>
+					
+					
 					
 					<br><br>
 					<h3 class="panel-title text-center"><strong><%= poll.title %></strong></h3> 
@@ -46,9 +50,10 @@
 						<%= ViewHelpers.show_initial_chars(0, 31, poll.description) %>
 					</div>
 					</div>
+					<%- partial ('preview', {poll:poll}) %>
 				</div>
-				<%- partial ('preview', {poll:poll}) %>
-			</div>
+				
+			
 		<% }) %>
 		<!-- Generate this dynamical -->
 	</div>

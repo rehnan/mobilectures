@@ -11,20 +11,17 @@
  		PollAnswersApiController.beforeAction(req, res, function (session) {
  			var params = req.params.all();
  			    params.listener = req.session.listener.id;
-
- 			PollAnswer.createIfValid(params, function (errors, record) {
- 				if (errors) {
- 					 Log.json(errors);
- 					res.json([401], {errors: errors});
- 				} else {
- 					res.json([200]);
- 				}
+      Log.json(params);
+ 			PollAnswer.createIfValid(params, function (errors, register) {
+ 				if (errors) { return res.json([401], {errors: errors}); } 
+ 				if (!register) { return res.json([401], {errors: 'Enquete inexistente/Encerrada!'});}
+ 				return res.json([200]);
  			});
  		});
  	},
 
  	beforeAction: function(req, res, callback) {
- 		Log.info('Agora foi!');
+ 		
       //Verifica se o ouvinte tem uma sessão e se  ele está está logado na sala
       if (!req.session.listener || !req.session.listener.logged_room) {
       	res.json([401], 'Você deve estar logado!');

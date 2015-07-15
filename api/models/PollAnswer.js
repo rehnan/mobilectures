@@ -41,13 +41,39 @@ module.exports = {
  			return callback(pretty_errors, null);
  		}
 
- 		PollAnswer.create(params, function (err, record) {
- 			if(err){return callback(err, null);}
- 			//Log.debug('PollAnswer created');
- 			return callback(null, record);
- 		});
+    Poll.findOne({id:params.poll, status:'open'}).exec(function(err, poll){
+          if(err) { return callback(err, null) }
+          if(!poll) { return callback(null, null); }
 
+      PollAnswer.create(params, function (err, record) {
+          if(err){return callback(err, null);}
+
+          PollAnswer.count_votes_alternatives(poll, params.alternatives, function(poll){
+              poll.save(function(err, record){
+               if(err){return callback(err, null);}
+               Log.debug('Poll saved From PollAnswer');
+                return callback(null, poll);
+              });
+          });
+      });
+ 		});
  	});
  },
+
+ count_votes_alternatives: function (poll, alternatives, cb) {
+    Log.json(alternatives);
+    for(i = 0; i < alternatives.length; i++) {
+            Log.json(alternatives[i]);
+            //Log.json(poll.statistics.rows[alternatives[index]]);
+            poll.statistics.rows[alternatives[i]].c[1].v += 1;
+    };
+    return cb(poll);
+ },
+
+ statistics: function (poll_id, callback) {
+      Poll.findOne({id:poll_id}).populate('pollanswers').exec(function(err, data){
+         return callback(null, data); 
+      });
+ }
 };
 

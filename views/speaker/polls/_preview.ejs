@@ -17,8 +17,8 @@
  				<div class="row">
  					<%= poll.question %>
  				</div>
+ 				<div class="row">
  				<% if(poll.choice_multiple) { %>
- 				<div class="row ">
 	 				<% _.each(poll.alternatives, function (alternative) { %>
 	 					<div class="checkbox">
 						  <label>
@@ -37,19 +37,20 @@
 						</div>
 	 					<% }) %>
 					<% } %>
-				
+				</div>
  				<br>
  				<div class="row limit-width">
 					<button type="button" class="btn btn-default btn-sm btn-block">Responder Enquete</button>
  				</div>
- 			</div>
+ 			
+
  			<div class="modal-footer">
  				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
  			</div>
  		</div>
- 	
-
  	</div>
  </div>
+</div>
+  <!-- End Modal -->
 
  

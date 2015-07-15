@@ -5,7 +5,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/models
  */
 
-module.exports = {
+ module.exports = {
    schema: true,
    attributes: {
 
@@ -43,6 +43,11 @@ module.exports = {
 
       doubts: {
          collection: 'doubt',
+         via: 'listener'
+      },
+
+      pollanswers:{
+         collection: 'PollAnswer',
          via: 'listener'
       }
    },
@@ -91,7 +96,7 @@ module.exports = {
     * Validates unique and custom messages
     * Thinking about extract to plugin
     */
-   createIfValid: function (params, callback) {
+    createIfValid: function (params, callback) {
       Listener.validate(params, function (errors) {
          sails.log.debug('Error create Listener on validate  ==> ' + JSON.stringify(errors));
 

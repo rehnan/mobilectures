@@ -243,6 +243,23 @@ module.exports.routes = {
       action: 'send'
    },
 
+   'GET /speaker/sessions/:session_id/polls/:poll_id/close':{
+      controller: 'PollsController',
+      action: 'close'
+   },
+
+   'GET /speaker/sessions/:session_id/polls/:poll_id/chart':{
+      controller: 'PollsController',
+      action: 'chart'
+   },
+
+   'GET /speaker/sessions/:session_id/polls/:poll_id/chart/json':{
+      controller: 'PollsController',
+      action: 'statistics'
+   },
+
+   
+
     /* ################# END POLL ROUTES   ####################### */
 
 

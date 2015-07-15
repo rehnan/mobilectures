@@ -98,7 +98,7 @@ var DoubtsController = {
    //Sobrescrevendo/Assistindo apenas o modelo Doubt desta sessão para está requisição socket
    Session.findOne(conditions).populate('doubts').exec(function (err, session) {
    	if(err){return err;}
-   	Doubt.subscribe(req.socket, session.doubts, ['create', 'update']);
+   	(session && session.doubts) ? Doubt.subscribe(req.socket, session.doubts, ['create', 'update']) : '';
    });
    Doubt.watch(req.socket);
    return res.json([200], {msg:"Doubt: " + req.socket.id + " subscribed!"});

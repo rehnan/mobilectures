@@ -1,0 +1,125 @@
+  <!--Load the AJAX API-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+
+  // Load the Visualization API and the piechart package.
+  google.load('visualization', '1.0', {'packages':['corechart']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(initChart);
+
+  $(window).resize(function(){
+    initChart();
+  });
+
+  function initChart() {
+
+    var url = location.href+"/json";
+
+    var jsonData = $.ajax({
+      type: 'GET',
+      url: url,
+      dataType:"json",
+      async: false,
+      success:function(data) {
+        //alert('Success!'); 
+      },
+      error: function(data, status) {
+        alert('Error!'); 
+      },
+    }).responseText;
+
+    var data = new google.visualization.DataTable(jsonData);
+    //  // Set chart options
+    var options = {'title':'none',  is3D: true,
+    'titlePosition': 'out',
+    legend: {position: 'bottom', textStyle: {bold:true}}, 
+    width: '100%',
+    height: '100%',
+    chartArea: {
+      left: "4%",
+      top: "0%",
+      height: "94%",
+      width: "94%"
+    }};
+
+    drawChart(data, options);
+  }
+
+  function drawChart(data, options) {
+    var chart_div = document.getElementById('chart_div');
+    var chart  = new google.visualization.PieChart(chart_div);
+   // google.visualization.events.addListener(chart, 'ready', function () {
+   //        chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+   //        console.log(chart_div.innerHTML);
+   //      });
+  chart.draw(data, options);
+}
+
+
+</script>
+
+<p></p><p></p>
+<div class="row">
+  <h2><center>Relatórios da Enquete: linguagem de programação </center></h2>
+  <div class="clearfix">
+      <a class="btn btn-default pull-right print_reporter" href="#" title="Imprimir Relatório" rule="button"><span class="glyphicon glyphicon-print" aria-hidden="true"> Imprimir </span></a>
+    </div>
+  <hr>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="row text-center"><h3>Relatório Gráfico</h3></div> 
+      <div id="chart_wrap">
+        <div id="chart_div"></div>
+    </div>
+    <hr>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="row text-center"><h3>Relatório Tabulado</h3></div>
+    <br>
+    <table id="report-table-poll" class="table table-bordered table-hover text-center">
+              <thead>
+                <tr>
+                  <th><strong>Palestrante(s)</strong></th>
+                  <th colspan="4">Rehnan Carlos Carolino Da Silva</th>
+                </tr>
+                <tr>
+                  <th><strong>Enquete</strong></th>
+                  <th colspan="4">Melhor Linguagem de Programação</th>
+                </tr>
+                <tr>
+                  <th><strong>Ouvintes</strong></th>
+                  <th colspan="4">30 ouvintes conectados</th>
+                </tr>
+                <tr>
+                  <th><strong>ID Sessão</strong></th>
+                  <th colspan="4">559ee0c1386b80a20180c559</th>
+                </tr>
+                <tr>
+                  <th>Alternativas</th>
+                  <th>Nº de Votos</th>
+                  <th>Abstinências</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Alternatia A</td>
+                  <td>1 voto</td>
+                  <td rowspan="3">5</td>
+                </tr>
+                <tr>
+                  <td>Alternatia B</td>
+                  <td>1 voto</td>
+                </tr>
+                <tr>
+                  <td>Alternatia C</td>
+                  <td>1 voto</td>
+                </tr>
+              </tbody>
+            </table>
+  </div>
+</div>
+
