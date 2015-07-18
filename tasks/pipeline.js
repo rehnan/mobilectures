@@ -16,6 +16,7 @@ var cssFilesToInject = [
   'bootstrap/css/bootstrap.min.css',
   'bootstrap/css/bootstrap-theme.min.css',
   'bootstrap/css/bootstrap-table.min.css',
+  'jquery-toast-plugin/jquery.toast.min.css',
   'styles/**/*.css'
 ];
 
@@ -30,6 +31,7 @@ var jsFilesToInject = [
   'bootstrap/js/bootstrap.min.js',
   'bootstrap/js/bootstrap-table.min.js',
   'bootstrap/js/bootstrap-dialog.min.js',
+  'jquery-toast-plugin/jquery.toast.min.js',
   'js/dependencies/socket.io.connection.js',
   'js/app.js',
   'js/lib/functions.js',

@@ -63,6 +63,14 @@ ml.polls = {
 	reports: {	 
 		render: function() {
 		 		if ($('#chart_div').length === 0) return false;
+
+		 		$.toast({
+		 			icon: 'success',
+				    heading: 'Render call',
+				    text: 'Renderizing poll graph...',
+				    position: 'top-right',
+				    stack: false
+				});
 		  		
 		  		$('#chart_div').removeData("chart-json");
 		  	    var jsonData = $('#chart_div').data('chart-json'); 
