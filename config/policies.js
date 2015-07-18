@@ -68,6 +68,10 @@ module.exports.policies = {
       subscribe: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
    },
 
+   polls: {
+      subscribe: 'onlySocketReq', //Ação liberada apenas para requisiçõe sockets
+   },
+
    /*
    doubts: {
     beforeAction: 'isAuthenticated',

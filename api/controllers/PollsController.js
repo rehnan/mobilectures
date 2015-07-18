@@ -133,7 +133,21 @@ show: function(req, res) {
 
 },
 
-chart: function (req, res) {
+subscribe: function (req, res) {
+    var conditions = {id: req.param('poll_id'), session: req.param('session_id')};
+   //Sobrescrevendo/Assistindo apenas o modelo Doubt desta sessão para está requisição socket
+   Poll.findOne(conditions).populate('pollanswers').exec(function (err, poll) {
+    if(err){return err;}
+
+    (poll && poll.pollanswers) ? PollAnswer.subscribe(req.socket, poll.pollanswers, ['create', 'update']) : '';
+   
+      PollAnswer.watch(req.socket);
+      return res.json([200], {msg:"Pollanswer: " + req.socket.id + " subscribed!"});
+   });
+   
+},
+
+reports: function (req, res) {
   PollsController.beforeAction(req, res, function (session) {
     var params = req.params.all();
 
@@ -144,25 +158,8 @@ chart: function (req, res) {
           req.flash('error', 'Enquete inexistente!!');
           return res.redirect('/speaker/sessions/'+session.id+'/polls');
         }
-
-        if (found_poll.status !== 'closed') {
-          req.flash('error', 'A enquete deve estar encerrada para a visualização do relatório de estatística!');
-          return res.redirect('/speaker/sessions/'+session.id+'/polls');
-        }
-       
-        return res.view('speaker/polls/chart', {layout: 'layouts/session', session: session, poll:found_poll});
-    });
-  });
-},
-
-statistics: function (req, res) {
-  PollsController.beforeAction(req, res, function (session) {
-    Poll.findOne({id:req.param('poll_id'), status:'closed'}).exec(function(err, poll) { 
-      if (err) { return Log.error(err); }
-      if (!poll) {
-        return res.json([401], {error:'Enquete inexistente!!'});
-      }
-      return res.json([200], poll.statistics);
+        //return res.json(found_poll);
+        return res.view('speaker/polls/reports', {layout: 'layouts/session', session: session, poll: found_poll});
     });
   });
 },
@@ -230,7 +227,7 @@ send: function (req, res) {
               } else {
                 req.flash('error', 'Enquete inexistente!!');
               }
-              return res.redirect('/speaker/sessions/'+session.id+'/polls');
+              return res.redirect('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/reports');
           });
       });
    });

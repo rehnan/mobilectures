@@ -248,14 +248,14 @@ module.exports.routes = {
       action: 'close'
    },
 
-   'GET /speaker/sessions/:session_id/polls/:poll_id/chart':{
+   'GET /speaker/sessions/:session_id/polls/:poll_id/reports':{
       controller: 'PollsController',
-      action: 'chart'
+      action: 'reports'
    },
 
-   'GET /speaker/sessions/:session_id/polls/:poll_id/chart/json':{
+   'POST /speaker/sessions/:session_id/polls/:poll_id/pollanswers/subscribe':{
       controller: 'PollsController',
-      action: 'statistics'
+      action: 'subscribe'
    },
 
    

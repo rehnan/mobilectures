@@ -1,0 +1,108 @@
+<section id="poll-open" data-poll_id="<%= poll.id %>"></section>
+<section>
+  <header>
+    <h3 class="text-center">Relatórios da Enquete: linguagem de programação</h3>
+
+    <a class="btn btn-primary btn-sm pull-right print_reporter" href="#" title="Imprimir Relatório" rule="button"><span class="glyphicon glyphicon-print" aria-hidden="true"> Imprimir </span></a>
+    
+    <span class="clearfix">
+      <a class="btn btn-success btn-sm pull-right print_reporter" href="#" title="Imprimir Relatório" rule="button"><span class="glyphicon glyphicon-comment" aria-hidden="true"> Enquete Aberta </span></a>
+      <!-- transfer | comment | lock -> to open polls -->
+    </span>
+  </header>
+  
+
+  <div class="row">
+
+    <div class="col-sm-6">
+      <article>
+        <header class="page-header">
+          <h4 class="text-center">Relatório Gráfico</h4>
+        </header>
+
+        <div id="chart_wrap">
+           <div id="chart_div" data-chart-json="<%= JSON.stringify(poll.statistics) %>" ></div>   
+<p id="canvas_size"></p>       
+        </div>
+      </article> 
+      
+    </div>
+
+    <div class="col-sm-6">
+      <article>
+        <header class="page-header">
+          <h4 class="text-center">Relatório Tabulado</h4>
+        </header>
+        <br><br>
+        <table id="report-table-poll" class="table table-bordered table-hover text-center">
+          <thead>
+            <tr>
+              <th><span class="glyphicon glyphicon-blackboard" aria-hidden="true"> <strong> Sessão:</strong></th>
+              <td colspan="4">Semana Acadêmica TSI</td>
+            </tr>
+            <tr>
+              <th><span class="glyphicon glyphicon-calendar" aria-hidden="true"> <strong>Período:</strong></th>
+              <td colspan="4">25/08/2015 18:00 - 25/08/2015 19:30</td>
+            </tr>
+            <tr>
+              <th><span class="glyphicon glyphicon-user" aria-hidden="true"> <strong>Palestrante(s):</strong></th>
+              <td colspan="4">Rehnan Carlos Carolino Da Silva</td>
+            </tr>
+            <tr>
+              <th><strong>Ouvinte(s):</strong></th>
+              <td colspan="4">30 ouvintes conectados</td>
+            </tr>
+            <tr>
+              <th><strong>Participante(s) da enquete:</strong></th>
+              <td colspan="4">30 participaram</td>
+            </tr>
+            <tr>
+              <th><strong>Pontuação por participação:</strong></th>
+              <td colspan="4">18 pontos</td>
+            </tr>
+            <tr>
+              <th><strong>Título Enquete:</strong></th>
+              <td colspan="4">Melhor Linguagem de Programação</td>
+            </tr>
+            <tr>
+              <th><strong>Descrição:</strong></th>
+              <td colspan="4">Descrição da enquete... ... </td>
+            </tr>
+            <tr>
+              <th>Questão:</th>
+              <td colspan="2">Qual são suas LPs preferidas?</td>
+              
+            </tr>
+            <tr>
+              <th>Alternativas</th>
+              <th>Nº de Votos</th>
+              <th>Abstenções</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Alternatia A</td>
+              <td>1 voto</td>
+              <td rowspan="4" align="middle">5</td>
+            </tr>
+            <tr>
+              <td>Alternatia B</td>
+              <td>1 voto</td>
+            </tr>
+            <tr>
+              <td>Alternatia C</td>
+              <td>1 voto</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>10 votos</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </article>      
+    </div>
+
+  </div>
+
+</section>

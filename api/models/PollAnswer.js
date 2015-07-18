@@ -51,7 +51,9 @@ module.exports = {
           PollAnswer.count_votes_alternatives(poll, params.alternatives, function(poll){
               poll.save(function(err, record){
                if(err){return callback(err, null);}
-               Log.debug('Poll saved From PollAnswer');
+                Log.debug('Poll saved From PollAnswer');
+                PollAnswer.publishCreate({id:record, statistics:record.statistics});
+                Log.info('Publish create PollAnswer');
                 return callback(null, poll);
               });
           });
