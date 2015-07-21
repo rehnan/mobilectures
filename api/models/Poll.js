@@ -89,6 +89,21 @@ module.exports = {
   sent: {
     type: 'boolean',
     defaultsTo: false
+  },
+
+  number_votes: {
+    type: 'integer',
+    defaultsTo: 0
+  },
+
+  number_participants: {
+    type: 'integer',
+    defaultsTo: 0
+  },
+
+  points: {
+    type: 'integer',
+    defaultsTo: 10
   }
 },
 
@@ -246,31 +261,12 @@ new: {
 
        if(session && session.polls.length > 0) {
         response.polls = session.polls;
+        Log.debug(response.polls);
         response.status = true;
       } else {
         response.polls = {};
         response.status = false;
       }
-      callback(null, response);
-    });
-    },
-
-    find: function (params, callback) {
-
-      Session.findOne({id:params.session_id, owner:params.owner}).populate('polls', {id:params.poll_id}).exec(function (err, session) {
-       if(err){return callback(err, null);}
-
-       var response = {};
-       var index = session.polls.length;
-
-       if(session && index > 0) {
-        response.poll = session.polls[index-1];
-        response.status = true;
-      } else {
-        response.poll = {};
-        response.status = false;
-      }
-
       callback(null, response);
     });
     },

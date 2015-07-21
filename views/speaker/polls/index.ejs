@@ -26,6 +26,7 @@
 
 	<div class="row">
 		<!-- Generate this dynamical -->
+
 		<% _.each(polls, function (poll) { %>
 			<div class="col-sm-4">
 				<div class="panel <%- PollsHelper.check_sent(poll) %>">

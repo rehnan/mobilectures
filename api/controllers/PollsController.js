@@ -4,24 +4,25 @@ var PollsController = {
 
   index: function(req, res) {
     PollsController.beforeAction(req, res, function (session) {
-      Poll.findAll(session, function(error, response){
-        if(error){return Log.error(error);}
-
-        application.title = req.__('poll.show.title');
-        if(response.status){
-          res.view('speaker/polls/index', {layout: 'layouts/session', session: session, polls: response.polls});
-       } else {
+      application.title = req.__('poll.show.title');
+      Session.findOne({id:session.id}).populate('polls', {enabled:true}).exec(function (err, session) {
+        if(err){return Log.error(err);}
+        
+        if(session.polls.length > 0){
+          res.view('speaker/polls/index', {layout: 'layouts/session', session: session, polls: session.polls});
+        } else {
+          req.flash('info', 'Não há nenhuma enquete cadastrada!');
           res.view('speaker/polls/index', {layout: 'layouts/session', session: session, polls: {}});
-       }
+        }
     });
    });
  },
 
-    /* Action new | Method: GET - 
-    * Renderiza view do formulário
-    */ 
-    new: function(req, res) {
-   //Log.debug('Rendering new sessions view form for user: ' + req.session.passport.user.id);
+/* Action new | Method: GET - 
+* Renderiza view do formulário
+*/ 
+new: function(req, res) {
+
    PollsController.beforeAction(req, res, function (session) {
      application.title = req.__('poll.index.title');
      return res.view('speaker/polls/new', {errors: {}, poll: Poll.new, session:session});
@@ -38,18 +39,21 @@ create: function(req, res) {
         sails.log.debug('Error ==> ' + JSON.stringify(errors));
         req.flash('error', req.__('global.flash.form.error'));
         return res.view('speaker/polls/new', {errors: pretty_errors,  poll: req.params.all(), session:session});
-     } else {
-        req.flash('success', req.__('global.flash.create.success', {name: req.param('title')}));
-        return res.redirect('speaker/sessions/'+session.id+'/polls/'+record.id+'/alternatives');
      }
+
+     if(record) {
+       req.flash('success', req.__('global.flash.create.success', {name: req.param('title')}));
+        return res.redirect('speaker/sessions/'+session.id+'/polls/'+record.id+'/alternatives');
+     } 
+     req.flash('error', req.__('Erro ao criar enquete!'));
+     return res.redirect('speaker/sessions/'+session.id+'/polls');
   });
  });
 },
 
 edit: function(req ,res) {
-   Log.info('Action: edit called! ');
+   application.title = req.__('poll.edit.title');
    PollsController.beforeAction(req, res, function (session) {
-     application.title = req.__('poll.edit.title');
 
      var conditions = {id: session.id, owner: req.session.passport.user.id };
      var poll_id = req.param('poll_id');
@@ -108,7 +112,7 @@ destroy: function(req, res) {
 
  PollsController.beforeAction(req, res, function (session) {
    var params = req.params.all();
-   params.owner = session.owner;
+   params.owner = session.owner.id;
    Poll.disable(params, function(err, response){
       if(err) {Log.error(err);}
 
@@ -158,6 +162,7 @@ reports: function (req, res) {
           req.flash('error', 'Enquete inexistente!!');
           return res.redirect('/speaker/sessions/'+session.id+'/polls');
         }
+        
         //return res.json(found_poll);
         return res.view('speaker/polls/reports', {layout: 'layouts/session', session: session, poll: found_poll});
     });
@@ -168,17 +173,19 @@ new_alternatives: function(req, res) {
 
    PollsController.beforeAction(req, res, function (session) {
       var params = req.params.all();
-      params.owner = session.owner;
-      Poll.find(params, function(err, response){
-         if(err) {Log.error(err);}
+      params.owner = session.owner.id;
 
-         if(response.status){
-            return res.view('speaker/polls/alternatives', {layout: 'layouts/session', errors: {}, poll: response.poll, session:session});
-         }
-
-         req.flash('error', 'Enquete inexistente!!!');
-         return res.redirect('/speaker/sessions/'+session.id+'/polls');
-      });
+      Session.findOne({id:params.session_id, owner:params.owner}).populate('polls', {id:params.poll_id}).exec(function (err, session) {
+       if(err){return Log.error(err);}
+       
+       if(session.polls.length > 0) {
+        var poll = session.polls[0] ;
+        return res.view('speaker/polls/alternatives', {layout: 'layouts/session', errors: {}, poll: poll, session:session});
+      } else {
+        req.flash('error', 'Enquete inexistente!!!');
+        return res.redirect('/speaker/sessions/'+params.session_id+'/polls');
+      }
+    });
    });
 },
 
@@ -275,7 +282,7 @@ close: function (req, res) {
  }
 
  var conditions = {id: req.param('session_id'), owner: req.session.passport.user.id};
- Session.findOne(conditions).exec(function (err, session){
+ Session.findOne(conditions).populate('listeners').populate('owner').exec(function (err, session){
   if(err){return err;}
   if(!session) {
     req.flash('error', 'Sessão inexistente!!!');

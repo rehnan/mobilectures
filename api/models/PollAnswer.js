@@ -49,12 +49,13 @@ module.exports = {
           if(err){return callback(err, null);}
 
           PollAnswer.count_votes_alternatives(poll, params.alternatives, function(poll){
+              poll.number_participants += 1;
               poll.save(function(err, record){
-               if(err){return callback(err, null);}
-                Log.debug('Poll saved From PollAnswer');
-                PollAnswer.publishCreate({id:record, statistics:record.statistics});
-                Log.info('Publish create PollAnswer');
-                return callback(null, poll);
+                if(err){return callback(err, null);}
+                  Log.debug('Poll saved From PollAnswer');
+                  PollAnswer.publishCreate({id:record, statistics:record.statistics});
+                  Log.info('Publish create PollAnswer');
+                  return callback(null, poll);
               });
           });
       });
@@ -65,8 +66,8 @@ module.exports = {
  count_votes_alternatives: function (poll, alternatives, cb) {
     Log.json(alternatives);
     for(i = 0; i < alternatives.length; i++) {
-            Log.json(alternatives[i]);
             //Log.json(poll.statistics.rows[alternatives[index]]);
+            poll.number_votes += 1;
             poll.statistics.rows[alternatives[i]].c[1].v += 1;
     };
     return cb(poll);

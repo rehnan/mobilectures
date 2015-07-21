@@ -38,23 +38,19 @@
           <thead>
             <tr>
               <th><span class="glyphicon glyphicon-blackboard" aria-hidden="true"> <strong> Sessão:</strong></th>
-              <td colspan="4">Semana Acadêmica TSI</td>
+              <td colspan="4"><%= session.name %></td>
             </tr>
             <tr>
-              <th><span class="glyphicon glyphicon-calendar" aria-hidden="true"> <strong>Período:</strong></th>
-              <td colspan="4">25/08/2015 18:00 - 25/08/2015 19:30</td>
+              <th><span class="glyphicon glyphicon-calendar" aria-hidden="true"> <strong>Data:</strong></th>
+              <td colspan="4"><%= session.name %></td>
             </tr>
             <tr>
               <th><span class="glyphicon glyphicon-user" aria-hidden="true"> <strong>Palestrante(s):</strong></th>
-              <td colspan="4">Rehnan Carlos Carolino Da Silva</td>
+              <td colspan="4"><%= session.owner.name %>a</td>
             </tr>
             <tr>
-              <th><strong>Ouvinte(s):</strong></th>
-              <td colspan="4">30 ouvintes conectados</td>
-            </tr>
-            <tr>
-              <th><strong>Participante(s) da enquete:</strong></th>
-              <td colspan="4">30 participaram</td>
+              <th><strong>Nº Participante(s):</strong></th>
+              <td colspan="4"><%= (session.listeners.length > 0) ? session.listeners.length+' ouvintes conectados' : 'Nenhum ouvinte conectado' %> </td>
             </tr>
             <tr>
               <th><strong>Pontuação por participação:</strong></th>
@@ -62,15 +58,15 @@
             </tr>
             <tr>
               <th><strong>Título Enquete:</strong></th>
-              <td colspan="4">Melhor Linguagem de Programação</td>
+              <td colspan="4"><%= poll.title %></td>
             </tr>
             <tr>
               <th><strong>Descrição:</strong></th>
-              <td colspan="4">Descrição da enquete... ... </td>
+              <td colspan="4"><%= poll.description %></td>
             </tr>
             <tr>
               <th>Questão:</th>
-              <td colspan="2">Qual são suas LPs preferidas?</td>
+              <td colspan="2"><%= poll.question %></td>
               
             </tr>
             <tr>
@@ -80,19 +76,14 @@
             </tr>
           </thead>
           <tbody>
+            <% var a_length = poll.statistics.rows.length %>
+            <% _.each(poll.statistics.rows, function(altrv, i){ %>
             <tr>
-              <td>Alternatia A</td>
-              <td>1 voto</td>
-              <td rowspan="4" align="middle">5</td>
+              <td><%= altrv.c[0].v %></td>
+              <td id="<%= i %>">1</td>
+              <%- (i === 0) ? "<td rowspan="+a_length+1+" >5</td>" : '' %>   
             </tr>
-            <tr>
-              <td>Alternatia B</td>
-              <td>1 voto</td>
-            </tr>
-            <tr>
-              <td>Alternatia C</td>
-              <td>1 voto</td>
-            </tr>
+            <% }); %>
             <tr>
               <td>Total</td>
               <td>10 votos</td>

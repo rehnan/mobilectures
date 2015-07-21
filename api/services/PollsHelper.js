@@ -13,7 +13,6 @@ module.exports = {
 	},
 
 	check_sent: function (poll) {
-		Log.debug(poll.status);
 		switch(poll.status) {
 			case 'open':
 			return 'panel-success';
@@ -79,5 +78,21 @@ module.exports = {
 			amount_alters++;
 		}
 		return html_alter;
+	},
+
+
+	plurarize: function (number, singular_context) {
+		
+		if(number > 1) {
+			return number+' '+singular_context+'s';
+		}
+
+		if(number === 0) {
+			return 'Nenhum '+singular_context;
+		}
+
+		if(number === 1) {
+			return number+' '+singular_context;
+		}
 	}
 };
