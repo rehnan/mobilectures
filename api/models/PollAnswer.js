@@ -64,7 +64,6 @@ module.exports = {
  },
 
  count_votes_alternatives: function (poll, alternatives, cb) {
-    Log.json(alternatives);
     for(i = 0; i < alternatives.length; i++) {
             //Log.json(poll.statistics.rows[alternatives[index]]);
             poll.number_votes += 1;
@@ -72,11 +71,5 @@ module.exports = {
     };
     return cb(poll);
  },
-
- statistics: function (poll_id, callback) {
-      Poll.findOne({id:poll_id}).populate('pollanswers').exec(function(err, data){
-         return callback(null, data); 
-      });
- }
 };
 

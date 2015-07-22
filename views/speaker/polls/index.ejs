@@ -32,12 +32,12 @@
 				<div class="panel <%- PollsHelper.check_sent(poll) %>">
 					<div class="panel-heading">
 						<div class="btn-group pull-right"> 
-						<%- (poll.status === "ready" && !poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/send', 'send', 'Enviar', 'Clique em Ok para confirmar o envio desta enquete') : '' %>
-						<%- (!poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/edit/'+poll.id, 'pencil', 'Editar Enquete', false) : '' %>
-						<%- (poll.status !== "open") ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/delete/'+poll.id, 'trash', 'Excluir', 'Tem certeza que deseja excluir a enquete:'+poll.title) : '' %>
-						<%- (!poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/alternatives', 'list-alt', 'Editar Alternativas', false) : '' %>
-						<%- (poll.status !== "ready") ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/reports', 'stats', 'Estatística', false) : ''  %>
-						<%- (poll.status === "open" && poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/close', 'off', 'Finalizar Enquete', 'Clique em Ok para finalizar esta enquete')  : '' %>
+						<%- (poll.status === "ready" && !poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/send', 'send', 'Enviar', 'Clique em Ok para confirmar o envio desta enquete', '') : '' %>
+						<%- (!poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/edit/'+poll.id, 'pencil', 'Editar Enquete', false, '') : '' %>
+						<%- (poll.status !== "open") ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/delete/'+poll.id, 'trash', 'Excluir', 'Tem certeza que deseja excluir a enquete:'+poll.title, '') : '' %>
+						<%- (!poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/alternatives', 'list-alt', 'Editar Alternativas', false, '') : '' %>
+						<%- (poll.status !== "ready") ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/reports', 'stats', 'Estatística', false, '') : ''  %>
+						<%- (poll.status === "open" && poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/close', 'lock', 'Finalizar Enquete', 'Clique em Ok para finalizar esta enquete', '')  : '' %>
 						<%- (poll.status !== "pending") ? PollsHelper.modal_poll_preview(poll.id) : '' %> 
 					</div>
 					

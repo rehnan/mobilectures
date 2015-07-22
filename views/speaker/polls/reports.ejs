@@ -1,99 +1,100 @@
+<% var a_length = poll.statistics.rows.length+1  %>
+<% var abstention = PollsHelper.abstention_votes(session.listeners.length,poll.number_participants) %>
 <section id="poll-open" data-poll_id="<%= poll.id %>"></section>
 <section>
   <header>
     <h3 class="text-center">Relatórios da Enquete: linguagem de programação</h3>
 
     <a class="btn btn-primary btn-sm pull-right print_reporter" href="#" title="Imprimir Relatório" rule="button"><span class="glyphicon glyphicon-print" aria-hidden="true"> Imprimir </span></a>
+
+    
     
     <span class="clearfix">
-      <a class="btn btn-success btn-sm pull-right print_reporter" href="#" title="Imprimir Relatório" rule="button"><span class="glyphicon glyphicon-comment" aria-hidden="true"> Enquete Aberta </span></a>
-      <!-- transfer | comment | lock -> to open polls -->
-    </span>
-  </header>
-  
+     <%- (poll.status === "open" && poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/close', 'lock', 'Finalizar Enquete', 'Clique em Ok para finalizar esta enquete', 'btn-sm pull-right print_reporter')  : '' %>
+     <!-- transfer | comment | lock -> to open polls  -->
+   </span>
+ </header>
 
-  <div class="row">
 
-    <div class="col-sm-6">
-      <article>
-        <header class="page-header">
-          <h4 class="text-center">Relatório Gráfico</h4>
-        </header>
+ <div class="row">
 
-        <div id="chart_wrap">
-           <div id="chart_div" data-chart-json="<%= JSON.stringify(poll.statistics) %>" ></div>   
-<p id="canvas_size"></p>       
-        </div>
-      </article> 
-      
-    </div>
+  <div class="col-sm-6">
+    <article>
+      <header class="page-header">
+        <h4 class="text-center">Relatório Gráfico</h4>
+      </header>
 
-    <div class="col-sm-6">
-      <article>
-        <header class="page-header">
-          <h4 class="text-center">Relatório Tabulado</h4>
-        </header>
-        <br><br>
-        <table id="report-table-poll" class="table table-bordered table-hover text-center">
-          <thead>
-            <tr>
-              <th><span class="glyphicon glyphicon-blackboard" aria-hidden="true"> <strong> Sessão:</strong></th>
-              <td colspan="4"><%= session.name %></td>
-            </tr>
-            <tr>
-              <th><span class="glyphicon glyphicon-calendar" aria-hidden="true"> <strong>Data:</strong></th>
-              <td colspan="4"><%= session.name %></td>
-            </tr>
-            <tr>
-              <th><span class="glyphicon glyphicon-user" aria-hidden="true"> <strong>Palestrante(s):</strong></th>
-              <td colspan="4"><%= session.owner.name %>a</td>
-            </tr>
-            <tr>
-              <th><strong>Nº Participante(s):</strong></th>
-              <td colspan="4"><%= (session.listeners.length > 0) ? session.listeners.length+' ouvintes conectados' : 'Nenhum ouvinte conectado' %> </td>
-            </tr>
-            <tr>
-              <th><strong>Pontuação por participação:</strong></th>
-              <td colspan="4">18 pontos</td>
-            </tr>
-            <tr>
-              <th><strong>Título Enquete:</strong></th>
-              <td colspan="4"><%= poll.title %></td>
-            </tr>
-            <tr>
-              <th><strong>Descrição:</strong></th>
-              <td colspan="4"><%= poll.description %></td>
-            </tr>
-            <tr>
-              <th>Questão:</th>
-              <td colspan="2"><%= poll.question %></td>
-              
-            </tr>
-            <tr>
-              <th>Alternativas</th>
-              <th>Nº de Votos</th>
-              <th>Abstenções</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% var a_length = poll.statistics.rows.length %>
-            <% _.each(poll.statistics.rows, function(altrv, i){ %>
-            <tr>
-              <td><%= altrv.c[0].v %></td>
-              <td id="<%= i %>">1</td>
-              <%- (i === 0) ? "<td rowspan="+a_length+1+" >5</td>" : '' %>   
-            </tr>
-            <% }); %>
-            <tr>
-              <td>Total</td>
-              <td>10 votos</td>
-            </tr>
-          </tbody>
-        </table>
+      <div id="chart_wrap">
+       <div id="chart_div" data-chart-json="<%= JSON.stringify(poll.statistics) %>" ></div>   
+       <p id="canvas_size"></p>       
+     </div>
+   </article> 
 
-      </article>      
-    </div>
+ </div>
 
-  </div>
+ <div class="col-sm-6">
+  <article>
+    <header class="page-header">
+      <h4 class="text-center">Relatório Tabulado</h4>
+    </header>
+    <br><br>
+    <table id="report-table-poll" class="table table-bordered table-hover text-center">
+      <thead>
+        <tr>
+          <th><span class="glyphicon glyphicon-blackboard" aria-hidden="true"> <strong> Sessão:</strong></span></th>
+          <td colspan="4"><%= session.name %></td>
+        </tr>
+        <tr>
+          <th><span class="glyphicon glyphicon-calendar" aria-hidden="true"> <strong>Data:</strong></span></th>
+          <td colspan="4"><%= poll.createdAt %></td>
+        </tr>
+        <tr>
+          <th><span class="glyphicon glyphicon-user" aria-hidden="true"> <strong>Palestrante(s):</strong></span></th>
+          <td colspan="4"><%= session.owner.name %>a</td>
+        </tr>
+        <tr>
+          <th><span class="glyphicon glyphicon-phone" aria-hidden="true"> <strong>Participante(s):</strong></span></th>
+          <td colspan="4" id="participants"><%= PollsHelper.plurarize(poll.number_participants, 'participante') %></td>
+        </tr>
+        <tr>
+          <th><span class="glyphicon glyphicon-star" aria-hidden="true"> <strong>Pontuação:</strong></span></th>
+          <td colspan="4"><%= PollsHelper.plurarize(poll.points, 'ponto') %></td>
+        </tr>
+        <tr>
+          <th><strong>Título Enquete:</strong></th>
+          <td colspan="4"><%= poll.title %></td>
+        </tr>
+        <tr>
+          <th><strong>Descrição:</strong></th>
+          <td colspan="4"><%= poll.description %></td>
+        </tr>
+        <tr>
+          <th>Questão:</th>
+          <td colspan="2"><%= poll.question %></td>
 
+        </tr>
+        <tr>
+          <th>Alternativas</th>
+          <th>Nº de Votos</th>
+          <th>Nº de Abstenções</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <% _.each(poll.statistics.rows, function(altrv, i){ %>
+          <tr>
+          <td><%= altrv.c[0].v %></td>
+          <td id="<%= i %>"><%= PollsHelper.plurarize(altrv.c[1].v, 'voto') %></td>
+          <%- (i === 0) ? "<td rowspan="+ a_length +" id='abstention' >"+abstention +"</td>" : '' %>   
+          </tr>
+          <% }); %>
+<tr>
+<td><strong>Total</strong></td>
+<td id="total_votes"><%= PollsHelper.plurarize(poll.number_votes, 'voto') %></td>
+</tr>
+</tbody>
+</table>
+</article>      
+</div>
+</div>
 </section>

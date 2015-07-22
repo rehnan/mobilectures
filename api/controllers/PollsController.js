@@ -101,7 +101,7 @@ update: function(req, res) {
       } 
 
       application.title = req.__('session.edit.title');
-      req.flash('info', 'Enquete '+params.title+' atualizada com sucesso!');
+      req.flash('success', 'Enquete '+params.title+' atualizada com sucesso!');
       return res.redirect('speaker/sessions/'+session.id+'/polls');
 
    });
@@ -153,6 +153,7 @@ subscribe: function (req, res) {
 
 reports: function (req, res) {
   PollsController.beforeAction(req, res, function (session) {
+    application.title = req.__('Relatório de Enquete');
     var params = req.params.all();
 
     Poll.findOne({id:params.poll_id, session:params.session_id}, function (err, found_poll) {

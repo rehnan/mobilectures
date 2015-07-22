@@ -31,9 +31,9 @@ module.exports = {
 		}
 	},
 
-	link_action_poll: function (link_to, icon, title, data_confirm) {
+	link_action_poll: function (link_to, icon, title, data_confirm, add_class) {
 		if(data_confirm){
-			return '<a href="'+link_to+'" class="btn btn-default" title="'+title+'" data-confirm="'+data_confirm+'" rule="button" ><span class="glyphicon glyphicon-'+icon+'" aria-hidden="true"></span></a>';
+			return '<a href="'+link_to+'" class="btn btn-default '+add_class+'" title="'+title+'" data-confirm="'+data_confirm+'" rule="button" ><span class="glyphicon glyphicon-'+icon+'" aria-hidden="true"></span></a>';
 		}
 		return '<a href="'+link_to+'" class="btn btn-default" title="'+title+'" rule="button"><span class="glyphicon glyphicon-'+icon+'" aria-hidden="true"></span></a>';
 	},
@@ -83,16 +83,16 @@ module.exports = {
 
 	plurarize: function (number, singular_context) {
 		
-		if(number > 1) {
+		if(number !== 1) {
 			return number+' '+singular_context+'s';
-		}
-
-		if(number === 0) {
-			return 'Nenhum '+singular_context;
 		}
 
 		if(number === 1) {
 			return number+' '+singular_context;
 		}
+	},
+
+	abstention_votes: function (participants, votes) {
+		return participants - votes;
 	}
 };

@@ -7,9 +7,11 @@ ml.polls = {
 		ml.polls.addAndRemove_inputs();
 		ml.polls.sortable_inputs();
 		ml.polls.remove_empty_alternatives();
-		ml.polls.reports.render();
-		ml.polls.reports.resize();
+		ml.polls.reports.chart.render();
+		ml.polls.reports.chart.resize();
+		ml.polls.reports.tabbed.update(null);
 		ml.polls.subscribeAndListen();
+		ml.polls.pluralize();
 	},
 
 	addAndRemove_inputs: function () {
@@ -24,6 +26,7 @@ ml.polls = {
 		            x++; //text box increment
 		            $(wrapper).append('<div class="input-group alternative glyphicon glyphicon-move order_alternative"><input style="max-width:93%;float:right" class="form-control" name="alternatives[]" type="text" placeholder="Descrição da alternativa..." /><span class="input-group-btn remove_field"><button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>'); //add input box
 		         }
+		         $('.input_fields_wrap div input').focus();
 		      });
 		    
 		    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
@@ -60,54 +63,78 @@ ml.polls = {
 		 	});
 		 },
 		
-	reports: {	 
-		render: function() {
-		 		if ($('#chart_div').length === 0) return false;
+	reports: {
+		//Gerencia atualização do relatório gráfico
+		chart: {	 
+			render: function() {
+			 		if ($('#chart_div').length === 0) return false;
 
-		 		$.toast({
-		 			icon: 'success',
-				    heading: 'Render call',
-				    text: 'Renderizing poll graph...',
-				    position: 'top-right',
-				    stack: false
+			 		$.toast({
+			 			icon: 'success',
+					    heading: 'Render call',
+					    text: 'Renderizing poll graph...',
+					    position: 'top-right',
+					    stack: false
+					});
+			  		
+			  		$('#chart_div').removeData("chart-json");
+			  	    var jsonData = $('#chart_div').data('chart-json'); 
+
+			  	    var data = new google.visualization.DataTable(jsonData);
+
+				    // Set chart options
+				    var options = {title:'Relatório',  is3D: true,
+				    titlePosition: '<output></output>',
+				    legend: {position: 'bottom', textStyle: {bold:true}}, 
+				    width: '100%',
+				    height: '100%',
+				    chartArea: {
+				    	left: "4%",
+				    	top: "0%",
+				    	height: "94%",
+				    	width: "94%"}
+				    };
+				    var chart_div = document.getElementById('chart_div');
+				    var chart  = new google.visualization.PieChart(chart_div);
+			    	// google.visualization.events.addListener(chart, 'ready', function () {
+			    	//        chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+			    	//        console.log(chart_div.innerHTML);
+			    	//      });
+					chart.draw(data, options);
+			},
+
+
+			resize: function () {
+				if ($('#chart_div').length === 0) return false;
+			    	$(window).resize(function() {
+			    		ml.polls.reports.chart.render();
+			    	});
+			},
+		},
+
+		//Gerencia atualização do relatório tabulado
+		tabbed: {
+	 		update: function(data) {
+	 			
+		 		if ($('#report-table-poll').length === 0 || data === null) return false;
+		 		
+		 		var poll = data;
+		 		$('#participants').text(poll.id.number_participants);
+
+		 		var total_votes = poll.id.number_votes;
+		 		$('#total_votes').text(ml.polls.pluralize(total_votes, 'voto'));
+
+		 		var a = Number($('#abstention').text());
+		 		a--;
+		 		$('#abstention').text(a);
+
+				$.each(poll.statistics.rows, function(index, alternative){
+				     $('#'+index).text(ml.polls.pluralize(alternative.c[1].v, 'voto'));
 				});
-		  		
-		  		$('#chart_div').removeData("chart-json");
-		  	    var jsonData = $('#chart_div').data('chart-json'); 
-
-		  	    var data = new google.visualization.DataTable(jsonData);
-
-			    // Set chart options
-			    var options = {title:'Relatório',  is3D: true,
-			    titlePosition: '<output></output>',
-			    legend: {position: 'bottom', textStyle: {bold:true}}, 
-			    width: '100%',
-			    height: '100%',
-			    chartArea: {
-			    	left: "4%",
-			    	top: "0%",
-			    	height: "94%",
-			    	width: "94%"}
-			    };
-			    var chart_div = document.getElementById('chart_div');
-			    var chart  = new google.visualization.PieChart(chart_div);
-		    	// google.visualization.events.addListener(chart, 'ready', function () {
-		    	//        chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
-		    	//        console.log(chart_div.innerHTML);
-		    	//      });
-				chart.draw(data, options);
-		},
-
-
-		resize: function () {
-
-			if ($('#chart_div').length === 0) return false;
-		    	$(window).resize(function() {
-		    		ml.polls.reports.render();
-		    	});
-		},
+	 		}
+	 	}
 	},	
- 	
+ 
 
  subscribeAndListen: function () {
  	if ($('#poll-open').length <= 0) {return;}
@@ -123,12 +150,20 @@ ml.polls = {
  	io.socket.on('pollanswer',function(obj){
  		console.log('Pollanswer Verb: '+obj.verb);
  		if(obj.verb == 'created') {
-				console.log(obj.data);
+				
 				var new_statistics = obj.data.statistics;
 				$('#chart_div').attr('data-chart-json', JSON.stringify(new_statistics));
-				ml.polls.reports.render();
+				ml.polls.reports.chart.render();
+				ml.polls.reports.tabbed.update(obj.data);
 			}
 		});
- }
+ },
+
+ 	pluralize: function(n, context) {
+ 		if ($('#poll-open').length <= 0) {return;}
+
+		 (n !== 1) ? n+=' '+context+'s' : n+=' '+context;
+		 return n;
+	}
 };
 
