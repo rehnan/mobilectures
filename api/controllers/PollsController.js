@@ -163,6 +163,18 @@ reports: function (req, res) {
           req.flash('error', 'Enquete inexistente!!');
           return res.redirect('/speaker/sessions/'+session.id+'/polls');
         }
+
+        if (found_poll.status === 'pending') {
+          req.flash('error', 'A Enquete ainda está pendente!!');
+          return res.redirect('/speaker/sessions/'+session.id+'/polls');
+        }
+
+        if (found_poll.status === 'ready') {
+          req.flash('error', 'Você deve enviar a enquete antes de abrir o relatório!');
+          return res.redirect('/speaker/sessions/'+session.id+'/polls');
+        }
+
+        
         
         //return res.json(found_poll);
         return res.view('speaker/polls/reports', {layout: 'layouts/session', session: session, poll: found_poll});

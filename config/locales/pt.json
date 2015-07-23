@@ -28,8 +28,8 @@
 
   "global.status.active": "Ativo",
   "global.status.inactive": "Inativo",
-  "global.boolean.true": "Verdadeiro",
-  "global.boolean.false": "Falso",
+  "global.boolean.true": "Sim",
+  "global.boolean.false": "Não",
   
   "global.link.show": "Visualizar",
   "global.link.edit": "Editar",
