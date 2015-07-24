@@ -90,6 +90,9 @@ ml.doubts = {
 				//A página atualiza se tabela de dúvidas estiver sendo exibida
 				($('#doubts-table').length <= 0) ? ml.doubts.update_doubt_count() :  window.location.reload(); 
 				console.log(obj.verb);
+				var notification = ml.toast.new('info', 'Dúvida', 'Uma nova dúvida foi recebida!');
+				
+				ml.toast.show(notification);
 			}
 			//if(obj.verb == 'updated')
 		});
@@ -115,5 +118,5 @@ ml.doubts = {
 		});
 
 		return false;
-	}
+	},
 }

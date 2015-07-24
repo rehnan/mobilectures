@@ -35,6 +35,7 @@ var jsFilesToInject = [
   'js/dependencies/socket.io.connection.js',
   'js/app.js',
   'js/lib/functions.js',
+  'js/toast.js',
   'js/listeners.js',
   'js/doubts.js',
   'js/polls.js',

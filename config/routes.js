@@ -213,17 +213,17 @@ module.exports.routes = {
       action: 'show'
    },
 
-   'GET /speaker/sessions/:session_id/polls/edit/:poll_id':{
+   'GET /speaker/sessions/:session_id/polls/:poll_id/edit':{
       controller: 'PollsController',
       action: 'edit'
    },
 
-   'POST /speaker/sessions/:session_id/polls/edit/:poll_id':{
+   'POST /speaker/sessions/:session_id/polls/:poll_id/edit':{
       controller: 'PollsController',
       action: 'update'
    },
 
-   'GET /speaker/sessions/:session_id/polls/delete/:poll_id':{
+   'GET /speaker/sessions/:session_id/polls/:poll_id/delete':{
       controller: 'PollsController',
       action: 'destroy'
    },

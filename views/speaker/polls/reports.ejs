@@ -25,14 +25,17 @@
       </header>
 
       <div id="chart_wrap">
-       <div id="chart_div" data-chart-json="<%= JSON.stringify(poll.statistics) %>" ></div>   
-       <p id="canvas_size"></p>       
-     </div>
-   </article> 
+       <div id="chart_div" data-chart-json="<%= JSON.stringify(poll.statistics) %>" >
+        <div class="icon-div-loading">
+          <button class="btn btn-lg btn-default loading-icon"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> <br><br> Carregando Gráfico... </button>
+        </div>
+      </div>   
+      <p id="canvas_size"></p>       
+    </div>
+  </article> 
+</div>
 
- </div>
-
- <div class="col-sm-6">
+<div class="col-sm-6">
   <article>
     <header class="page-header">
       <h4 class="text-center">Relatório Tabulado</h4>

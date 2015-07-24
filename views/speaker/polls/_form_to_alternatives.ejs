@@ -1,16 +1,18 @@
 <form action="<%= action %>" method="POST" id="form_update_altvs">
-	<div class="well">
-		<div class="form-inline">
-			<label class="control-label">Múltipla escolha? </label>
-				<label class="radio">
-					<input value="false" <%- PollsHelper.check_radio_false(poll.choice_multiple) %> name="choice_multiple" type="radio">Não.
-				</label>
-				<label class="radio">
-					<input value="true" <%- PollsHelper.check_radio_true(poll.choice_multiple) %> name="choice_multiple" type="radio">Sim.
-				</label>
-			</div>
+	<article>
+		<div class="form-inline question-group well">
+		<label class="control-label">Múltipla escolha? </label>
+		<label class="radio choice_multiple">
+			<input value="false" <%- PollsHelper.check_radio_false(poll.choice_multiple) %> name="choice_multiple" type="radio">Não.
+		</label>
+		<label class="radio choice_multiple">
+			<input value="true" <%- PollsHelper.check_radio_true(poll.choice_multiple) %> name="choice_multiple" type="radio">Sim.
+		</label>
 		</div>
-		<div class="input-group class='form-group <%= Messages.errors.form.class('question', errors) %>'">
+	</article>
+
+	<article>
+		<div class="input-group <%= Messages.errors.form.class('question', errors) %>'">
 			<input type="hidden" name="title" value="<%= poll.title %>">
 			<input type="hidden" name="description" value="<%= poll.description %>">
 			<span class="input-group-addon" id="sizing-addon2">Questão: </span>
@@ -30,4 +32,5 @@
 				<button type="button" class="btn btn-success btn-sm add_field_button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nova Alternativa</button>
 			</div> <br><br>
 			<button type="submit" class="btn btn-sm btn-primary btn-block btn_save_altvs">Salvar Alterações</button>
-		</form>
+		</article>
+	</form>

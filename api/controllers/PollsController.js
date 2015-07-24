@@ -3,6 +3,7 @@ var application = sails.config.globals;
 var PollsController = {
 
   index: function(req, res) {
+    
     PollsController.beforeAction(req, res, function (session) {
       application.title = req.__('poll.show.title');
       Session.findOne({id:session.id}).populate('polls', {enabled:true}).exec(function (err, session) {
@@ -174,9 +175,6 @@ reports: function (req, res) {
           return res.redirect('/speaker/sessions/'+session.id+'/polls');
         }
 
-        
-        
-        //return res.json(found_poll);
         return res.view('speaker/polls/reports', {layout: 'layouts/session', session: session, poll: found_poll});
     });
   });

@@ -68,14 +68,6 @@ ml.polls = {
 		chart: {	 
 			render: function() {
 			 		if ($('#chart_div').length === 0) return false;
-
-			 		$.toast({
-			 			icon: 'success',
-					    heading: 'Render call',
-					    text: 'Renderizing poll graph...',
-					    position: 'top-right',
-					    stack: false
-					});
 			  		
 			  		$('#chart_div').removeData("chart-json");
 			  	    var jsonData = $('#chart_div').data('chart-json'); 
@@ -101,6 +93,12 @@ ml.polls = {
 			    	//        console.log(chart_div.innerHTML);
 			    	//      });
 					chart.draw(data, options);
+
+					google.visualization.events.addListener(chart, 'ready', function() {
+			            // Do something like ...
+			            //$('#chart_div').css('visibility', 'visible'); // provided this was already hidden
+			            $('.loading-icon').show(); // if it exists in your HTML */
+			        });
 			},
 
 
@@ -155,6 +153,10 @@ ml.polls = {
 				$('#chart_div').attr('data-chart-json', JSON.stringify(new_statistics));
 				ml.polls.reports.chart.render();
 				ml.polls.reports.tabbed.update(obj.data);
+				
+				var notification = ml.toast.new('info', 'Enquete', 'Uma nova resposta de enquete recebida!');
+				
+				ml.toast.show(notification);
 			}
 		});
  },

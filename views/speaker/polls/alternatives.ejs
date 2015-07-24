@@ -1,10 +1,8 @@
 <section>
-	<header class="page-header text-center"><h3>Questões</h3></header>
-</section>
-<article>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3 ">
+	<header class="page-header text-center"><h3>Edição Questão/Alternativas</h3></header>
+	<div class="row">
+		<article>
+			<div class="alternatives">
 				<div class="form-group question-group well">
 					<label>Título Enquete: <%= poll.title %> </label>
 					<p>
@@ -13,8 +11,7 @@
 				</div>
 				<% var poll_id = poll.id || poll.poll_id %>
 				<%- partial('_form_to_alternatives', {action: '/speaker/sessions/'+session.id+'/polls/'+poll_id+'/alternatives', disabledKey: ''}) %>
-				</div>
 			</div>
-		</div>
-	</article>
-
+		</article>
+	</div>
+</section>

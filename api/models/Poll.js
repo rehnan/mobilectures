@@ -14,7 +14,7 @@ module.exports = {
    title : { 
      type: 'string',
      required: true ,
-     maxLength: 50
+     maxLength: 30
    },
 
     /*
