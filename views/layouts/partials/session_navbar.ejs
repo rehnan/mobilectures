@@ -19,8 +19,8 @@
             <button class="btn" type="button" ><%= i18n("session.link.home") %></button>
           </a>
         </li>
-        <li class="<%= ViewHelpers.active_link("/speaker/sessions/" + session.id + "/quizzes", req.url) %>">
-          <a href="/speaker/sessions/<%= session.id %>/quizzes">
+        <li class="<%= ViewHelpers.active_link("/speaker/sessions/" + session.id + "/quizes", req.url) %>">
+          <a href="/speaker/sessions/<%= session.id %>/quizes">
             <button class="btn" type="button" ><%= i18n("quiz.link.index") %></button>
           </a>
         </li>

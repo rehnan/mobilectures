@@ -143,9 +143,9 @@ module.exports.routes = {
 
 
    //Rest to session quiz
-   'GET /speaker/sessions/:session_id/quizzes':{
-      controller: 'QuizzesController',
-      action: 'show'
+   'GET /speaker/sessions/:session_id/quizes':{
+      controller: 'QuizesController',
+      action: 'index'
    },
 
    //Rest to session doubts

@@ -2,10 +2,10 @@ var application = sails.config.globals;
 
 var QuizController = {
 
-   show: function(req, res) {
+   index: function(req, res) {
       QuizController.beforeAction(req, res, function (session) {
          application.title = req.__('quiz.show.title');
-         return res.view('speaker/quizzes/show', {layout: 'layouts/session', session: session});
+         return res.view('speaker/quizes/index', {layout: 'layouts/session', session: session});
       });
    },
 
