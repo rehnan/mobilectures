@@ -1,0 +1,21 @@
+<form action="<%= action %>" method='POST'>
+
+  <div class='form-group <%= Messages.errors.form.class("title", errors) %>'>
+    <label for='title'><%= i18n("quiz.title") %>:</label>
+    <input type='text' class='form-control' name='title'
+    placeholder='<%= i18n("quiz.input.placeholder.title") %>' value="<%= quiz.title %>" <%= disabledKey %> >
+    <%- Messages.errors.form.message("title", errors) %>
+  </div>
+
+  <div class='form-group <%= Messages.errors.form.class("description", errors) %>'>
+    <label for='description'><%= i18n("quiz.description") %>:</label>
+    <textarea class='form-control' name='description' placeholder='<%= i18n("quiz.input.placeholder.description") %>' rows="3"><%= quiz.description %></textarea>
+    <%- Messages.errors.form.message("description", errors) %>
+  </div>
+
+  <hr />
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary btn-block btn-sm"><%= i18n("global.form.submit.update") %></button>
+    <a class="btn btn-default btn-block btn-sm" href="/speaker/sessions/<%= session.id %>/quizes" role="button"><%= i18n("global.form.cancel") %></a>
+  </div>
+</form>

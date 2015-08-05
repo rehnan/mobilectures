@@ -1,62 +1,54 @@
 <section>
-  <header class="page-header">
+  <header class="page-header text-center">
     <h3> Quizes </h3>
+    <hr>
+    <div class="row">
+      <div class="col-xs-4">
+        <label>Legenda:</label>
+       </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-5">
+        <ul class="legend">
+            <li><span class="sent"></span> Aberta(s) </li>
+            <li><span class="pending"></span> Pendente(s) </li>
+            <li><span class="ready"></span> Pronta(s) pra envio </li>
+            <li><span class="closed"></span> Encerrada(s) </li>
+        </ul>
+      </div>
+    </div>
+    <div class="clearfix">
+      <a href="/speaker/sessions/<%= session.id %>/quizes/new" class="btn btn-default pull-right" ><%= i18n("quiz.link.new") %></a>
+    </div>
   </header>
+</section>
+<article>
 
   <div class="row">
-    <div class="col-sm-4">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-      </div>
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-      </div>
-    </div><!-- /.col-sm-4 -->
-    <div class="col-sm-4">
-      <div class="panel panel-success">
-        <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-      </div>
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-      </div>
-    </div><!-- /.col-sm-4 -->
-    <div class="col-sm-4">
-      <div class="panel panel-warning">
-        <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-      </div>
-      <div class="panel panel-danger">
-        <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-      </div>
-    </div><!-- /.col-sm-4 -->
+    <!-- Generate this dynamical -->
+      <% _.each(quizes, function (quiz) { %>
+         <div class="col-sm-4">
+           <div class="panel <%- QuizesHelper.check_status(quiz) %>">
+             <div class="panel-heading">
+               <div class="btn-group pull-right"> 
+               
+               </div>
+
+             <br><br>
+             <h3 class="panel-title text-center"><strong><%= quiz.title %></strong></h3> 
+             
+             </div>
+             <div class="panel-body">
+               <%= ViewHelpers.show_initial_chars(0, 31, quiz.description) %>
+             </div>
+             </div>
+             <%= 'Inserir Partial aqui'  %>
+           </div>
+      <% }) %>
+    <!-- Generate this dynamical -->
   </div>
+
+</article>
+<section> 
+  <footer></footer>
 </section>

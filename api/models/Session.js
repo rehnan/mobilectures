@@ -53,6 +53,11 @@ module.exports = {
          collection:'poll',
          via: 'session' 
       },
+
+      quizes: {
+         collection:'quiz',
+         via: 'session' 
+      },
    },
 
    validationMessages: {

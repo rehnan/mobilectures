@@ -100,6 +100,16 @@
   "poll.input.placeholder.title": "Informe o título da enquete",
   "poll.input.placeholder.description": "Informe uma descrição sobre a enquete",
 
+  "quiz.link.index": "Quizes",
+  "quiz.show.title": "Gerenciar Quizes",
+  "quiz.index.title": "Gerenciar Quizes",
+  "quiz.edit.title": "Editar Quiz",
+  "quiz.link.new": "Novo Quiz",
+  "quiz.title": "Título",
+  "quiz.description": "Descrição",
+  "quiz.input.placeholder.title": "Informe o título do quiz",
+  "quiz.input.placeholder.description": "Informe uma descrição sobre o quiz",
+
   "listener.link.index": "Ouvintes",
   "listener.index.title": "Ouvintes Conectados",
   "liseter.auth.error": "Usuário e/ou senha incorretos!",

@@ -35,7 +35,7 @@
 						<%- (poll.status === "ready" && !poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/send', 'send', 'Enviar', 'Clique em Ok para confirmar o envio desta enquete', '') : '' %>
 						<%- (!poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/edit', 'pencil', 'Editar Enquete', false, '') : '' %>
 						<%- (poll.status !== "open") ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/delete', 'trash', 'Excluir', 'Tem certeza que deseja excluir a enquete:'+poll.title, '') : '' %>
-						<%- (!poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/alternatives', 'list-alt', 'Editar Alternativas', false, '') : '' %>
+						<%- (!poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/alternatives', 'cog', 'Editar Alternativas', false, '') : '' %>
 						<%- (poll.status !== "ready" && poll.status !== "pending") ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/reports', 'stats', 'Estatística', false, '') : ''  %>
 						<%- (poll.status === "open" && poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/close', 'lock', 'Finalizar Enquete', 'Clique em Ok para finalizar esta enquete', '')  : '' %>
 						<%- (poll.status !== "pending") ? PollsHelper.modal_poll_preview(poll.id) : '' %> 

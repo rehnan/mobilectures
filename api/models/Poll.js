@@ -8,7 +8,7 @@
 module.exports = {
 
 	attributes: {
-     /*
+   /*
    * Attribute to set title a poll 
    */
    title : { 
@@ -111,7 +111,7 @@ validationMessages: {
 
   title: {
     required: 'Você deve informar o título da enquete!',
-    maxLength: 'O Título deve possuir no máximo 50 caracteres!'
+    maxLength: 'O Título deve possuir no máximo 30 caracteres!'
   },
 
   description: {

@@ -15,7 +15,7 @@ var PollsController = {
           req.flash('info', 'Não há nenhuma enquete cadastrada!');
           res.view('speaker/polls/index', {layout: 'layouts/session', session: session, polls: {}});
         }
-    });
+      });
    });
  },
 
@@ -25,7 +25,7 @@ var PollsController = {
 new: function(req, res) {
 
    PollsController.beforeAction(req, res, function (session) {
-     application.title = req.__('poll.index.title');
+     application.title = req.__('quiz.link.new');
      return res.view('speaker/polls/new', {errors: {}, poll: Poll.new, session:session});
   });
 },
