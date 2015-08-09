@@ -39,7 +39,7 @@ var QuizesController = {
 
             if(record) {
                req.flash('success', req.__('global.flash.create.success', {name: req.param('title')}));
-               //return res.redirect('speaker/sessions/'+session.id+'/quizes/'+record.id+'/alternatives');
+               return res.redirect('speaker/sessions/'+session.id+'/quizes/'+record.id+'/configuration');
                return res.redirect('speaker/sessions/'+session.id+'/quizes');
             } 
 
@@ -47,6 +47,57 @@ var QuizesController = {
             return res.redirect('speaker/sessions/'+session.id+'/quizes');
          });
      });
+   },
+
+   new_question: function (req, res) {
+      QuizesController.beforeAction(req, res, function (session) {
+         application.title = req.__('quiz.config.title');
+         var params = req.params.all();
+
+         Log.debug(req.params.all());
+          Quiz.findOne({id:params.quiz_id, session:params.session_id, enabled:true}).populate('questions').exec(function (err, quiz) {
+            if(err){return Log.error(err);}
+            
+            Log.json(quiz);
+            if(!quiz) {
+               req.flash('error',  'Quiz Inexistente!!');
+               return res.redirect('speaker/sessions/'+session.id+'/quizes');
+            }
+
+            return res.view('speaker/quizes/new_question', {layout: 'layouts/session', errors: {}, quiz: quiz, question:QuizQuestion.new, session:session});
+         });
+      });
+   },
+
+   create_question: function (req, res) {
+      Log.debug('Create Action Called');
+      
+      QuizesController.beforeAction(req, res, function (session) {
+         application.title = req.__('quiz.show.title');
+         var params = req.params.all();
+             params.quiz = req.param('quiz_id');
+
+         Log.info(params);
+         QuizQuestion.createIfValid(params, function (errors, quiz, question) {
+            if(errors){
+               req.flash('error',  'Possuem erros no formulário de nova questão!');
+               return res.view('speaker/quizes/new_question', {layout: 'layouts/session', errors: errors, quiz: quiz, question:params,session:session});
+            }
+
+            if(!quiz){
+               req.flash('error',  'Quiz Inexistente!!');
+               return res.redirect('speaker/sessions/'+session.id+'/quizes');
+            } 
+           
+            if(!question){
+               req.flash('error',  'Não foi possível criar esta questão!');
+               return res.redirect('speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/questions/new');
+            } 
+
+             req.flash('success',  'Questão criada com sucesso!');
+             return res.redirect('speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/questions/new');
+         });
+      });
    },
 
    /*

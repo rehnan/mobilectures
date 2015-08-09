@@ -101,7 +101,9 @@
   "poll.input.placeholder.description": "Informe uma descrição sobre a enquete",
 
   "quiz.link.index": "Quizes",
+  "quiz.question.link.new": "Nova Questão",
   "quiz.show.title": "Gerenciar Quizes",
+  "quiz.config.title": "Configuração Quiz",
   "quiz.index.title": "Gerenciar Quizes",
   "quiz.edit.title": "Editar Quiz",
   "quiz.link.new": "Novo Quiz",

@@ -1,0 +1,47 @@
+
+<form action="<%= action %>" method="POST" id="form_new_question">
+	<article>
+		<div class="input-group input-group-lg <%= Messages.errors.form.class('description', errors) %>'">
+			<span class="input-group-addon" id="sizing-addon2">Questão: </span>
+			<input type="text" value="<%= question.description %>" class="form-control" name="description" placeholder="Descrição da questão" aria-describedby="sizing-addon2">
+		</div>
+		<div class="input-group input-group-lg <%= Messages.errors.form.class('description', errors) %>'">
+			<%- Messages.errors.form.message("description", errors) %>
+		</div>
+
+		<br>
+		<!-- Refatoras colocando um for pra gerar as opções  -->
+		<div class="input-group input-group-lg <%= Messages.errors.form.class('points', errors) %>'">
+			<span class="input-group-addon" id="sizing-addon2">Pontos: </span>
+			<select class="form-control input-lg" name="points">
+            <option <%- QuizesHelper.select_points(question.points, '0') %>>0</option>
+            <option <%- QuizesHelper.select_points(question.points, '1') %>>1</option>
+            <option <%- QuizesHelper.select_points(question.points, '2') %>>2</option>
+            <option <%- QuizesHelper.select_points(question.points, '3') %>>3</option>
+            <option <%- QuizesHelper.select_points(question.points, '4') %>>4</option>
+            <option <%- QuizesHelper.select_points(question.points, '5') %>>5</option>
+            <option <%- QuizesHelper.select_points(question.points, '6') %>>6</option>
+            <option <%- QuizesHelper.select_points(question.points, '7') %>>7</option>
+            <option <%- QuizesHelper.select_points(question.points, '8') %>>8</option>
+            <option <%- QuizesHelper.select_points(question.points, '9') %>>9</option>
+            <option <%- QuizesHelper.select_points(question.points, '10') %>>10</option>
+         </select>
+		</div>
+
+		<div class="input-group input-group-lg <%= Messages.errors.form.class('points', errors) %>'">
+			<%- Messages.errors.form.message("points", errors) %>
+		</div>
+		<br>
+		<div class="input_fields_wrap question"> 
+			<% _.each(quiz.questions.alternatives, function (alternative, interator) { %>
+				<%- QuizesHelper.input_foreah(alternative, interator) %>
+				<% }); %>
+				<%- QuizesHelper.input_for_missing(quiz.questions.alternatives) %>
+		</div>
+
+		<div class="input-group pull-right">
+			<button type="button" class="btn btn-success btn-sm add_field_button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nova Alternativa</button>
+		</div> <br><br>
+		<button type="submit" class="btn btn-sm btn-primary btn-block btn_save_altvs">Salvar Questão</button>
+	</article>
+</form>

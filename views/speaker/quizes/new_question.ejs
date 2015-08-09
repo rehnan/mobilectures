@@ -1,0 +1,20 @@
+<section id="quiz_config">
+  <h2 class="page-header text-center">Configuração QUIZ</h2>
+  <div class="row">
+    <div class="col-xs-12 col-md-5 sidebar">
+      <%- partial ('quiz_info', {quiz:quiz}) %>
+      <%- partial ('questions', {quiz:quiz}) %>
+    </div>
+
+    <div class="col-xs-12 col-md-7 main">
+      <div class="clearfix">
+        <a href="/speaker/sessions/<%= session.id %>/quizes/<%= quiz.id %>/questions/new" class="btn btn-default pull-right" ><%= i18n("quiz.question.link.new") %></a>
+      </div>
+      <hr>
+      <article>
+       <% var quiz_id = quiz.id || quiz.quiz_id %>
+       <%- partial ('form_new_question', {quiz:quiz, action: '/speaker/sessions/'+session.id+'/quizes/'+quiz_id+'/questions', question:question}) %>
+     </article>
+   </div>
+ </div>
+</section>

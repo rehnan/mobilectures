@@ -15,6 +15,7 @@ ml.polls = {
 	},
 
 	addAndRemove_inputs: function () {
+		if ($('#form_update_altvs').length <= 0) {return;}
 		    var max_fields      = 10; //maximum input boxes allowed
 		    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
 		    var add_button      = $(".add_field_button"); //Add button ID
@@ -35,7 +36,7 @@ ml.polls = {
 		 },
 
 		 sortable_inputs: function () {
-
+		 	if ($('#form_update_altvs').length <= 0) {return;}
 		 	$(".question").sortable({
 		 		tolerance: 'pointer',
 		 		revert: 'invalid',
@@ -49,6 +50,7 @@ ml.polls = {
 		 },
 
 		 remove_empty_alternatives: function () {
+		 	if ($('#form_update_altvs').length <= 0) {return;}
 		 	$(".btn_save_altvs").click(function() {
 		 		var form = $("#form_update_altvs");
 		 		$(form).find('input.form-control').each(function(){

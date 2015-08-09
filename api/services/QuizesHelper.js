@@ -74,7 +74,7 @@ module.exports = {
 				btn_disabled = '';
 				remove_field_class = 'remove_field';
 			}   
-			html_alter += '<div class="input-group alternative glyphicon glyphicon-move order_alternative"><input style="max-width:93%;float:right" class="form-control" name="alternatives[]" type="text" placeholder="Descrição da alternativa..." /><span class="input-group-btn '+remove_field_class+'"><button class="btn btn-danger" '+btn_disabled+' type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>';
+			html_alter += '<div class="input-group alternative glyphicon glyphicon-move order_alternative"><span class="input-group-addon"><input type="radio" name="correct_alternative" value="'+amount_alters+'"></span><input style="max-width:100%;float:right" class="form-control" name="alternatives[]" type="text" placeholder="Descrição da alternativa..." /><span class="input-group-btn '+remove_field_class+'"><button class="btn btn-danger" '+btn_disabled+' type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>';
 			amount_alters++;
 		}
 		return html_alter;
@@ -94,5 +94,10 @@ module.exports = {
 
 	abstention_votes: function (participants, votes) {
 		return participants - votes;
+	},
+
+	select_points: function (point, number) {
+		var selectd = (point === number) ? 'selected' : ''
+		return selectd;
 	}
 };

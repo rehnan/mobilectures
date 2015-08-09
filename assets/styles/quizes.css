@@ -1,0 +1,7 @@
+/* basic positioning */
+.legend_questions { list-style: none; padding-bottom:25px; margin-left: 0;}
+.legend_questions li { float: left; margin-right: 10px; }
+.legend_questions span { border: 1px solid #ccc; float: left; width: 25px; height: 25px; margin: 2px; }
+/* your colors */
+.legend_questions .valid { background-color: #dff0d8; }
+.legend_questions .pending { background-color: #faebcc; }

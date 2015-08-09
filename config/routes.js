@@ -158,6 +158,16 @@ module.exports.routes = {
       action: 'create'
    },
 
+   'GET /speaker/sessions/:session_id/quizes/:quiz_id/questions/new':{
+      controller: 'QuizesController',
+      action: 'new_question'
+   },
+
+   'POST /speaker/sessions/:session_id/quizes/:quiz_id/questions':{
+      controller: 'QuizesController',
+      action: 'create_question'
+   },
+
    //Rest to session doubts
    'GET /speaker/sessions/:session_id/doubts':{
       controller: 'DoubtsController',
