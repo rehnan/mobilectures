@@ -39,7 +39,7 @@ var QuizesController = {
 
             if(record) {
                req.flash('success', req.__('global.flash.create.success', {name: req.param('title')}));
-               return res.redirect('speaker/sessions/'+session.id+'/quizes/'+record.id+'/configuration');
+               return res.redirect('speaker/sessions/'+session.id+'/quizes/'+record.id+'/questions/new');
                return res.redirect('speaker/sessions/'+session.id+'/quizes');
             } 
 
