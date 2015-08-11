@@ -1,0 +1,41 @@
+ <!-- Modal -->
+ <div id="modal-<%= question.id %>" class="modal fade" role="dialog">
+ 	<div class="modal-dialog">
+
+ 		<!-- Modal content-->
+ 		<div class="modal-content">
+ 			<div class="modal-header">
+ 				<button type="button" class="close" data-dismiss="modal">&times;</button>
+ 				<h4 class="modal-title"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Preview - Quiz Question</h4>
+ 			</div>
+ 			<div class="modal-body center-block limit-width">
+ 				<div class="row">
+ 					<strong> <%= question.description %></strong>
+ 				</div>
+ 				<hr>
+ 				<div class="row">
+					<% _.each(question.alternatives, function (alternative) { %>
+ 					<div class="radio ">
+					  <label>
+					    <input type="radio" name="alternative"  value="<%= alternative %>">
+					   <%= alternative %>
+					  </label>
+					</div>
+ 					<% }) %>
+				</div>
+ 				<br>
+ 				<div class="row limit-width">
+					<button type="button" class="btn btn-default btn-sm btn-block">Responder</button>
+ 				</div>
+ 			
+
+ 			<div class="modal-footer">
+ 				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+ 			</div>
+ 		</div>
+ 	</div>
+ </div>
+</div>
+  <!-- End Modal -->
+
+ 

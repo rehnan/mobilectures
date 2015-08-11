@@ -99,5 +99,11 @@ module.exports = {
 	select_points: function (point, number) {
 		var selectd = (point === number) ? 'selected' : ''
 		return selectd;
+	},
+
+	popoverInfo: function (question) {
+		var content = '<p>1. Você deve informar no mínimo duas alternativas pra esta questão.</p><p> 2. Você deve informar qual delas é a correta. </p>';
+		var popover = '<button type="button" class="btn btn-warning popoverInfo" data-html="true"  data-content="'+content+'" rel="popover" data-placement="top"  data-original-title="Pendências"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></button>';
+		return (question.status === 'invalid') ? popover : '';
 	}
 };

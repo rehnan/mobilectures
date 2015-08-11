@@ -141,8 +141,10 @@ module.exports.routes = {
       action: 'destroy'
    },
 
+/* ################# END SESSION REST ROUTES ####################### */
 
-   //Rest to session quiz
+/* ################# BEGIN QUIZ REST ROUTES ####################### */
+
    'GET /speaker/sessions/:session_id/quizes':{
       controller: 'QuizesController',
       action: 'index'
@@ -168,7 +170,25 @@ module.exports.routes = {
       action: 'create_question'
    },
 
-   //Rest to session doubts
+   'GET /speaker/sessions/:session_id/quizes/:quiz_id/questions/:question_id/delete':{
+      controller: 'QuizesController',
+      action: 'destroy_question'
+   },
+
+   'GET /speaker/sessions/:session_id/quizes/:quiz_id/questions/:question_id/edit':{
+      controller: 'QuizesController',
+      action: 'edit_question'
+   },
+
+   'POST /speaker/sessions/:session_id/quizes/:quiz_id/questions/:question_id':{
+      controller: 'QuizesController',
+      action: 'update_question'
+   },
+
+   /* ################# END QUIZ REST ROUTES ####################### */
+
+
+   /* ################# BEGIN DOUBTS REST ROUTES ####################### */
    'GET /speaker/sessions/:session_id/doubts':{
       controller: 'DoubtsController',
       action: 'show'
@@ -194,12 +214,7 @@ module.exports.routes = {
       action: 'count'
    },
 
-   //Rest to session polls
-   'GET /speaker/sessions/:session_id/polls':{
-      controller: 'PollsController',
-      action: 'index'
-   },
-   /* ################# END SESSIONS ROUTES ####################### */
+   /* ################# END DOUBTS REST ROUTES ####################### */
 
 
    /* ################# BEGIN LISTENERS ROUTES ####################### */
@@ -217,6 +232,11 @@ module.exports.routes = {
 
 
     /* ################# BEGIN POLL ROUTES ####################### */
+
+    'GET /speaker/sessions/:session_id/polls':{
+      controller: 'PollsController',
+      action: 'index'
+   },
 
     'POST /speaker/sessions/:session_id/polls':{
       controller: 'PollsController',
@@ -277,8 +297,6 @@ module.exports.routes = {
       controller: 'PollsController',
       action: 'subscribe'
    },
-
-   
 
     /* ################# END POLL ROUTES   ####################### */
 

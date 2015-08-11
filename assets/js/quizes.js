@@ -7,6 +7,7 @@ ml.quizes = {
 		ml.quizes.addAndRemove_inputs();
 		ml.quizes.sortable_inputs();
 		ml.quizes.remove_empty_alternatives();
+		ml.quizes.pending_info();
 	},
 
 	addAndRemove_inputs: function () {
@@ -63,6 +64,14 @@ ml.quizes = {
 			});
 		 	});
 		 },
+
+		 pending_info: function () {
+		 	if ($('#form_new_question').length <= 0) {return;}
+
+			$('.popoverInfo').popover({ trigger: "hover" });
+
+			
+		 }
 
 
 };

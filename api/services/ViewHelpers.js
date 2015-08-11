@@ -37,7 +37,18 @@ module.exports = {
    show_initial_chars: function(start, end, string) {
       var str = string.trim();
       return str.substring(start, end)+'...';
-   }
+   },
+
+   link_action: function (link_to, icon, title, data_confirm, add_class) {
+      if(data_confirm){
+         return '<a href="'+link_to+'" class="btn btn-default '+add_class+'" title="'+title+'" data-confirm="'+data_confirm+'" rule="button" ><span class="glyphicon glyphicon-'+icon+'" aria-hidden="true"></span></a>';
+      }
+      return '<a href="'+link_to+'" class="btn btn-default" title="'+title+'" rule="button"><span class="glyphicon glyphicon-'+icon+'" aria-hidden="true"></span></a>';
+   },
+
+   modal_preview: function(poll_id) {
+      return '<a type="button" class="btn btn-default" rule="button" data-toggle="modal" title="Preview" data-target="#modal-'+ poll_id +'"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>';
+   },
 
    /*
    *Retorna o número de dúvidas de uma sessão
