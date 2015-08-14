@@ -1,0 +1,15 @@
+<div class="btn-group btn-group-justified" role="group" aria-label="...">
+	<div class="btn-group" role="group">
+		<a href="/speaker/sessions/<%= session.id %>/quizes" class="btn btn-default" >Quizes
+		</a>
+	</div>
+	<div class="btn-group" role="group">
+		<a href="/speaker/sessions/<%= session.id %>/quizes/<%= quiz.id %>/questions" class="btn btn-default" >Questões
+		</a>
+	</div>
+	<div class="btn-group" role="group">
+		<a href="/speaker/sessions/<%= session.id %>/quizes/<%= quiz.id %>/questions/new" class="btn btn-default" ><%= i18n("quiz.question.link.new") %>
+		</a>
+	</div>
+</div>
+

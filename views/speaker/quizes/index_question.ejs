@@ -1,5 +1,5 @@
 <section id="quiz_config">
-  <h2 class="page-header text-center">Configuração QUIZ - Nova Questão</h2>
+  <h2 class="page-header text-center">Configuração QUIZ - Questões</h2>
   <article >
     <div  class="row">
       <div class="col-xs-4 col-md-2"></div>
@@ -7,11 +7,11 @@
         <%- partial ('quiz_info', {quiz:quiz}) %>
         <%- partial ('_buttons_options') %>
         <hr>
-        <% var quiz_id = quiz.id || quiz.quiz_id %>
-       <%- partial ('form_question', {quiz:quiz, action: '/speaker/sessions/'+session.id+'/quizes/'+quiz_id+'/questions', question:question}) %>
-
+        <%- partial ('table_questions', {quiz:quiz}) %>
       </div>
       <div class="col-xs-4 col-md-2"></div>
     </div> 
   </article>
 </section>
+
+

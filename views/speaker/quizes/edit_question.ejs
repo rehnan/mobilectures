@@ -1,0 +1,18 @@
+<section id="quiz_config">
+  <h2 class="page-header text-center">Configuração QUIZ - Editar Questão</h2>
+  <article >
+    <div  class="row">
+      <div class="col-xs-4 col-md-2"></div>
+      <div class="col-xs-12 col-md-8">
+        <%- partial ('quiz_info', {quiz:quiz}) %>
+        <%- partial ('_buttons_options') %>
+        <hr>
+        <% var quiz_id = quiz.id || quiz.quiz_id %>
+        <% var question_id = question.id || question.question_id %>
+        <%- partial ('form_question', {quiz:quiz, action: '/speaker/sessions/'+session.id+'/quizes/'+quiz_id+'/questions/'+question_id, question:question}) %>
+
+      </div>
+      <div class="col-xs-4 col-md-2"></div>
+    </div> 
+  </article>
+</section>

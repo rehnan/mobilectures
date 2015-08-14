@@ -1,5 +1,5 @@
 
-<form action="<%= action %>" method="POST" id="form_new_question">
+<form action="<%= action %>" method="POST" id="form_question">
 	<article>
 		<div class="input-group input-group-lg <%= Messages.errors.form.class('description', errors) %>'">
 			<span class="input-group-addon" id="sizing-addon2">Questão: </span>
@@ -14,17 +14,17 @@
 		<div class="input-group input-group-lg <%= Messages.errors.form.class('points', errors) %>'">
 			<span class="input-group-addon" id="sizing-addon2">Pontos: </span>
 			<select class="form-control input-lg" name="points">
-            <option <%- QuizesHelper.select_points(question.points, '0') %>>0</option>
-            <option <%- QuizesHelper.select_points(question.points, '1') %>>1</option>
-            <option <%- QuizesHelper.select_points(question.points, '2') %>>2</option>
-            <option <%- QuizesHelper.select_points(question.points, '3') %>>3</option>
-            <option <%- QuizesHelper.select_points(question.points, '4') %>>4</option>
-            <option <%- QuizesHelper.select_points(question.points, '5') %>>5</option>
-            <option <%- QuizesHelper.select_points(question.points, '6') %>>6</option>
-            <option <%- QuizesHelper.select_points(question.points, '7') %>>7</option>
-            <option <%- QuizesHelper.select_points(question.points, '8') %>>8</option>
-            <option <%- QuizesHelper.select_points(question.points, '9') %>>9</option>
-            <option <%- QuizesHelper.select_points(question.points, '10') %>>10</option>
+            <option <%- QuizesHelper.select_points(question, '0') %>>0</option>
+            <option <%- QuizesHelper.select_points(question, '1') %>>1</option>
+            <option <%- QuizesHelper.select_points(question, '2') %>>2</option>
+            <option <%- QuizesHelper.select_points(question, '3') %>>3</option>
+            <option <%- QuizesHelper.select_points(question, '4') %>>4</option>
+            <option <%- QuizesHelper.select_points(question, '5') %>>5</option>
+            <option <%- QuizesHelper.select_points(question, '6') %>>6</option>
+            <option <%- QuizesHelper.select_points(question, '7') %>>7</option>
+            <option <%- QuizesHelper.select_points(question, '8') %>>8</option>
+            <option <%- QuizesHelper.select_points(question, '9') %>>9</option>
+            <option <%- QuizesHelper.select_points(question, '10') %>>10</option>
          </select>
 		</div>
 
@@ -33,10 +33,11 @@
 		</div>
 		<br>
 		<div class="input_fields_wrap question"> 
-			<% _.each(quiz.questions.alternatives, function (alternative, interator) { %>
-				<%- QuizesHelper.input_foreah(alternative, interator) %>
+			
+			<% _.each(question.alternatives, function (alternative, interator) { %>
+				<%- QuizesHelper.input_foreah(alternative, interator, question.correct_alternative) %>
 				<% }); %>
-				<%- QuizesHelper.input_for_missing(quiz.questions.alternatives) %>
+				<%- QuizesHelper.input_for_missing(question.alternatives) %>
 		</div>
 
 		<div class="input-group pull-right">

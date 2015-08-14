@@ -11,7 +11,7 @@ ml.quizes = {
 	},
 
 	addAndRemove_inputs: function () {
-		if ($('#form_new_question').length <= 0) {return;}
+		if ($('#form_question').length <= 0) {return;}
 
 		    var max_fields      = 10; //maximum input boxes allowed
 		    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
@@ -34,7 +34,7 @@ ml.quizes = {
 		 },
 
 		 sortable_inputs: function () {
-		 	if ($('#form_new_question').length <= 0) {return;}
+		 	if ($('#form_question').length <= 0) {return;}
 
 		 	$(".question").sortable({
 		 		tolerance: 'pointer',
@@ -49,10 +49,10 @@ ml.quizes = {
 		 },
 
 		 remove_empty_alternatives: function () {
-		 	if ($('#form_new_question').length <= 0) {return;}
+		 	if ($('#form_question').length <= 0) {return;}
 
 		 	$(".btn_save_altvs").click(function() {
-		 		var form = $("#form_new_question");
+		 		var form = $("#form_question");
 		 		$(form).find('input.form-control').each(function(){
 		 			var input = $.trim($(this).val());
 		 			var numbers_input = $(form).find('input.form-control').size();
@@ -66,11 +66,8 @@ ml.quizes = {
 		 },
 
 		 pending_info: function () {
-		 	if ($('#form_new_question').length <= 0) {return;}
-
+		 	if ($('#table_questions').length <= 0) {return;}
 			$('.popoverInfo').popover({ trigger: "hover" });
-
-			
 		 }
 
 

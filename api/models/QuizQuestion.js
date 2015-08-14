@@ -99,6 +99,8 @@ module.exports = {
 
 	new: {
 	  description: '',
+	  points: 0,
+	  alternatives: [],
 	},
 
 	createIfValid: function (params, callback) {
@@ -123,13 +125,19 @@ module.exports = {
 			 			params.statistics.push([params.alternatives[i], 0]);
 			 		}
                     
-                    /* Se possuiu no mínimo duas alternativas
+		         /* Se possuiu no mínimo duas alternativas
 			 		Se POssui a alternativa certa marcada 
 			 		Se a alternativa marcada é >= 0 ou <= ao número de alternativa
 					*/
-                    if(params.alternatives.length >= 2 && params.correct_alternative && params.correct_alternative >= 0 || params.correct_alternative <= params.alternatives.length) {
-                    	params.status = 'valid';
-                    }
+							
+		         if(params.alternatives.length >= 2 && params.correct_alternative && (params.correct_alternative >= 0 && params.correct_alternative <= params.alternatives.length)) {
+		        		Log.info('Validou!!!');
+		        		params.status = 'valid';
+		         } else {
+		        	 	params.status = 'invalid';
+		        	}
+
+		        	if(params.points > 10 || params.points < 0) {params.points = 0; }
 			 		
 					quiz.questions.add(params);
 					quiz.save(function(err, record){
@@ -137,13 +145,49 @@ module.exports = {
 							
 						var index = record.questions.length;
 						var question = record.questions[index-1];
-						Log.debug('Quiz created '+question);
 
 						callback(null, quiz, question);
 					});
 				});
 			});
 		
+	},
+
+	updateIfValid: function (question, callback) {
+
+      QuizQuestion.validate(question, function (errors) {
+		
+			if (errors) {
+				Log.debug('Quiz Errors ==> ' + JSON.stringify(errors));
+				pretty_errors = SailsValidador(QuizQuestion, errors);
+				Log.debug('Pretty Errors ==> ' + JSON.stringify(pretty_errors));
+				return callback(pretty_errors, null);
+			}
+
+			question.statistics = [];
+			for(i = 0; i < question.alternatives.length; i++) {
+	 			Log.info(question.alternatives[i]);
+	 			question.statistics.push([question.alternatives[i], 0]);
+	 		}
+              
+         if(question.alternatives.length >= 2 && question.correct_alternative && (question.correct_alternative >= 0 && question.correct_alternative <= question.alternatives.length)) {
+        		Log.info('Validou!!!');
+        		question.status = 'valid';
+         } else {
+        	 	question.status = 'invalid';
+        	}
+
+        	if(question.points > 10 || question.points < 0) {question.points = 0; }
+		 		
+	 		QuizQuestion.update({id:question.question_id, quiz:question.quiz_id}, question).exec(function (err, updated) {
+		         if(err) { return Log.error(err); }
+
+		         if(Validator.objectIsEmpty(updated)){
+		           return callback(null, null);
+		         } 
+		        return callback(null, updated[0]);
+		   });
+		});
 	}
 };
 

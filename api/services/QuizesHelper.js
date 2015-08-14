@@ -1,7 +1,11 @@
 module.exports = {
-	input_foreah: function(alternative, i) {
+	input_foreah: function(alternative, i, correct_alternative) {
 		var btn_disabled;
 		var remove_field_class;
+		var checked;
+
+		(correct_alternative === i) ? checked = 'checked' : '';
+		
 		if (i < 2) {
 			btn_disabled = 'disabled="disabled"';
 			remove_field_class = '';	
@@ -9,7 +13,7 @@ module.exports = {
 			btn_disabled = '';
 			remove_field_class = 'remove_field';
 		}   
-		return '<div class="input-group alternative glyphicon glyphicon-move order_alternative"><input style="max-width:93%;float:right" class="form-control" name="alternatives[]" type="text" value="'+alternative+'" placeholder="Descrição da alternativa..." /><span class="input-group-btn '+remove_field_class+'"><button class="btn btn-danger" '+btn_disabled+' type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>';
+		return '<div class="input-group alternative glyphicon glyphicon-move order_alternative"><span class="input-group-addon"><input type="radio" name="correct_alternative" value="'+i+'" '+checked+'></span><input style="max-width:100%;float:right" class="form-control" name="alternatives[]" type="text" value="'+alternative+'" placeholder="Descrição da alternativa..." /><span class="input-group-btn '+remove_field_class+'"><button class="btn btn-danger" '+btn_disabled+' type="button"><span class="glyphicon glyphicon-remove"></span></button></span></div>';
 	},
 
 	check_status: function (quiz) {
@@ -96,8 +100,8 @@ module.exports = {
 		return participants - votes;
 	},
 
-	select_points: function (point, number) {
-		var selectd = (point === number) ? 'selected' : ''
+	select_points: function (question, number) {
+		var selectd = (question && question.points.toString() === number.toString()) ? 'selected' : ''
 		return selectd;
 	},
 

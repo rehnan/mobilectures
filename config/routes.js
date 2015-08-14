@@ -185,6 +185,11 @@ module.exports.routes = {
       action: 'update_question'
    },
 
+   'GET /speaker/sessions/:session_id/quizes/:quiz_id/questions':{
+      controller: 'QuizesController',
+      action: 'index_question'
+   },
+
    /* ################# END QUIZ REST ROUTES ####################### */
 
 

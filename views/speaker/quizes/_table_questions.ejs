@@ -1,23 +1,26 @@
-<div>
-  <ul class="legend_questions">
-    <li> <b>Legenda: </b></li>
-    <li><span class="valid"></span> Válida(s) </li>
-    <li><span class="pending"></span> Pendente(s) </li>
-  </ul>
-</div>
-
-<table class="table table-hover table-bordered">
+<table class="table table-hover table-bordered" id="table_questions">
   <thead>
     <tr> 
-      <th class="text-center">Pontos</th>
-      <th class="text-center">Questões</th>
+      <th class="text-center" colspan="3">Legenda</th>
+    </tr>
+    <tr> 
+      <th class="text-center">Válida (s)</th>
+      <th class="text-center" colspan="2"><span class="legend_questions valid"></span></th>
+    </tr>
+    <tr> 
+      <th class="text-center">Pendente (s)</th>
+      <th class="text-center" colspan="2"><span class="legend_questions pending"></span></th>
+    </tr>
+    <tr> 
+      <th class="text-center" colspan="3">Questões</th>
+    </tr>
+    <tr> 
+      <th class="text-center">Pontuação</th>
+      <th class="text-center">Questão</th>
       <th class="text-center">Ações</th>
     </tr>
   </thead>
   <tbody>
-
-
-
     <% _.each(quiz.questions, function (question, i){ %>
       <tr class="<%- (question.status === 'valid') ? 'success' : 'warning' %>">
         <td><%= question.points %></td>

@@ -10,9 +10,8 @@
     <div class="row">
         <div class="col-xs-5">
         <ul class="legend">
-            <li><span class="sent"></span> Aberta(s) </li>
-            <li><span class="pending"></span> Pendente(s) </li>
             <li><span class="ready"></span> Pronta(s) pra envio </li>
+            <li><span class="sent"></span> Aberta(s) </li>
             <li><span class="closed"></span> Encerrada(s) </li>
         </ul>
       </div>
@@ -28,10 +27,10 @@
     <!-- Generate this dynamical -->
       <% _.each(quizes, function (quiz) { %>
          <div class="col-sm-4">
-           <div class="panel <%- QuizesHelper.check_status(quiz) %>">
+           <div class="panel panel-info">
              <div class="panel-heading">
                <div class="btn-group pull-right"> 
-               
+                  <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/questions', 'cog', 'Configurar Quiz', false, '') : '' %>
                </div>
 
              <br><br>
