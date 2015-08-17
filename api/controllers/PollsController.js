@@ -6,7 +6,8 @@ var PollsController = {
     
     PollsController.beforeAction(req, res, function (session) {
       application.title = req.__('poll.show.title');
-      Session.findOne({id:session.id}).populate('polls', {enabled:true}).exec(function (err, session) {
+      var orders_by = {sort: {createdAt: -1}, enabled:true};
+      Session.findOne({id:session.id}).populate('polls', orders_by).exec(function (err, session) {
         if(err){return Log.error(err);}
         
         if(session.polls.length > 0){

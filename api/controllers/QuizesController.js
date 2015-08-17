@@ -5,7 +5,8 @@ var QuizesController = {
    index: function (req, res) {
       QuizesController.beforeAction(req, res, function (session) {
          application.title = req.__('quiz.show.title');
-         Session.findOne({id:session.id}).populate('quizes', {enabled:true}).exec(function (err, session) {
+         var orders_by = {sort: {createdAt: -1}, enabled:true};
+         Session.findOne({id:session.id}).populate('quizes', orders_by).exec(function (err, session) {
            if(err){return Log.error(err);}
 
            if(session.quizes.length > 0){
