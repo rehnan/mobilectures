@@ -31,6 +31,10 @@
              <div class="panel-heading">
                <div class="btn-group pull-right"> 
                   <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/questions', 'cog', 'Configurar Quiz', false, '') : '' %>
+
+                  <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/edit', 'pencil', 'Editar Quiz', false, '') : '' %>
+
+                  <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/delete', 'trash', 'Excluir', 'Tem certeza que deseja excluir este quiz:'+quiz.title, '') : '' %>
                </div>
 
              <br><br>

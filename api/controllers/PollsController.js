@@ -73,7 +73,6 @@ edit: function(req ,res) {
       }
 
       var poll = session.polls[0];
-      application.title = req.__('session.edit.title');
       return res.view('speaker/polls/edit', {errors: {}, poll: poll, poll_id: poll_id, session_id:session_id, session:session});
    });
   });

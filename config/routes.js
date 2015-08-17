@@ -190,6 +190,41 @@ module.exports.routes = {
       action: 'index_question'
    },
 
+   'GET /speaker/sessions/:session_id/quizes/:quiz_id/edit':{
+      controller: 'QuizesController',
+      action: 'edit'
+   },
+
+   'POST /speaker/sessions/:session_id/quizes/:quiz_id/edit':{
+      controller: 'QuizesController',
+      action: 'update'
+   },
+
+   'GET /speaker/sessions/:session_id/quizes/:quiz_id/delete':{
+      controller: 'QuizesController',
+      action: 'destroy'
+   },
+
+   'GET /speaker/sessions/:session_id/quizes/:quiz_id/send':{
+      controller: 'QuizesController',
+      action: 'send'
+   },
+
+   /*'GET /speaker/sessions/:session_id/quizes/:quiz_id/close':{
+      controller: 'QuizesController',
+      action: 'close'
+   },
+
+   'GET /speaker/sessions/:session_id/quizes/:quiz_id/reports':{
+      controller: 'QuizesController',
+      action: 'reports'
+   },
+
+   'POST /speaker/sessions/:session_id/quizes/:quiz_id/quizesanswers/subscribe':{
+      controller: 'QuizesController',
+      action: 'subscribe'
+   },*/
+
    /* ################# END QUIZ REST ROUTES ####################### */
 
 

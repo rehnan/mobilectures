@@ -103,7 +103,7 @@ module.exports = {
 
     		if (errors) {
     			Log.debug('Quiz Errors ==> ' + JSON.stringify(errors));
-    			pretty_errors = SailsValidador(Poll, errors);
+    			pretty_errors = SailsValidador(Quiz, errors);
     			Log.debug('Pretty Errors ==> ' + JSON.stringify(pretty_errors));
     			return callback(pretty_errors, null);
     		}
@@ -123,6 +123,38 @@ module.exports = {
     	});
     },
 
+    updateIfValid: function (params, callback) {
 
+      Quiz.validate(params, function (errors) {
+
+    		if (errors) {
+    			Log.debug('Quiz Errors ==> ' + JSON.stringify(errors));
+    			pretty_errors = SailsValidador(Quiz, errors);
+    			Log.debug('Pretty Errors ==> ' + JSON.stringify(pretty_errors));
+    			return callback(pretty_errors, null);
+    		}
+
+    		Quiz.update({session:params.session_id, id:params.quiz_id}, params).exec(function (err, updated) {
+		         if(err) { return callback(err, null) }
+		         return callback(null, updated[0]);
+		   });
+    	});
+    },
+
+   disable: function (params, callback) {
+   	var response = {};
+	   Quiz.update({id:params.quiz_id, session:params.session_id}, {enabled:false}).exec(function(err, quiz){
+	     if(err) {callback(err, null);}
+	     if(!Validator.objectIsEmpty(quiz)) {
+	         response.status = true;
+	      	Log.info('Quiz desabilitado!');  
+	      	callback(null, response);
+	      } else {
+	       	response.status = false;
+	       	Log.error('Quiz não encontrada!');  
+	     		callback(null, response);
+	     }
+	 });	
+   }
 };
 
