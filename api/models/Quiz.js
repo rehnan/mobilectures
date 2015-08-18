@@ -141,6 +141,30 @@ module.exports = {
     	});
     },
 
+   before_send: function (params, callback) {
+   	Log.info(params);
+   	var response = {};
+   	var conditions = {id:params.quiz_id, session:params.session_id, enabled:true};
+      Quiz.findOne(conditions).populate('questions', {status:'invalid'}).exec(function (err, quiz) {
+         if (err) { return callback(err, null); }
+         response.quiz = quiz;
+         
+         if (!quiz) { return callback(null, response); }
+         
+       	if(quiz.questions.length > 0) {
+       		response.pending = true;
+       		response.quiz = quiz;
+       		return callback(null, response);
+       	}
+       	Quiz.findOne(conditions).populate('questions', {status:'valid'}).exec(function (err, quiz) {
+       		if (err) { return callback(err, null); }
+       		response.pending = false;
+       		response.quiz = quiz;
+       		return callback(null, response);
+       	});
+      });
+   },
+
    disable: function (params, callback) {
    	var response = {};
 	   Quiz.update({id:params.quiz_id, session:params.session_id}, {enabled:false}).exec(function(err, quiz){

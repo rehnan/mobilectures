@@ -116,7 +116,34 @@ var QuizesController = {
    },
 
    send: function (req, res) {
+      QuizesController.beforeAction(req, res, function (session) {
+         var params = req.params.all();
+         var quiz = session.quizes[0];
+         //Before send, verify pending questions...
+         Quiz.before_send(params, function (err, response){
+            if (err) { return Log.error(err); }
 
+            if (!response.quiz) {
+               req.flash('error', 'Quiz inexistente!!!');
+               return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+            }
+
+            if(response.pending) {
+               req.flash('warning', 'Este quiz possui questões pendentes!!');
+               return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+            }
+
+            if (response.quiz.questions.length === 0) {
+               req.flash('info', 'Este quiz não possui nenhuma questão cadastrada!!');
+               return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+            } 
+            
+            req.flash('success', 'Quiz: '+ response.quiz.title +' foi enviado com sucesso!!');
+            //Sending quiz to connected listeners 
+            sails.sockets.broadcast(session.id, 'quizes-receive', response.quiz);
+            return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+         });
+      });
    },
 
    new_question: function (req, res) {

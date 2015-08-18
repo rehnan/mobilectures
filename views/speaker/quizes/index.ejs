@@ -30,6 +30,8 @@
            <div class="panel panel-info">
              <div class="panel-heading">
                <div class="btn-group pull-right"> 
+                  <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/send', 'send', 'Enviar', 'Clique em Ok para confirmar o envio deste quiz', '') : '' %>
+
                   <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/questions', 'cog', 'Configurar Quiz', false, '') : '' %>
 
                   <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/edit', 'pencil', 'Editar Quiz', false, '') : '' %>
@@ -45,7 +47,7 @@
                <%= ViewHelpers.show_initial_chars(0, 31, quiz.description) %>
              </div>
              </div>
-             <%= 'Inserir Partial aqui'  %>
+             <%= '-'  %>
            </div>
       <% }) %>
     <!-- Generate this dynamical -->
