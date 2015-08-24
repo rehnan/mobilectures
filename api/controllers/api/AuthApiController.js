@@ -91,7 +91,7 @@ var AuthApiController = {
             req.session.listener = listener;
 
             sails.sockets.broadcast(session.id, 'welcome-msg', 'Seja bem vindo a palestra ' + session.name);
-            return res.json([200],{authorization: 'authorized', session: session});
+            return res.json([200],{authorization: 'authorized', session: session, listener:listener});
          });
       });
    },

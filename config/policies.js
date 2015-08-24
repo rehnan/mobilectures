@@ -56,6 +56,10 @@ module.exports.policies = {
       '*': true
    },
 
+   'api/quizAnswersApi': {
+      '*': true
+   },
+
    /* ################# END API POLICES ####################### */
 
    

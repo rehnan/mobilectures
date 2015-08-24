@@ -140,7 +140,7 @@ var QuizesController = {
             
             req.flash('success', 'Quiz: '+ response.quiz.title +' foi enviado com sucesso!!');
             //Sending quiz to connected listeners 
-            sails.sockets.broadcast(session.id, 'quizes-receive', response.quiz);
+            sails.sockets.broadcast(session.id, 'quizzes-receive', response.quiz);
             return res.redirect('/speaker/sessions/'+session.id+'/quizes');
          });
       });
