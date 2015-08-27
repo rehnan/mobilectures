@@ -25,7 +25,7 @@ var ListenersController = {
        Listener.subscribe(req.socket, session.listeners, ['create', 'update']);
      });
       Listener.watch(req.socket);
-      Log.debug("Listener: " + req.socket.id + " subscribed!");
+      Log.debug("Listener:  " + req.socket.id + " subscribed!");
       return res.json([200], {msg:"User: " + req.socket.id + " subscribed!"});
     },
 
