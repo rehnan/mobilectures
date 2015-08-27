@@ -5,6 +5,30 @@
   max-width: 500px;
   padding: 15px;
   margin: 0 auto;
+  background-color: black;
+}
+
+#img_logo img {
+  display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#img_logo label {
+  display: block;
+    text-align: center;
+}
+
+
+.logo {
+  max-width: 85%;
+  max-height: 85%;
+}
+
+.label_mobilectures {
+  font-size: 40px;
+  color: black;
+
 }
 
 .form-signup {
@@ -12,6 +36,7 @@
   padding: 15px;
   margin: 0 auto;
   margin-top: 15px;
+  background-color: black;
 }
 
 .form-signin .form-signin-heading,

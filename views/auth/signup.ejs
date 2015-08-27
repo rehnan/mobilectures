@@ -1,19 +1,23 @@
 <form class="form-signup jumbotron" action="/signup" method="POST" novalidate>
-  
+  <div id="img_logo">
+    <%- partial('../layouts/partials/logo', {path:'../images/logo.png', height:'', width:'', color:'white'}) %>
+    <label class="label_mobilectures"> Mobilectures </label>
+  </div>
+
   <h2 class="form-signin-heading"><%= i18n("speaker.sign_up.header") %></h2>
   
   <div class="form-group input-group-lg  <%= Messages.errors.form.class("name", errors) %>">
     <input type="text" name="name" class="form-control" id="name" 
-                       placeholder="<%= i18n('speaker.sign_up.input.name.placeholder') %>"
-                       value="<%= speaker.name %>" autofocus>
-     <%- Messages.errors.form.message("name", errors) %>
+    placeholder="<%= i18n('speaker.sign_up.input.name.placeholder') %>"
+    value="<%= speaker.name %>" autofocus>
+    <%- Messages.errors.form.message("name", errors) %>
   </div>
 
   <br/>
   <div class="form-group input-group-lg  <%= Messages.errors.form.class("email", errors) %>">
     <input type="text" name="email" class="form-control" id="email"
-           placeholder="<%= i18n('global.input.email.placeholder') %>"
-           value="<%= speaker.email %>">
+    placeholder="<%= i18n('global.input.email.placeholder') %>"
+    value="<%= speaker.email %>">
 
     <%- Messages.errors.form.message("email", errors) %>
   </div>
@@ -21,15 +25,15 @@
   <br/>
   <div class="form-group input-group-lg  <%= Messages.errors.form.class("password", errors) %>">
     <input type="password" name="password" class="form-control" id="password"
-           placeholder="<%= i18n('global.input.pwd.placeholder') %>"
-           value="<%= speaker.password %>">
+    placeholder="<%= i18n('global.input.pwd.placeholder') %>"
+    value="<%= speaker.password %>">
 
     <%- Messages.errors.form.message("password", errors) %>
   </div>
 
   <br/>
   <input type="submit" value="<%= i18n('speaker.sign_up.submit') %>"
-        class="btn btn-lg btn-primary btn-block"/> <br>
+  class="btn btn-lg btn-primary btn-block"/> <br>
 
   <a href="/login" class="pull-right need-help">
     <%= i18n("speaker.sign_up.back") %>

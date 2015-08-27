@@ -9,6 +9,12 @@ body {
   padding-top: 23px;
 }
 
+#background_black {
+	background-color: black;
+}
+
+
+
 
 /*
  * Sessions Navbar

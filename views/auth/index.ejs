@@ -1,21 +1,23 @@
+
 <form class="form-signin jumbotron" action="/login" method="POST" novalidate>
-  
+  <%- partial('../layouts/partials/logo', {path:'images/logo.png', height:'', width:'', color:'white'}) %>
+
   <h3 class="form-signin-heading"><%= i18n("speaker.login.index.header") %></h3>
   
   <label for="email" class="sr-only"><%= i18n('global.label.email') %></label>
   <div class="form-group">
     <input type="email" id="email" name="email" class="form-control" 
-           placeholder="<%= i18n('global.input.email.placeholder') %>" autofocus="">
+    placeholder="<%= i18n('global.input.email.placeholder') %>" autofocus="">
   </div>
 
   <label for="password" class="sr-only"><%= i18n('global.label.pwd') %></label>
   <div class="form-group">
     <input type="password" id="password" name="password" class="form-control"
-           placeholder="<%= i18n('global.input.pwd.placeholder') %>" >
+    placeholder="<%= i18n('global.input.pwd.placeholder') %>" >
   </div>
 
   <button class="btn btn-lg btn-primary btn-block" id="action_login"
-          type="submit"><%= i18n("speaker.login.submit") %></button>
+  type="submit"><%= i18n("speaker.login.submit") %></button>
   <a href="/signup/new" role="button" 
-     class="btn btn-lg btn-success btn-block"><%= i18n("speaker.login.btn.sign_up") %></a>
+  class="btn btn-lg btn-success btn-block"><%= i18n("speaker.login.btn.sign_up") %></a>
 </form>
