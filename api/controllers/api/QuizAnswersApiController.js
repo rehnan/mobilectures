@@ -12,12 +12,15 @@
  			var params = req.params.all();
  			    params.listener = req.session.listener.id;
       Log.json(params);
- 			/*QuizAnswer.createIfValid(params, function (errors, register) {
+ 			QuizAnswer.createIfValid(params, function (errors, register) {
  				if (errors) { return res.json([401], {errors: errors}); } 
- 				if (!register) { return res.json([401], {errors: 'Enquete inexistente/Encerrada!'});}
- 				return res.json([200]);
- 			});*/
-      return res.json([200]);
+        Log.info(register);
+ 				if (!register) { 
+           Log.info('Não achemo nada, pô!');
+          return res.json([401], {errors: 'Quiz inexistente/Encerrada!'});
+        } 
+        return res.json([200], {quiz:register});
+ 			});
  		});
  	},
 
