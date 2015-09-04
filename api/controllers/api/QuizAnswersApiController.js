@@ -12,11 +12,13 @@
  			var params = req.params.all();
  			    params.listener = req.session.listener.id;
       Log.json(params);
+      //Compare answers to pontuation
+      params.pointing = (params.alternative === params.correct_alternative) ? (params.points - (params.timer/100)) : 0.0;
+
  			QuizAnswer.createIfValid(params, function (errors, register) {
  				if (errors) { return res.json([401], {errors: errors}); } 
         Log.info(register);
  				if (!register) { 
-           Log.info('Não achemo nada, pô!');
           return res.json([401], {errors: 'Quiz inexistente/Encerrada!'});
         } 
         return res.json([200], {quiz:register});

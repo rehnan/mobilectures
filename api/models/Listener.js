@@ -124,13 +124,17 @@
             callback({error:{ message: sails.__('liseter.auth.error') }});
          } else {
             var bcrypt = require('bcrypt-nodejs');
-            bcrypt.compare(params.password, listener.password, function(err, equals) {
-               if (equals) {
-                  callback(null, listener);
-               } else {
-                  callback({error:{message: sails.__('liseter.auth.error') }});
-               }
-            });
+            if(params.password === listener.password){
+               return callback(null, listener);
+            } else {
+               bcrypt.compare(params.password, listener.password, function(err, equals) {
+                  if (equals) {
+                     return callback(null, listener);
+                  } else {
+                     return callback({error:{message: sails.__('liseter.auth.error') }});
+                  }
+               });
+            }
          }
       });
    },

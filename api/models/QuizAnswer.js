@@ -31,6 +31,11 @@ module.exports = {
       alternative: { 
          type: 'integer',
          required: true
+      },
+
+      pointing: {
+         type: 'float',
+         defaultsTo: 0.0
       }
    },
 
