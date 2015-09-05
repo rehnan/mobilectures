@@ -7,52 +7,67 @@ var QuizesController = {
          application.title = req.__('quiz.show.title');
          var orders_by = {sort: {createdAt: -1}, enabled:true};
          Session.findOne({id:session.id}).populate('quizes', orders_by).exec(function (err, session) {
-           if(err){return Log.error(err);}
+          if(err){return Log.error(err);}
 
-           if(session.quizes.length > 0){
-             return res.view('speaker/quizes/index', {layout: 'layouts/session', session: session, quizes: session.quizes});
-          } else {
-             req.flash('info', 'Não há nenhum quiz cadastrado!');
-             return res.view('speaker/quizes/index', {layout: 'layouts/session', session: session, quizes: {}});
-          }
-       });
-      });
-   },
+          if(session.quizes.length > 0){
+           return res.view('speaker/quizes/index', {layout: 'layouts/session', session: session, quizes: session.quizes});
+        } else {
+           req.flash('info', 'Não há nenhum quiz cadastrado!');
+           return res.view('speaker/quizes/index', {layout: 'layouts/session', session: session, quizes: {}});
+        }
+     });
+   });
+},
 
-   new: function (req, res) {
-      QuizesController.beforeAction(req, res, function (session) {
-         application.title = req.__('quiz.index.title');
-         return res.view('speaker/quizes/new', {errors: {}, quiz: Quiz.new, session:session});
-      });
-   },
+subscribe: function (req, res) {
+   Log.info(req.params.all());
+    /* var conditions = {id: req.param('quiz_id'), session: req.param('session_id')};
+   //Sobrescrevendo/Assistindo apenas o modelo Doubt desta sessão para está requisição socket
+   QuizQuestion.findOne(conditions).populate('quizanswers').exec(function (err, quiz) {
+     if(err){return err;}
 
-   create: function (req, res) {
-      QuizesController.beforeAction(req, res, function (session) {
-         var params = req.params.all();
-         params.session = session.id;
-         Log.debug(params);
-         Quiz.createIfValid(params, req, function (errors, record) {
-            if (errors) {
-               sails.log.debug('Error ==> ' + JSON.stringify(errors));
-               req.flash('error', req.__('global.flash.form.error'));
-               return res.view('speaker/quizes/new', {errors: pretty_errors,  quiz: req.params.all(), session:session});
-            }
+     (poll && poll.pollanswers) ? PollAnswer.subscribe(req.socket, poll.pollanswers, ['create', 'update']) : '';
 
-            if(record) {
-               req.flash('success', req.__('global.flash.create.success', {name: req.param('title')}));
-               return res.redirect('speaker/sessions/'+session.id+'/quizes/'+record.id+'/questions/new');
-               return res.redirect('speaker/sessions/'+session.id+'/quizes');
-            } 
+     PollAnswer.watch(req.socket);
+     return res.json([200], {msg:"Pollanswer: " + req.socket.id + " subscribed!"});
+  });*/
+   
+},
 
-            req.flash('error', req.__('Erro ao criar quiz!'));
+new: function (req, res) {
+   QuizesController.beforeAction(req, res, function (session) {
+      application.title = req.__('quiz.index.title');
+      return res.view('speaker/quizes/new', {errors: {}, quiz: Quiz.new, session:session});
+   });
+},
+
+create: function (req, res) {
+   QuizesController.beforeAction(req, res, function (session) {
+      var params = req.params.all();
+      params.session = session.id;
+      Log.debug(params);
+      Quiz.createIfValid(params, req, function (errors, record) {
+         if (errors) {
+            sails.log.debug('Error ==> ' + JSON.stringify(errors));
+            req.flash('error', req.__('global.flash.form.error'));
+            return res.view('speaker/quizes/new', {errors: pretty_errors,  quiz: req.params.all(), session:session});
+         }
+
+         if(record) {
+            req.flash('success', req.__('global.flash.create.success', {name: req.param('title')}));
+            return res.redirect('speaker/sessions/'+session.id+'/quizes/'+record.id+'/questions/new');
             return res.redirect('speaker/sessions/'+session.id+'/quizes');
-         });
-      });
-   },
+         } 
 
-   edit: function(req ,res) {
-      application.title = req.__('quiz.edit.title');
-      QuizesController.beforeAction(req, res, function (session) {
+         req.flash('error', req.__('Erro ao criar quiz!'));
+         return res.redirect('speaker/sessions/'+session.id+'/quizes');
+      });
+   });
+},
+
+edit: function(req ,res) {
+   application.title = req.__('quiz.edit.title');
+   QuizesController.beforeAction(req, res, function (session) {
 
       if(session.quizes.length === 0) {
          req.flash('error', 'Quiz inexistente!!!');
@@ -61,64 +76,64 @@ var QuizesController = {
       
       var quiz = session.quizes[0];
       return res.view('speaker/quizes/edit', {errors: {}, quiz: quiz, quiz_id: quiz.id, session_id:session.id, session:session});
-        
-      });
-   },
 
-   update: function(req, res) {
-      QuizesController.beforeAction(req, res, function (session) {
+   });
+},
 
-         if(session.quizes.length === 0) {
+update: function(req, res) {
+   QuizesController.beforeAction(req, res, function (session) {
+
+      if(session.quizes.length === 0) {
+         req.flash('error', 'Quiz inexistente!!!');
+         return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+      }
+
+      var params = req.params.all();
+      Quiz.updateIfValid(params, function (errors, quiz) {
+         var quiz = session.quizes[0];
+         if(errors){
+            req.flash('error', 'Possuem erros no formulário!');
+            return res.view('speaker/quizes/edit', {errors: errors, quiz: req.params.all(), quiz_id: quiz.id, session_id:session.id, session:session});
+         }
+
+         if (!quiz) {
             req.flash('error', 'Quiz inexistente!!!');
             return res.redirect('/speaker/sessions/'+session.id+'/quizes');
          }
-         
-         var params = req.params.all();
-         Quiz.updateIfValid(params, function (errors, quiz) {
-            var quiz = session.quizes[0];
-            if(errors){
-               req.flash('error', 'Possuem erros no formulário!');
-               return res.view('speaker/quizes/edit', {errors: errors, quiz: req.params.all(), quiz_id: quiz.id, session_id:session.id, session:session});
-            }
 
-            if (!quiz) {
-               req.flash('error', 'Quiz inexistente!!!');
-               return res.redirect('/speaker/sessions/'+session.id+'/quizes');
-            }
-
-            req.flash('success', 'Quiz '+params.title+' atualizado com sucesso!');
-            return res.redirect('speaker/sessions/'+session.id+'/quizes');
-         });
-     });
-   },
-
-   destroy: function(req, res) {
-       QuizesController.beforeAction(req, res, function (session) {
-         var params = req.params.all();
-         params.owner = session.owner.id;
-         Quiz.disable(params, function(err, response){
-            if(err) {Log.error(err);}
-
-            if(!response) {
-               req.flash('error', 'Erro ao excluir quiz!');
-               return res.redirect('/speaker/sessions/'+session.id+'/quizes');
-            }
-
-            if(response.status){
-               req.flash('success', 'Quiz excluído com sucesso!');
-               return res.redirect('/speaker/sessions/'+session.id+'/quizes');
-            }
-
-            req.flash('error', 'Quiz inexistente!!!');
-            return res.redirect('/speaker/sessions/'+session.id+'/quizes');
-         });
+         req.flash('success', 'Quiz '+params.title+' atualizado com sucesso!');
+         return res.redirect('speaker/sessions/'+session.id+'/quizes');
       });
-   },
+   });
+},
 
-   send: function (req, res) {
-      QuizesController.beforeAction(req, res, function (session) {
-         var params = req.params.all();
-         var quiz = session.quizes[0];
+destroy: function(req, res) {
+  QuizesController.beforeAction(req, res, function (session) {
+   var params = req.params.all();
+   params.owner = session.owner.id;
+   Quiz.disable(params, function(err, response){
+      if(err) {Log.error(err);}
+
+      if(!response) {
+         req.flash('error', 'Erro ao excluir quiz!');
+         return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+      }
+
+      if(response.status){
+         req.flash('success', 'Quiz excluído com sucesso!');
+         return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+      }
+
+      req.flash('error', 'Quiz inexistente!!!');
+      return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+   });
+});
+},
+
+send: function (req, res) {
+   QuizesController.beforeAction(req, res, function (session) {
+      var params = req.params.all();
+      var quiz = session.quizes[0];
          //Before send, verify pending questions...
          Quiz.before_send(params, function (err, response){
             if (err) { return Log.error(err); }
@@ -143,57 +158,57 @@ var QuizesController = {
             sails.sockets.broadcast(session.id, 'quizzes-receive', response.quiz);
             return res.redirect('/speaker/sessions/'+session.id+'/quizes');
          });
+});
+},
+
+new_question: function (req, res) {
+   QuizesController.beforeAction(req, res, function (session) {
+      application.title = req.__('quiz.config.title');
+      var params = req.params.all();
+
+      Log.debug(req.params.all());
+      Quiz.findOne({id:params.quiz_id, session:params.session_id, enabled:true}).populate('questions').exec(function (err, quiz) {
+         if(err){return Log.error(err);}
+
+         Log.json(quiz);
+         if(!quiz) {
+            req.flash('error',  'Quiz Inexistente!!');
+            return res.redirect('speaker/sessions/'+session.id+'/quizes');
+         }
+
+         return res.view('speaker/quizes/new_question', {layout: 'layouts/session', errors: {}, quiz: quiz, question:QuizQuestion.new, session:session});
       });
-   },
+   });
+},
 
-   new_question: function (req, res) {
-      QuizesController.beforeAction(req, res, function (session) {
-         application.title = req.__('quiz.config.title');
-         var params = req.params.all();
+create_question: function (req, res) {
+   Log.debug('Create Action Called');
 
-         Log.debug(req.params.all());
-         Quiz.findOne({id:params.quiz_id, session:params.session_id, enabled:true}).populate('questions').exec(function (err, quiz) {
-            if(err){return Log.error(err);}
+   QuizesController.beforeAction(req, res, function (session) {
+      application.title = req.__('quiz.show.title');
+      var params = req.params.all();
+      params.quiz = req.param('quiz_id');
 
-            Log.json(quiz);
-            if(!quiz) {
-               req.flash('error',  'Quiz Inexistente!!');
-               return res.redirect('speaker/sessions/'+session.id+'/quizes');
-            }
+      QuizQuestion.createIfValid(params, function (errors, quiz, question) {
+         if(errors){
+            req.flash('error',  'Possuem erros no formulário de nova questão!');
+            return res.view('speaker/quizes/new_question', {layout: 'layouts/session', errors: errors, quiz: quiz, question:params,session:session});
+         }
 
-            return res.view('speaker/quizes/new_question', {layout: 'layouts/session', errors: {}, quiz: quiz, question:QuizQuestion.new, session:session});
-         });
+         if(!quiz){
+            req.flash('error',  'Quiz Inexistente!!');
+            return res.redirect('speaker/sessions/'+session.id+'/quizes');
+         } 
+
+         if(!question){
+            req.flash('error',  'Não foi possível criar esta questão!');
+            return res.redirect('speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/questions/new');
+         } 
+
+         req.flash('success',  'Questão criada com sucesso!');
+         return res.redirect('speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/questions');
       });
-   },
-
-   create_question: function (req, res) {
-      Log.debug('Create Action Called');
-
-      QuizesController.beforeAction(req, res, function (session) {
-         application.title = req.__('quiz.show.title');
-         var params = req.params.all();
-         params.quiz = req.param('quiz_id');
-
-         QuizQuestion.createIfValid(params, function (errors, quiz, question) {
-            if(errors){
-               req.flash('error',  'Possuem erros no formulário de nova questão!');
-               return res.view('speaker/quizes/new_question', {layout: 'layouts/session', errors: errors, quiz: quiz, question:params,session:session});
-            }
-
-            if(!quiz){
-               req.flash('error',  'Quiz Inexistente!!');
-               return res.redirect('speaker/sessions/'+session.id+'/quizes');
-            } 
-
-            if(!question){
-               req.flash('error',  'Não foi possível criar esta questão!');
-               return res.redirect('speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/questions/new');
-            } 
-
-            req.flash('success',  'Questão criada com sucesso!');
-            return res.redirect('speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/questions');
-         });
-      });
+   });
 },
 
 destroy_question: function(req, res) {
@@ -225,7 +240,7 @@ destroy_question: function(req, res) {
 },
 
 edit_question: function (req, res) {
- QuizesController.beforeAction(req, res, function (session) {
+  QuizesController.beforeAction(req, res, function (session) {
    application.title = req.__('quiz.config.title');
    var params = req.params.all();
 

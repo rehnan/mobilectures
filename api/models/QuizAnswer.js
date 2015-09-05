@@ -43,7 +43,7 @@ module.exports = {
 
       alternative: {
          required: 'Você deve selecionar uma das alternativas!',
-         integer: 'O parâmetro da alternativa correta deve ser do tipo inteiro!'
+         integer: 'O parâmetro da alternativa correta deve ser do tipo integer!'
       }
    },
 
@@ -56,28 +56,38 @@ module.exports = {
             return callback(pretty_errors, null);
          }
 
-         Quiz.findOne({id:params.quiz, status:'pending'}).exec(function(err, quiz){
+         //Find Quiz
+         /*Problema: poulate retornando apenas umas questão: quanso o save 
+            é executado, ele substitui a array de questões pela última upada
+            Achar outra solução!!!!
+         */
+         Quiz.findOne({id:params.quiz, status:'pending'}).populate('questions', {id:params.quizquestion}).exec(function(err, quiz){
             if(err) { return callback(err, null) }
-
             if(!quiz) { return callback(null, null); }
+            if(!quiz.questions.length > 0) {return callback(null, null);}
 
             QuizAnswer.create(params, function (err, record) {
                if(err){return callback(err, null);}
-               return callback(null, quiz);
 
-               /*QuizAnswer.count_votes_alternatives(quiz, params.alternatives, function(poll){
-                  quiz.number_participants += 1;
-                  quiz.save(function(err, record){
+                var quizquestion = quiz.questions[0];
+                
+                quizquestion.number_participants += 1;
+                quizquestion.number_votes += 1;
+                quizquestion.statistics[params.alternative][1] += 1;
+
+               Log.info(quizquestion);
+               QuizQuestion.update({id:quizquestion.id}, quizquestion).exec(function(err, quizquestion){
                   if(err){return callback(err, null);}
-                  Log.debug('Poll saved From QuizAnswer');
-                  QuizAnswer.publishCreate({id:record, statistics:record.statistics});
-                    Log.info('Publish create QuizAnswer');
-                    return callback(null, quiz);
-                  });
-               });*/
+                  
+                  //Update Publish create answer quiz
+                  QuizAnswer.publishCreate({id:quizquestion[0].id, statistics:quizquestion[0].statistics});
+                  Log.info('############## Publish create QuizAnswer');
+
+                  return callback(null, quizquestion);
+               });
             });
          });
       });
-  },
+  }
 };
 

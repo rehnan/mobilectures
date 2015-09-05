@@ -39,7 +39,7 @@ var jsFilesToInject = [
   'js/listeners.js',
   'js/doubts.js',
   'js/polls.js',
-  'js/quizes.js',
+  'js/quizzes.js',
   'js/speaker_profile.js',
 
   // Dependencies like jQuery, or Angular are brought in here

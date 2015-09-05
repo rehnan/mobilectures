@@ -11,16 +11,18 @@
  		QuizAnswersApiController.beforeAction(req, res, function (session) {
  			var params = req.params.all();
  			    params.listener = req.session.listener.id;
-      Log.json(params);
+      
       //Compare answers to pontuation
       params.pointing = (params.alternative === params.correct_alternative) ? (params.points - (params.timer/100)) : 0.0;
 
  			QuizAnswer.createIfValid(params, function (errors, register) {
  				if (errors) { return res.json([401], {errors: errors}); } 
-        Log.info(register);
+       
  				if (!register) { 
-          return res.json([401], {errors: 'Quiz inexistente/Encerrada!'});
+          Log.error('Quiz Inexistente/Encerrado!');
+          return res.json([401], {errors: 'Quiz inexistente/Encerrado!'});
         } 
+        Log.info('Resposta Registrada com Sucesso!');
         return res.json([200], {quiz:register});
  			});
  		});

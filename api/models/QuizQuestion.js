@@ -26,12 +26,12 @@ module.exports = {
 	* ######### End Assossiations Attributes
 	*/
 
-		description: {
-			type: 'text',
-			required: true,
-			maxLength: 100,
-			minLength: 5 
-		},
+	description: {
+		type: 'text',
+		required: true,
+		maxLength: 100,
+		minLength: 5 
+	},
 
       /*
 	   * Attribute to add array of alternatives 
@@ -98,96 +98,96 @@ module.exports = {
 	},
 
 	new: {
-	  description: '',
-	  points: 0,
-	  alternatives: [],
+		description: '',
+		points: 0,
+		alternatives: [],
 	},
 
 	createIfValid: function (params, callback) {
 		
 		
-			Quiz.findOne({id:params.quiz_id}).populate('questions').exec(function (err, quiz) {
-				if(err){return callback(err, null, null);}
-				if(!quiz) { return callback(null, null, null); }
+		Quiz.findOne({id:params.quiz_id}).populate('questions').exec(function (err, quiz) {
+			if(err){return callback(err, null, null);}
+			if(!quiz) { return callback(null, null, null); }
 
-				QuizQuestion.validate(params, function (errors) {
-		
-					if (errors) {
-						Log.debug('Quiz Errors ==> ' + JSON.stringify(errors));
-						pretty_errors = SailsValidador(QuizQuestion, errors);
-						Log.debug('Pretty Errors ==> ' + JSON.stringify(pretty_errors));
-						return callback(pretty_errors, quiz, null);
-					}
+			QuizQuestion.validate(params, function (errors) {
 
-					params.statistics = [];
-					for(i = 0; i < params.alternatives.length; i++) {
-			 			Log.info(params.alternatives[i]);
-			 			params.statistics.push([params.alternatives[i], 0]);
-			 		}
-                    
+				if (errors) {
+					Log.debug('Quiz Errors ==> ' + JSON.stringify(errors));
+					pretty_errors = SailsValidador(QuizQuestion, errors);
+					Log.debug('Pretty Errors ==> ' + JSON.stringify(pretty_errors));
+					return callback(pretty_errors, quiz, null);
+				}
+
+				params.statistics = [];
+				for(i = 0; i < params.alternatives.length; i++) {
+					Log.info(params.alternatives[i]);
+					params.statistics.push([params.alternatives[i], 0]);
+				}
+
 		         /* Se possuiu no mínimo duas alternativas
 			 		Se POssui a alternativa certa marcada 
 			 		Se a alternativa marcada é >= 0 ou <= ao número de alternativa
-					*/
-							
-		         if(params.alternatives.length >= 2 && params.correct_alternative && (params.correct_alternative >= 0 && params.correct_alternative <= params.alternatives.length)) {
-		        		Log.info('Validou!!!');
-		        		params.status = 'valid';
-		         } else {
-		        	 	params.status = 'invalid';
-		        	}
+			 		*/
 
-		        	if(params.points > 10 || params.points < 0) {params.points = 0; }
+			 		if(params.alternatives.length >= 2 && params.correct_alternative && (params.correct_alternative >= 0 && params.correct_alternative <= params.alternatives.length)) {
+			 			Log.info('Validou!!!');
+			 			params.status = 'valid';
+			 		} else {
+			 			params.status = 'invalid';
+			 		}
+
+			 		if(params.points > 10 || params.points < 0) {params.points = 0; }
 			 		
-					quiz.questions.add(params);
-					quiz.save(function(err, record){
-						if(err){ return callback(err, quiz, null); }
-							
-						var index = record.questions.length;
-						var question = record.questions[index-1];
+			 		quiz.questions.add(params);
+			 		quiz.save(function(err, record){
+			 			if(err){ return callback(err, quiz, null); }
 
-						callback(null, quiz, question);
-					});
-				});
-			});
+			 			var index = record.questions.length;
+			 			var question = record.questions[index-1];
+
+			 			callback(null, quiz, question);
+			 		});
+			 	});
+});
+
+},
+
+updateIfValid: function (question, callback) {
+
+	QuizQuestion.validate(question, function (errors) {
 		
-	},
+		if (errors) {
+			Log.debug('Quiz Errors ==> ' + JSON.stringify(errors));
+			pretty_errors = SailsValidador(QuizQuestion, errors);
+			Log.debug('Pretty Errors ==> ' + JSON.stringify(pretty_errors));
+			return callback(pretty_errors, null);
+		}
 
-	updateIfValid: function (question, callback) {
+		question.statistics = [];
+		for(i = 0; i < question.alternatives.length; i++) {
+			Log.info(question.alternatives[i]);
+			question.statistics.push([question.alternatives[i], 0]);
+		}
 
-      QuizQuestion.validate(question, function (errors) {
-		
-			if (errors) {
-				Log.debug('Quiz Errors ==> ' + JSON.stringify(errors));
-				pretty_errors = SailsValidador(QuizQuestion, errors);
-				Log.debug('Pretty Errors ==> ' + JSON.stringify(pretty_errors));
-				return callback(pretty_errors, null);
-			}
+		if(question.alternatives.length >= 2 && question.correct_alternative && (question.correct_alternative >= 0 && question.correct_alternative <= question.alternatives.length)) {
+			Log.info('Validou!!!');
+			question.status = 'valid';
+		} else {
+			question.status = 'invalid';
+		}
 
-			question.statistics = [];
-			for(i = 0; i < question.alternatives.length; i++) {
-	 			Log.info(question.alternatives[i]);
-	 			question.statistics.push([question.alternatives[i], 0]);
-	 		}
-              
-         if(question.alternatives.length >= 2 && question.correct_alternative && (question.correct_alternative >= 0 && question.correct_alternative <= question.alternatives.length)) {
-        		Log.info('Validou!!!');
-        		question.status = 'valid';
-         } else {
-        	 	question.status = 'invalid';
-        	}
+		if(question.points > 10 || question.points < 0) {question.points = 0; }
 
-        	if(question.points > 10 || question.points < 0) {question.points = 0; }
-		 		
-	 		QuizQuestion.update({id:question.question_id, quiz:question.quiz_id}, question).exec(function (err, updated) {
-		         if(err) { return Log.error(err); }
+		QuizQuestion.update({id:question.question_id, quiz:question.quiz_id}, question).exec(function (err, updated) {
+			if(err) { return Log.error(err); }
 
-		         if(Validator.objectIsEmpty(updated)){
-		           return callback(null, null);
-		         } 
-		        return callback(null, updated[0]);
-		   });
+			if(Validator.objectIsEmpty(updated)){
+				return callback(null, null);
+			} 
+			return callback(null, updated[0]);
 		});
-	}
+	});
+}
 };
 

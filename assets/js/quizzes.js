@@ -1,13 +1,13 @@
 
-$(document).ready(function (){  ml.quizes.load() });
+$(document).ready(function (){  ml.quizzes.load() });
 
-ml.quizes = {
+ml.quizzes = {
 
 	load: function () {
-		ml.quizes.addAndRemove_inputs();
-		ml.quizes.sortable_inputs();
-		ml.quizes.remove_empty_alternatives();
-		ml.quizes.pending_info();
+		ml.quizzes.addAndRemove_inputs();
+		ml.quizzes.sortable_inputs();
+		ml.quizzes.remove_empty_alternatives();
+		ml.quizzes.pending_info();
 	},
 
 	addAndRemove_inputs: function () {
@@ -27,7 +27,7 @@ ml.quizes = {
 		         $('.input_fields_wrap div input').focus();
 		      });
 		    
-                
+
 		    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
 		    	e.preventDefault(); $(this).parent('div').remove(); x--;
 		    })
@@ -67,8 +67,35 @@ ml.quizes = {
 
 		 pending_info: function () {
 		 	if ($('#table_questions').length <= 0) {return;}
-			$('.popoverInfo').popover({ trigger: "hover" });
-		 }
+		 	$('.popoverInfo').popover({ trigger: "hover" });
+		 },
+
+		 subscribeAndListen: function () {
+		 	if ($('#quiz-open').length <= 0) {return;}
+
+		 	var session_id = $('#session-open').data('session_id');
+		 	var quiz_id = $('#quiz-open').data('quiz_id');
+
+		 	url = '/speaker/sessions/'+session_id+'/quizzes/'+quiz_id+'/quizanswers/subscribe';
+		 	io.socket.post(url, function (data){
+		 		console.log('QuizAnswers Subscribed!');
+		 	});
+
+		 	io.socket.on('quizanswer',function(obj){
+		 		console.log('Quizanswer Verb: '+obj.verb);
+		 		if(obj.verb == 'created') {
+
+		 			/*var new_statistics = obj.data.statistics;
+		 			$('#chart_div').attr('data-chart-json', JSON.stringify(new_statistics));
+		 			ml.polls.reports.chart.render();
+		 			ml.polls.reports.tabbed.update(obj.data);*/
+
+		 			var notification = ml.toast.new('info', 'Quiz', 'Uma nova resposta de quiz recebida!');
+
+		 			ml.toast.show(notification);
+		 		}
+		 	});
+		 },
 
 
-};
+		};
