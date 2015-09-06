@@ -1,0 +1,19 @@
+<section id="quiz-open" data-quiz_id="<%= quiz.id %>"></section>
+<section>
+  <header>
+    <h3 class="text-center"> Quiz - Relatórios Geral </h3>
+
+    <a class="btn btn-primary btn-sm pull-right print_reporter" href="#" title="Imprimir Relatório" rule="button"><span class="glyphicon glyphicon-print" aria-hidden="true"> Imprimir </span></a>
+    
+    <span class="clearfix">
+     <%- (quiz.status === "pending") ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/close', 'lock', 'Finalizar Quiz', 'Clique em Ok para finalizar este quiz', 'btn-sm pull-right print_reporter')  : '' %>
+     <!-- transfer | comment | lock -> to open polls  -->
+   </span>
+   <!-- Partial to renderize info quiz in table report  -->
+   <%- partial('report_table_quiz', {quiz:quiz, session: session}) %>
+  </header>
+
+  <% _.each(quiz.questions, function(question, index) { %>
+    <%- partial('report_table_question', {quiz:quiz, session: session, question:question, index:index}) %>
+  <% }); %>  
+</section>

@@ -1,0 +1,54 @@
+<% var listeners_length = session.listeners.length+1  %>
+<div class="row">
+  <div class="col-sm-6">
+    <article>
+      <header class="page-header">
+        <h4 class="text-center">Relatório Gráfico</h4>
+      </header>
+
+      <div id="chart_wrap">
+        <div id="chart_div_<%= question.id %>" index_<%= index %>="<%= question.id %>" class="chart_div" data-chart-json="<%= JSON.stringify(question.statistics) %>" >
+          <div class="icon-div-loading">
+            <button class="btn btn-lg btn-default loading-icon"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> <br><br> Carregando Gráfico... </button>
+          </div>
+        </div>   
+        <p id="canvas_size"></p>       
+      </div>
+    </article> 
+  </div>
+
+  <div class="col-sm-6">
+    <article>
+      <header class="page-header">
+        <h4 class="text-center">Relatório Tabulado</h4>
+      </header>
+      <br><br>
+      <table id="report-table-question" class="table table-bordered table-hover text-center">
+        <thead>
+          <tr>
+            <th><span class="glyphicon glyphicon-question-sign" aria-hidden="true"> <strong>Questão:</strong></th>
+            <td colspan="2"><%= question.description %></td>
+          </tr>
+          <tr>
+            <th><span class="glyphicon glyphicon-star" aria-hidden="true"> <strong>Pontuação:</strong></span></th>
+            <td colspan="4"><%= question.points %></td>
+          </tr>
+          <tr>
+            <th>Alternativas</th>
+            <th>Nº de Votos</th>
+            <th>Nº de Abstenções</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% _.each(question.statistics, function(alternative, i){ %>
+            <tr>
+            <td><%= alternative[0] %></td>
+            <td id="<%= question.id %>"><%= PollsHelper.plurarize(alternative[1], 'voto') %></td>  
+            <%- (i === 0) ? "<td rowspan="+ question.statistics.length +" id='abstention' >"+((session.listeners.length - question.number_participants) ) +"</td>" : '' %> 
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </article>      
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<br>
+<table id="table-quiz-infos" class="table table-bordered table-hover text-center">
+  <thead>
+    <tr>
+      <th><span class="glyphicon glyphicon-blackboard" aria-hidden="true"> <strong> Sessão:</strong></span></th>
+      <td colspan="4"><%= session.name %></td>
+    </tr>
+    <tr>
+      <th><span class="glyphicon glyphicon-calendar" aria-hidden="true"> <strong>Data:</strong></span></th>
+      <td colspan="4"><%= DateHelper.formatDate(quiz.createdAt) %></td>
+    </tr>
+    <tr>
+      <th><span class="glyphicon glyphicon-user" aria-hidden="true"> <strong>Palestrante(s):</strong></span></th>
+      <td colspan="4"><%= session.owner.name %></td>
+    </tr>
+    <tr>
+      <th><span class="glyphicon glyphicon-phone" aria-hidden="true"> <strong>Participante(s):</strong></span></th>
+      <td colspan="4" id="participants"></td>
+    </tr>
+    <tr>
+      <th><strong>Quiz:</strong></th>
+      <td colspan="4"><%= quiz.title %></td>
+    </tr>
+    <tr>
+      <th><strong>Descrição:</strong></th>
+      <td colspan="4"><%= quiz.description %></td>
+    </tr>
+  </thead>
+</table>

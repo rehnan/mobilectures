@@ -210,6 +210,10 @@ module.exports.routes = {
       action: 'send'
    },
 
+   'GET /speaker/sessions/:session_id/quizes/:quiz_id/reports':{
+      controller: 'QuizesController',
+      action: 'reports'
+   },
 
    'POST /speaker/sessions/:session_id/quizzes/:quiz_id/quizanswers/subscribe':{
       controller: 'QuizesController',

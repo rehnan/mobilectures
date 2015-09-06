@@ -3,12 +3,10 @@
 <section id="poll-open" data-poll_id="<%= poll.id %>"></section>
 <section>
   <header>
-    <h3 class="text-center">Relatórios da Enquete: linguagem de programação</h3>
+    <h3 class="text-center">Relatórios da Enquete: <%= poll.title %></h3>
 
     <a class="btn btn-primary btn-sm pull-right print_reporter" href="#" title="Imprimir Relatório" rule="button"><span class="glyphicon glyphicon-print" aria-hidden="true"> Imprimir </span></a>
 
-    
-    
     <span class="clearfix">
      <%- (poll.status === "open" && poll.sent) ? PollsHelper.link_action_poll('/speaker/sessions/'+session.id+'/polls/'+poll.id+'/close', 'lock', 'Finalizar Enquete', 'Clique em Ok para finalizar esta enquete', 'btn-sm pull-right print_reporter')  : '' %>
      <!-- transfer | comment | lock -> to open polls  -->

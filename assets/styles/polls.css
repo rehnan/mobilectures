@@ -77,6 +77,14 @@
     height:80%;
 }
 
+.chart_div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:80%;
+    height:80%;
+}
+
 .print_reporter {
   margin-right: 2%;
 }

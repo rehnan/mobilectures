@@ -8,6 +8,11 @@ ml.quizzes = {
 		ml.quizzes.sortable_inputs();
 		ml.quizzes.remove_empty_alternatives();
 		ml.quizzes.pending_info();
+		ml.quizzes.reports.chart.render(null);
+		ml.quizzes.reports.chart.render_all();
+		ml.quizzes.reports.chart.resize(null);
+		ml.quizzes.reports.tabbed.update(null);
+		ml.quizzes.subscribeAndListen();
 	},
 
 	addAndRemove_inputs: function () {
@@ -70,9 +75,94 @@ ml.quizzes = {
 		 	$('.popoverInfo').popover({ trigger: "hover" });
 		 },
 
+		 reports: {
+		//Gerencia atualização do relatório gráfico
+		chart: {	 
+			render: function(question_id) {
+			 		if ($('#chart_div_'+question_id).length === 0) return false;
+			  		
+			  		$('#chart_div_'+question_id).removeData("chart-json");
+			  	    var jsonData = $('#chart_div_'+question_id).data('chart-json'); 
+			  	    jsonData.unshift(['Alternativas', 'Votos']);
+
+			  	    /*var jsonGraph = ['Alternativas', 'Votos'];
+			  	    jsonGraph.push(jsonData);*/
+			  	    console.log(jsonData);
+			  	    var data = google.visualization.arrayToDataTable(jsonData);
+
+				    // Set chart options
+				    var options = {title:'Relatório',  is3D: true,
+				    titlePosition: '<output></output>',
+				    legend: {position: 'bottom', textStyle: {bold:true}}, 
+				    width: '100%',
+				    height: '100%',
+				    chartArea: {
+				    	left: "4%",
+				    	top: "0%",
+				    	height: "94%",
+				    	width: "94%"}
+				    };
+
+				var chart_div = document.getElementById('chart_div_'+question_id);
+        		var chart = new google.visualization.PieChart(chart_div);
+
+        		chart.draw(data, options);
+
+        		
+				google.visualization.events.addListener(chart, 'ready', function() {
+		            // Do something like ...
+		            //$('#chart_div').css('visibility', 'visible'); // provided this was already hidden
+		            $('.loading-icon').show(); // if it exists in your HTML */
+		        });
+			},
+
+
+			resize: function () {
+				if ($('#quiz-open').length === 0) { return false; }
+			    	$(window).resize('.chart_div', function() {
+			    		for (i = 0; i < $('.chart_div').length; i++) { 
+				  			var question_id = $("div[index_"+i+"]").attr("index_"+i)
+				  			ml.quizzes.reports.chart.render(question_id);
+						}
+			    	});
+			},
+
+			render_all: function () {
+				if ($('#quiz-open').length === 0) { return false };
+			  	
+			  	for (i = 0; i < $('.chart_div').length; i++) { 
+		  			var question_id = $("div[index_"+i+"]").attr("index_"+i)
+		  			ml.quizzes.reports.chart.render(question_id);
+				}
+			}
+		},
+
+		//Gerencia atualização do relatório tabulado
+		tabbed: {
+	 		update: function(data) {
+	 			
+		 		if ($('#report-table-poll').length === 0 || data === null) return false;
+		 		
+		 		var poll = data;
+		 		$('#participants').text(poll.id.number_participants);
+
+		 		var total_votes = poll.id.number_votes;
+		 		$('#total_votes').text(ml.polls.pluralize(total_votes, 'voto'));
+
+		 		var a = Number($('#abstention').text());
+		 		a--;
+		 		$('#abstention').text(a);
+
+				$.each(poll.statistics.rows, function(index, alternative){
+				     $('#'+index).text(ml.polls.pluralize(alternative.c[1].v, 'voto'));
+				});
+	 		}
+	 	}
+	},
+
 		 subscribeAndListen: function () {
 		 	if ($('#quiz-open').length <= 0) {return;}
-
+		 	
 		 	var session_id = $('#session-open').data('session_id');
 		 	var quiz_id = $('#quiz-open').data('quiz_id');
 
@@ -84,11 +174,12 @@ ml.quizzes = {
 		 	io.socket.on('quizanswer',function(obj){
 		 		console.log('Quizanswer Verb: '+obj.verb);
 		 		if(obj.verb == 'created') {
-
-		 			/*var new_statistics = obj.data.statistics;
-		 			$('#chart_div').attr('data-chart-json', JSON.stringify(new_statistics));
-		 			ml.polls.reports.chart.render();
-		 			ml.polls.reports.tabbed.update(obj.data);*/
+		 			console.log(obj.data);
+		 			var new_statistics = obj.data.statistics;
+		 			var question_id = obj.data.id;
+		 			$('#chart_div_'+question_id).attr('data-chart-json', JSON.stringify(new_statistics));
+		 			ml.quizzes.reports.chart.render(question_id);
+		 			//ml.polls.reports.tabbed.update(obj.data);
 
 		 			var notification = ml.toast.new('info', 'Quiz', 'Uma nova resposta de quiz recebida!');
 

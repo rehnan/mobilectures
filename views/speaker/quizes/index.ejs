@@ -37,6 +37,8 @@
                   <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/edit', 'pencil', 'Editar Quiz', false, '') : '' %>
 
                   <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/delete', 'trash', 'Excluir', 'Tem certeza que deseja excluir este quiz:'+quiz.title, '') : '' %>
+
+                  <%- (quiz.status === "pending") ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/reports', 'stats', 'Estatística', false, ''): ''  %>
                </div>
 
              <br><br>

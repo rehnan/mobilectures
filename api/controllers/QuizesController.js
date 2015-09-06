@@ -20,18 +20,46 @@ var QuizesController = {
 },
 
 subscribe: function (req, res) {
-   Log.info(req.params.all());
-    /* var conditions = {id: req.param('quiz_id'), session: req.param('session_id')};
-   //Sobrescrevendo/Assistindo apenas o modelo Doubt desta sessão para está requisição socket
-   QuizQuestion.findOne(conditions).populate('quizanswers').exec(function (err, quiz) {
+   Log.info('Subscribe method called!');
+   var conditions = {quiz: req.param('quiz_id')};
+   QuizAnswer.find(conditions).exec(function (err, quizanswers) {
      if(err){return err;}
 
-     (poll && poll.pollanswers) ? PollAnswer.subscribe(req.socket, poll.pollanswers, ['create', 'update']) : '';
+     (quizanswers && quizanswers.length > 0) ? QuizAnswer.subscribe(req.socket, quizanswers, ['create', 'update']) : '';
 
-     PollAnswer.watch(req.socket);
-     return res.json([200], {msg:"Pollanswer: " + req.socket.id + " subscribed!"});
-  });*/
+     QuizAnswer.watch(req.socket);
+     return res.json([200], {msg:"Quizanswer: " + req.socket.id + " subscribed!"});
+  });
    
+},
+
+reports: function (req, res) {
+  QuizesController.beforeAction(req, res, function (session) {
+    application.title = req.__('Relatório de Quiz');
+    var params = req.params.all();
+
+      if(session.quizes.length === 0) {
+         req.flash('error', 'Quiz inexistente!!!');
+         return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+      }
+
+      var quiz = session.quizes[0];
+
+      if (quiz.status !== 'pending') {
+         req.flash('error', 'O Quiz ainda está pendente!!');
+         return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+      }
+
+      Quiz.findOne({id:quiz.id}).populate('questions').exec(function (err, quiz_populated){
+         if(err) { return Log.error(err); }
+         if(quiz_populated.questions.length === 0) {
+            req.flash('error', 'O Quiz não possui nenhuma questão cadastrada!!');
+            return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+         }
+         
+         return res.view('speaker/quizes/reports', {layout: 'layouts/session', session: session, quiz: quiz_populated});
+      });
+  });
 },
 
 new: function (req, res) {
@@ -311,7 +339,7 @@ index_question:  function (req, res) {
     */
     beforeAction: function(req, res, callback) {
       var conditions = {id: req.param('session_id'), owner: req.session.passport.user.id};
-      Session.findOne(conditions).populate('quizes', {id: req.param('quiz_id')}).exec(function (err, session){
+      Session.findOne(conditions).populate('quizes', {id: req.param('quiz_id')}).populate('listeners').populate('owner').exec(function (err, session){
          if(err){return err;}
          if(!session) {
             req.flash('error', 'Sessão inexistente!!!');
