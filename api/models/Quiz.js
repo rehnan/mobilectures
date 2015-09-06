@@ -57,6 +57,7 @@ module.exports = {
 	   /*
 	   * Attribute to check status quiz
 	   closing: cinza; opening: verde; pending: laranja; ready:azul
+	   Deixar default: closed quando enviada: open
 	   */
 	   status: {
 	   	type: 'string',

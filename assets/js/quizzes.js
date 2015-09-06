@@ -13,6 +13,7 @@ ml.quizzes = {
 		ml.quizzes.reports.chart.resize(null);
 		ml.quizzes.reports.tabbed.update(null);
 		ml.quizzes.subscribeAndListen();
+		ml.quizzes.pluralize();
 	},
 
 	addAndRemove_inputs: function () {
@@ -141,21 +142,21 @@ ml.quizzes = {
 		tabbed: {
 	 		update: function(data) {
 	 			
-		 		if ($('#report-table-poll').length === 0 || data === null) return false;
+		 		if ($('#report-table-quiz').length === 0 || data === null) return false;
 		 		
-		 		var poll = data;
-		 		$('#participants').text(poll.id.number_participants);
+		 		/*$.each(data.statistics, function(index, alternative){
+				    $('#'+index).text(ml.polls.pluralize(alternative.c[1].v, 'voto'));
+					console.log($("#"+data.id+" > td[id="+index+"]").text());
+					text(alternative[1])
+				});*/
 
-		 		var total_votes = poll.id.number_votes;
-		 		$('#total_votes').text(ml.polls.pluralize(total_votes, 'voto'));
+				for (i = 0; i < data.statistics.length; i++) { 
+		  			$("tr[id="+data.id+"] > td[id="+i+"]").text(ml.quizzes.pluralize(data.statistics[i][1], 'voto'));
+				}
 
-		 		var a = Number($('#abstention').text());
+				var a = Number($("tr[id="+data.id+"] > td[id=abstention]").text());
 		 		a--;
-		 		$('#abstention').text(a);
-
-				$.each(poll.statistics.rows, function(index, alternative){
-				     $('#'+index).text(ml.polls.pluralize(alternative.c[1].v, 'voto'));
-				});
+		 		$("tr[id="+data.id+"] > td[id=abstention]").text(a);		 		
 	 		}
 	 	}
 	},
@@ -179,7 +180,7 @@ ml.quizzes = {
 		 			var question_id = obj.data.id;
 		 			$('#chart_div_'+question_id).attr('data-chart-json', JSON.stringify(new_statistics));
 		 			ml.quizzes.reports.chart.render(question_id);
-		 			//ml.polls.reports.tabbed.update(obj.data);
+		 			ml.quizzes.reports.tabbed.update(obj.data);
 
 		 			var notification = ml.toast.new('info', 'Quiz', 'Uma nova resposta de quiz recebida!');
 
@@ -187,6 +188,13 @@ ml.quizzes = {
 		 		}
 		 	});
 		 },
+
+		pluralize: function(n, context) {
+ 			if ($('#quiz-open').length <= 0) {return;}
+
+			(n !== 1) ? n+=' '+context+'s' : n+=' '+context;
+			return n;
+		}
 
 
 		};

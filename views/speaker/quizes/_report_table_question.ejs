@@ -23,7 +23,7 @@
         <h4 class="text-center">Relatório Tabulado</h4>
       </header>
       <br><br>
-      <table id="report-table-question" class="table table-bordered table-hover text-center">
+      <table id="report-table-quiz" class="table table-bordered table-hover text-center">
         <thead>
           <tr>
             <th><span class="glyphicon glyphicon-question-sign" aria-hidden="true"> <strong>Questão:</strong></th>
@@ -41,9 +41,9 @@
         </thead>
         <tbody>
           <% _.each(question.statistics, function(alternative, i){ %>
-            <tr>
+            <tr id="<%= question.id %>">
             <td><%= alternative[0] %></td>
-            <td id="<%= question.id %>"><%= PollsHelper.plurarize(alternative[1], 'voto') %></td>  
+            <td id="<%= i %>"><%= PollsHelper.plurarize(alternative[1], 'voto') %></td>  
             <%- (i === 0) ? "<td rowspan="+ question.statistics.length +" id='abstention' >"+((session.listeners.length - question.number_participants) ) +"</td>" : '' %> 
             </tr>
           <% }); %>

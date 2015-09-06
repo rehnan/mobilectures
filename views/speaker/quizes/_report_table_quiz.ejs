@@ -14,15 +14,15 @@
       <td colspan="4"><%= session.owner.name %></td>
     </tr>
     <tr>
-      <th><span class="glyphicon glyphicon-phone" aria-hidden="true"> <strong>Participante(s):</strong></span></th>
-      <td colspan="4" id="participants"></td>
+      <th><span class="glyphicon glyphicon-phone" aria-hidden="true"> <strong>Ouvintes(s): </strong></span></th>
+      <td colspan="4"><%= session.listeners.length %></td>
     </tr>
     <tr>
-      <th><strong>Quiz:</strong></th>
+      <th><span class="glyphicon glyphicon-comment" aria-hidden="true"> <strong>Quiz:</strong></th>
       <td colspan="4"><%= quiz.title %></td>
     </tr>
     <tr>
-      <th><strong>Descrição:</strong></th>
+      <th><span class="glyphicon glyphicon-pencil" aria-hidden="true"> <strong>Descrição:</strong></th>
       <td colspan="4"><%= quiz.description %></td>
     </tr>
   </thead>

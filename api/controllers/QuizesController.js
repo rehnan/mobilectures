@@ -50,7 +50,7 @@ reports: function (req, res) {
          return res.redirect('/speaker/sessions/'+session.id+'/quizes');
       }
 
-      Quiz.findOne({id:quiz.id}).populate('questions').exec(function (err, quiz_populated){
+      Quiz.findOne({id:quiz.id, enabled:true}).populate('questions').exec(function (err, quiz_populated){
          if(err) { return Log.error(err); }
          if(quiz_populated.questions.length === 0) {
             req.flash('error', 'O Quiz não possui nenhuma questão cadastrada!!');
