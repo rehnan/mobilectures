@@ -2,6 +2,7 @@
 * Imagem gravatar
 */
 .circle-mask {
+  text-align: center;
   height: 56px;
   width: 56px;
   overflow: hidden;
@@ -23,9 +24,8 @@
 .circle_on {
   margin-left: auto;
   margin-right: auto;
-  display: block;
+  display: inline;
   border: 5px solid #35AC19;
-  position: absolute;
   z-index: 101;
   height: 56px;
   width: 56px;
@@ -39,8 +39,7 @@
 .circle_off {
   margin-left: auto;
   margin-right: auto;
-  display: block;
-  position: absolute;
+  display: inline;
   z-index: 101;
   height: 56px;
   width: 56px;
