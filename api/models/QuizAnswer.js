@@ -61,7 +61,7 @@ module.exports = {
             é executado, ele substitui a array de questões pela última upada
             Achar outra solução!!!!
          */
-         Quiz.findOne({id:params.quiz, status:'pending'}).populate('questions', {id:params.quizquestion}).exec(function(err, quiz){
+         Quiz.findOne({id:params.quiz, status:'open', sent:true, enabled:true}).populate('questions', {id:params.quizquestion}).exec(function(err, quiz){
             if(err) { return callback(err, null) }
             if(!quiz) { return callback(null, null); }
             if(!quiz.questions.length > 0) {return callback(null, null);}

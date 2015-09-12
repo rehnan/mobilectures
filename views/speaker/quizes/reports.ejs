@@ -6,7 +6,7 @@
     <a class="btn btn-primary btn-sm pull-right print_reporter" href="#" title="Imprimir Relatório" rule="button"><span class="glyphicon glyphicon-print" aria-hidden="true"> Imprimir </span></a>
     
     <span class="clearfix">
-     <%- (quiz.status === "pending") ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/close', 'lock', 'Finalizar Quiz', 'Clique em Ok para finalizar este quiz', 'btn-sm pull-right print_reporter')  : '' %>
+     <%- (quiz.sent && quiz.status === "open") ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/close', 'lock', 'Finalizar Quiz', 'Clique em Ok para finalizar este quiz', 'btn-sm pull-right print_reporter')  : '' %>
      <!-- transfer | comment | lock -> to open polls  -->
    </span>
    <!-- Partial to renderize info quiz in table report  -->

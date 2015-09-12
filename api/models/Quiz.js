@@ -153,6 +153,7 @@ module.exports = {
          if (!quiz) { return callback(null, response); }
          
        	if(quiz.questions.length > 0) {
+       		
        		response.pending = true;
        		response.quiz = quiz;
        		return callback(null, response);
@@ -161,6 +162,7 @@ module.exports = {
        		if (err) { return callback(err, null); }
        		response.pending = false;
        		response.quiz = quiz;
+       		
        		return callback(null, response);
        	});
       });
@@ -180,6 +182,16 @@ module.exports = {
 	     		callback(null, response);
 	     }
 	 });	
-   }
+   },
+
+   close: function (params, callback) {
+      Log.json(params);
+      Quiz.update({id:params.quiz_id}, {status:'closed'}, function (err, updated) {
+        if (err) {return callback(err, null)}
+         Log.info(updated);
+        Log.info(updated[0]);
+        return callback(null, updated[0]);  
+      });
+    },
 };
 

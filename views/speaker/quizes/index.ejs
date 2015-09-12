@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-xs-5">
         <ul class="legend">
-            <li><span class="ready"></span> Pronta(s) pra envio </li>
+            <li><span class="pending"></span>Configurações Pendentes </li>
             <li><span class="sent"></span> Aberta(s) </li>
             <li><span class="closed"></span> Encerrada(s) </li>
         </ul>
@@ -27,18 +27,22 @@
     <!-- Generate this dynamical -->
       <% _.each(quizes, function (quiz) { %>
          <div class="col-sm-4">
-           <div class="panel panel-info">
+           <div class="panel <%- QuizesHelper.check_status(quiz) %>">
              <div class="panel-heading">
                <div class="btn-group pull-right"> 
-                  <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/send', 'send', 'Enviar', 'Clique em Ok para confirmar o envio deste quiz', '') : '' %>
+                  <%- (!quiz.sent && quiz.status === "pending") ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/send', 'send', 'Enviar', 'Clique em Ok para confirmar o envio deste quiz', '') : '' %>
 
-                  <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/questions', 'cog', 'Configurar Quiz', false, '') : '' %>
+                  <%- (!quiz.sent && quiz.status === "pending") ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/questions', 'cog', 'Configurar Quiz', false, '') : '' %>
 
-                  <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/edit', 'pencil', 'Editar Quiz', false, '') : '' %>
+                  <%- (!quiz.sent && quiz.status !== "open") ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/edit', 'pencil', 'Editar Quiz', false, '') : '' %>
 
-                  <%- (!quiz.sent) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/delete', 'trash', 'Excluir', 'Tem certeza que deseja excluir este quiz:'+quiz.title, '') : '' %>
+                  <%- (!quiz.sent && quiz.status !== "open") ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/delete', 'trash', 'Excluir', 'Tem certeza que deseja excluir este quiz:'+quiz.title, '') : '' %>
 
-                  <%- (quiz.status === "pending") ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/reports', 'stats', 'Estatística', false, ''): ''  %>
+                  <%- (quiz.sent && quiz.status !== "pending") ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/reports', 'stats', 'Estatística', false, ''): ''  %>
+
+                  <%- (quiz.sent && quiz.status === "open" ) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/close', 'lock', 'Finalizar Quiz', 'Clique em Ok para finalizar o quiz', '')  : '' %>
+
+                  <%- (quiz.sent && quiz.status !== "pending") ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/ranking', 'star', 'Ranking', '', '')  : '' %>
                </div>
 
              <br><br>

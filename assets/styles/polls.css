@@ -92,9 +92,9 @@
 
 
 /* basic positioning */
-.legend { list-style: none; }
+.legend { list-style: none; min-width: 100px}
 .legend li { float: left; margin-right: 10px; }
-.legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+.legend span { border: 1px solid #ccc; float: left; width: 25px; height: 25px; margin: 2px; }
 /* your colors */
 .legend .sent { background-color: #dff0d8; }
 .legend .pending { background-color: #faebcc; }

@@ -35,7 +35,7 @@
           </tr>
           <tr>
             <th>Alternativas</th>
-            <th>Nº de Votos</th>
+            <th>Nº Resposta(s)</th>
             <th>Nº de Abstenções</th>
           </tr>
         </thead>
@@ -43,10 +43,23 @@
           <% _.each(question.statistics, function(alternative, i){ %>
             <tr id="<%= question.id %>">
             <td><%= alternative[0] %></td>
-            <td id="<%= i %>"><%= PollsHelper.plurarize(alternative[1], 'voto') %></td>  
+            <td id="<%= i %>"><%= PollsHelper.plurarize(alternative[1], 'resposta') %></td>  
             <%- (i === 0) ? "<td rowspan="+ question.statistics.length +" id='abstention' >"+((session.listeners.length - question.number_participants) ) +"</td>" : '' %> 
             </tr>
+
           <% }); %>
+          <tr>
+            <th><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"> Acertos (%)</th>
+            <td colspan="4"><%= question.points %></td>
+          </tr>
+          <tr>
+            <th><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"> Erros (%)</th>
+            <td colspan="4"><%= question.points %></td>
+          </tr>
+          <tr>
+            <th><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> Não Responderam (%) </th>
+            <td colspan="4"><%= question.points %></td>
+          </tr>
         </tbody>
       </table>
     </article>      

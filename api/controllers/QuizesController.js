@@ -45,7 +45,7 @@ reports: function (req, res) {
 
       var quiz = session.quizes[0];
 
-      if (quiz.status !== 'pending') {
+      if (quiz.status === 'pending') {
          req.flash('error', 'O Quiz ainda está pendente!!');
          return res.redirect('/speaker/sessions/'+session.id+'/quizes');
       }
@@ -177,16 +177,47 @@ send: function (req, res) {
             }
 
             if (response.quiz.questions.length === 0) {
-               req.flash('info', 'Este quiz não possui nenhuma questão cadastrada!!');
+               req.flash('warning', 'Este quiz não possui nenhuma questão cadastrada!!');
                return res.redirect('/speaker/sessions/'+session.id+'/quizes');
             } 
-            
-            req.flash('success', 'Quiz: '+ response.quiz.title +' foi enviado com sucesso!!');
-            //Sending quiz to connected listeners 
-            sails.sockets.broadcast(session.id, 'quizzes-receive', response.quiz);
-            return res.redirect('/speaker/sessions/'+session.id+'/quizes');
-         });
-});
+
+            //Set status Quiz to sent:true and status:open
+            Quiz.update({id:params.quiz_id, session:params.session_id}, {status:"open", sent:true}).exec(function(err, updated){
+               if (err) { return callback(err, null); }
+               req.flash('success', 'Quiz: '+ response.quiz.title +' foi enviado com sucesso!!');
+               //Sending quiz to connected listeners 
+               sails.sockets.broadcast(session.id, 'quizzes-receive', response.quiz);
+               return res.redirect('/speaker/sessions/'+session.id+'/quizes/'+updated[0].id+'/reports');
+            });
+      });
+   });
+},
+
+close: function (req, res) {
+   QuizesController.beforeAction(req, res, function (session) {
+      var params = req.params.all();
+
+      if(session.quizes.length === 0) {
+         req.flash('error', 'Quiz inexistente!!!');
+         return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+      }
+
+      var quiz = session.quizes[0];
+      if (quiz.status !== 'open') {
+         req.flash('error', 'Este quiz não está aberto!!');
+         return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+      }
+        
+      Quiz.close(params, function (err, quiz_closed){
+          if (err) { return Log.error(err); }
+          if(quiz_closed) {
+             req.flash('success', 'O Quiz '+ quiz_closed.title +' foi encerrado!');
+             return res.redirect('/speaker/sessions/'+session.id+'/quizes');
+          }
+          req.flash('error', 'Quiz inexistente!!');
+          return res.redirect('/speaker/sessions/'+session.id+'/quizes/');  
+      });
+   });
 },
 
 new_question: function (req, res) {

@@ -27,8 +27,6 @@ module.exports = {
 			case 'pending':
 			return 'panel-warning';
 			break;
-			case 'ready':
-			return 'panel-info';
 			break;
 			default:
 			return 'panel-error';
