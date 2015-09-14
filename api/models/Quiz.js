@@ -24,6 +24,10 @@ module.exports = {
 	  		via: 'quiz'
 	  	},
 
+	   ranking: {
+	    	model: 'Ranking'
+	   },
+
   /*
 	* ######### End Assossiations Attributes
    */

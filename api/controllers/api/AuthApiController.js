@@ -101,6 +101,7 @@ var AuthApiController = {
     */
    leave: function(req, res) {
       Listener.leave(req.session, req.socket);
+      //Listener.update({id:req.session.listener.id}, {})
       return res.json([200],{authorization: 'bye'});
    },
 };

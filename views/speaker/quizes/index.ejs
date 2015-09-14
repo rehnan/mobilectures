@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-xs-5">
         <ul class="legend">
-            <li><span class="pending"></span>Configurações Pendentes </li>
+            <li><span class="pending"></span>Não enviadas </li>
             <li><span class="sent"></span> Aberta(s) </li>
             <li><span class="closed"></span> Encerrada(s) </li>
         </ul>
@@ -42,7 +42,7 @@
 
                   <%- (quiz.sent && quiz.status === "open" ) ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/close', 'lock', 'Finalizar Quiz', 'Clique em Ok para finalizar o quiz', '')  : '' %>
 
-                  <%- (quiz.sent && quiz.status !== "pending") ? QuizesHelper.link_action_quiz('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/ranking', 'star', 'Ranking', '', '')  : '' %>
+                   <%- (quiz.sent && quiz.status !== "pending") ? QuizesHelper.modal_ranking(quiz) : '' %> 
                </div>
 
              <br><br>
@@ -53,8 +53,9 @@
                <%= ViewHelpers.show_initial_chars(0, 31, quiz.description) %>
              </div>
              </div>
-             <%= '-'  %>
+             <%- partial ('ranking', {quiz:quiz}) %>
            </div>
+
       <% }) %>
     <!-- Generate this dynamical -->
   </div>

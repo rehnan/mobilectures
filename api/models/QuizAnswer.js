@@ -33,9 +33,24 @@ module.exports = {
          required: true
       },
 
+      correct_alternative: { 
+         type: 'integer',
+         required: true
+      },
+
       pointing: {
          type: 'float',
          defaultsTo: 0.0
+      },
+
+      time: {
+         type: 'integer',
+         defaultsTo: 0
+      },
+
+      hit: {
+        type: 'boolean',
+        defaultsTo: false
       }
    },
 
@@ -65,26 +80,24 @@ module.exports = {
             if(err) { return callback(err, null) }
             if(!quiz) { return callback(null, null); }
             if(!quiz.questions.length > 0) {return callback(null, null);}
+            Log.info('@@@@@@@@@@@@@@@');
+            Log.info(params);
+            QuizQuestion.findOne({id:params.quizquestion}).exec(function(err, quizquestion){
+              if(err){return callback(err, null);}
 
-            QuizAnswer.create(params, function (err, record) {
-               if(err){return callback(err, null);}
-
-                var quizquestion = quiz.questions[0];
-                
+                quizquestion.answers.add(params);
                 quizquestion.number_participants += 1;
                 quizquestion.number_votes += 1;
                 quizquestion.statistics[params.alternative][1] += 1;
 
-               Log.info(quizquestion);
-               QuizQuestion.update({id:quizquestion.id}, quizquestion).exec(function(err, quizquestion){
+                quizquestion.save(function(err, record){
                   if(err){return callback(err, null);}
-                  
+                 
                   //Update Publish create answer quiz
-                  QuizAnswer.publishCreate({id:quizquestion[0].id, statistics:quizquestion[0].statistics});
+                  QuizAnswer.publishCreate({id:record.id, statistics:record.statistics});
                   Log.info('############## Publish create QuizAnswer');
-
-                  return callback(null, quizquestion);
-               });
+                  return callback(null, record);
+                });
             });
          });
       });

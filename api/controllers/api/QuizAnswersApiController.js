@@ -9,24 +9,49 @@
  	create: function (req, res) {
  		
  		QuizAnswersApiController.beforeAction(req, res, function (session) {
- 			var params = req.params.all();
- 			    params.listener = req.session.listener.id;
+ 			
+      var params = req.params.all();
       
       //Compare answers to pontuation
-      params.pointing = (params.alternative === params.correct_alternative) ? (params.points - (params.timer/100)) : 0.0;
-
+      if(params.alternative === params.correct_alternative) {
+        params.pointing = (params.pointing - (params.time/100)) 
+        params.hit = true;
+      } else {
+        params.pointing = 0;
+      }
+      
  			QuizAnswer.createIfValid(params, function (errors, register) {
  				if (errors) { return res.json([401], {errors: errors}); } 
        
  				if (!register) { 
           Log.error('Quiz Inexistente/Encerrado!');
-          return res.json([401], {errors: 'Quiz inexistente/Encerrado!'});
+          return res.json([401], {errors: 'Quiz Encerrado!'});
         } 
+        var conditions = {};
+        conditions.quiz = params.quiz;
+        conditions.listener = params.listener;
+
+        Ranking.ranking_update(conditions, params.pointing, function(err, rank){
+          if(err) { Log.error(err); }
+          Log.info('Ranking Updated Success!');
+        });
         Log.info('Resposta Registrada com Sucesso!');
         return res.json([200], {quiz:register});
  			});
  		});
  	},
+
+  create_ranking: function (req, res) {
+    QuizAnswersApiController.beforeAction(req, res, function (session) {
+      var params = req.params.all();
+          Log.info('Creating Ranking to listener...');
+          Log.json(params);
+          Ranking.findOrCreate({listener:params.listener, quiz:params.quiz}, params).exec(function (err, ranking){
+            if (err) { return res.json([401], {errors: 'Erro ao tentar criar Ranking! '+err});} 
+            return res.json([200], {ranking:ranking});
+          });
+    });
+  },
 
  	beforeAction: function(req, res, callback) {
  		

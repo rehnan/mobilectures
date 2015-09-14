@@ -49,6 +49,11 @@
       pollanswers:{
          collection: 'PollAnswer',
          via: 'listener'
+      },
+
+      rankings: {
+         collection: 'Ranking',
+         via: 'listener'
       }
    },
 

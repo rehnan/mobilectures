@@ -46,8 +46,9 @@ module.exports = {
       return '<a href="'+link_to+'" class="btn btn-default" title="'+title+'" rule="button"><span class="glyphicon glyphicon-'+icon+'" aria-hidden="true"></span></a>';
    },
 
-   modal_preview: function(poll_id) {
-      return '<a type="button" class="btn btn-default" rule="button" data-toggle="modal" title="Preview" data-target="#modal-'+ poll_id +'"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>';
+   modal_preview: function(poll_id, _class) {
+      var c = (_class) ? _class : '';
+      return '<a type="button" class="btn btn-default '+c+'" rule="button" data-toggle="modal" title="Preview" data-target="#modal-'+ poll_id +'"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>';
    },
 
    /*

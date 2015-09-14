@@ -36,7 +36,12 @@ module.exports.sockets = {
   onDisconnect: function(session, socket) {
     // TODO: With more time
     // Listener.leave(session, socket);
-    sails.log.debug('Socket ID: '+socket.id+ ' disconnected!'); 
+    //sails.log.debug('Socket ID: '+socket.id+ ' disconnected!'); 
+    //req.session.listener.id;
+    if(session.listener) {
+      Log.error('Socket ID: '+session.listener.email+ ' disconnected!');
+    }
+    //If existis listener unllog there
   },
 
 

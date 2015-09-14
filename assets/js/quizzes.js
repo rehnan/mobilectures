@@ -14,6 +14,8 @@ ml.quizzes = {
 		ml.quizzes.reports.tabbed.update(null);
 		ml.quizzes.subscribeAndListen();
 		ml.quizzes.pluralize();
+		ml.quizzes.show_ranking();
+		ml.quizzes.update_ranking(null);
 	},
 
 	addAndRemove_inputs: function () {
@@ -162,11 +164,11 @@ ml.quizzes = {
 	},
 
 		 subscribeAndListen: function () {
-		 	if ($('#quiz-open').length <= 0) {return;}
+		 	if ($('#quiz-open').length <= 0) {return false;}
 		 	
 		 	var session_id = $('#session-open').data('session_id');
 		 	var quiz_id = $('#quiz-open').data('quiz_id');
-
+		 	//Method subscribe QuizAnswers
 		 	url = '/speaker/sessions/'+session_id+'/quizzes/'+quiz_id+'/quizanswers/subscribe';
 		 	io.socket.post(url, function (data){
 		 		console.log('QuizAnswers Subscribed!');
@@ -194,7 +196,49 @@ ml.quizzes = {
 
 			(n !== 1) ? n+=' '+context+'s' : n+=' '+context;
 			return n;
-		}
+		},
 
+		show_ranking: function () {
+			
+			$(".show_ranking").click(function() {
+				var quiz = $(this).data('quiz');
+
+				ml.quizzes.update_ranking(quiz);
+			});
+		},
+
+		update_ranking: function(quiz) {
+			if (!quiz) {return false;}
+			
+			var url = '/speaker/sessions/'+quiz.session+'/quizes/'+quiz.id+'/ranking';
+				
+				$.ajax({
+					type: 'GET',
+					dataType: 'json',
+					url: url,
+					success: function(data, status) { 
+						console.log(data);
+						$("#table-rank-"+quiz.id).html('');
+						$.each(data, function(index, ranking){
+							var avatar = ranking.listener.avatar;
+							var position = index+1;
+							var name = ranking.listener.name;
+							var pointing = ranking.pointing.toFixed(2);
+							var line = '<tr>'+
+								'<td class="text-center">'+
+									'<div class="circle-mask"><img align="middle" src="'+ avatar +'" alt="Smiley face" class="circle_on" width="56" height="56"></div>'+
+								'</td>'+
+								'<td><b>'+position+'º Lugar</b></td>'+
+								'<td class="text-center"><b>'+name+'</b></td>'+
+								'<td class="text-center"><b>'+pointing+'</b> pontos</td>'+
+							'</tr>';
+							$("#table-rank-"+ranking.quiz).append(line);
+						});
+					},
+					error: function(ranking, status) {
+						console.log(JSON.stringify(ranking));
+					},
+				});
+		}
 
 		};

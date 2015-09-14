@@ -41,11 +41,6 @@ module.exports = {
 	   	defaultsTo: []
 	   },
 
-	   time: {
-	   	type: 'integer',
-	   	defaultsTo: 60
-	   },
-
 	   correct_alternative: {
 	   	type: 'integer',
 	   	defaultsTo: null

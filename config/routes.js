@@ -220,25 +220,15 @@ module.exports.routes = {
       action: 'reports'
    },
 
+   'GET /speaker/sessions/:session_id/quizes/:quiz_id/ranking':{
+      controller: 'QuizesController',
+      action: 'ranking'
+   },
+
    'POST /speaker/sessions/:session_id/quizzes/:quiz_id/quizanswers/subscribe':{
       controller: 'QuizesController',
       action: 'subscribe'
    },
-
-   /*'GET /speaker/sessions/:session_id/quizes/:quiz_id/close':{
-      controller: 'QuizesController',
-      action: 'close'
-   },
-
-   'GET /speaker/sessions/:session_id/quizes/:quiz_id/reports':{
-      controller: 'QuizesController',
-      action: 'reports'
-   },
-
-   'POST /speaker/sessions/:session_id/quizes/:quiz_id/quizesanswers/subscribe':{
-      controller: 'QuizesController',
-      action: 'subscribe'
-   },*/
 
    /* ################# END QUIZ REST ROUTES ####################### */
 
@@ -395,6 +385,11 @@ module.exports.routes = {
    'POST /api/quiz_answers':{
       controller: 'api/QuizAnswersApiController',
       action: 'create'
+   },
+
+   'POST /api/quiz/ranking':{
+      controller: 'api/QuizAnswersApiController',
+      action: 'create_ranking'
    }
 
    /* ################# END MOBILE API ################### */

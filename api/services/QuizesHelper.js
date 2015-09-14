@@ -44,9 +44,9 @@ module.exports = {
 		return '<a type="button" class="btn btn-default" rule="button" data-toggle="modal" title="Preview" data-target="#modal-'+ quiz_id +'"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>';
 	},
 
-	form_quiz_preview:function(quiz) {
-		
-	},
+	modal_ranking: function(quiz) {
+      return "<a type='button' title='Ranking' id='"+quiz.id+"' data-quiz='"+ JSON.stringify(quiz) +"' class='btn btn-default show_ranking' rule='button' data-toggle='modal' title='Preview' data-target='#modal-"+ quiz.id +"'><span class='glyphicon glyphicon-star' aria-hidden='true'></span></a>";
+   },
 
 	check_radio_true: function (option) {
 		var check = null;
