@@ -33,7 +33,7 @@ module.exports = {
 	},
 
 	ranking_update: function (conditions, points, cb) {
-    
+     Log.info(conditions);
     Ranking.findOne(conditions).exec(function (err, ranking) {
       if(err) { return cb(err); }
      

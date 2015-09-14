@@ -244,7 +244,7 @@ ranking: function (req, res) {
          });
       });*/
 
-      var conditions = {quiz: quiz.id, sort: { pointing:-1, createdAt: 1 }};
+      var conditions = {quiz: quiz.id, sort: { pointing:-1, createdAt: -1 }};
       Ranking.find(conditions).populate('listener').exec(function(err, ranking){
          return res.json(ranking);
       });

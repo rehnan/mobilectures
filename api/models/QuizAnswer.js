@@ -71,19 +71,19 @@ module.exports = {
             return callback(pretty_errors, null);
          }
 
-         //Find Quiz
-         /*Problema: poulate retornando apenas umas questão: quanso o save 
-            é executado, ele substitui a array de questões pela última upada
-            Achar outra solução!!!!
-         */
          Quiz.findOne({id:params.quiz, status:'open', sent:true, enabled:true}).populate('questions', {id:params.quizquestion}).exec(function(err, quiz){
             if(err) { return callback(err, null) }
             if(!quiz) { return callback(null, null); }
             if(!quiz.questions.length > 0) {return callback(null, null);}
-            Log.info('@@@@@@@@@@@@@@@');
-            Log.info(params);
+            
             QuizQuestion.findOne({id:params.quizquestion}).exec(function(err, quizquestion){
               if(err){return callback(err, null);}
+                if(params.hit === true) {
+                    quizquestion.hits += 1;
+                } else {
+                    quizquestion.errors += 1;
+                }
+                Log.info(quizquestion);
 
                 quizquestion.answers.add(params);
                 quizquestion.number_participants += 1;
@@ -94,7 +94,7 @@ module.exports = {
                   if(err){return callback(err, null);}
                  
                   //Update Publish create answer quiz
-                  QuizAnswer.publishCreate({id:record.id, statistics:record.statistics});
+                  QuizAnswer.publishCreate({id:record.id, question:record});
                   Log.info('############## Publish create QuizAnswer');
                   return callback(null, record);
                 });

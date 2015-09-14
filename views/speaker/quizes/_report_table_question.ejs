@@ -1,4 +1,5 @@
-<% var listeners_length = session.listeners.length+1  %>
+<% var listeners_length = session.listeners.length  %>
+<section id="listeners_length" data-listeners_length="<%= listeners_length %>"></section>
 <div class="row">
   <div class="col-sm-6">
     <article>
@@ -44,21 +45,25 @@
             <tr id="<%= question.id %>">
             <td><%= alternative[0] %></td>
             <td id="<%= i %>"><%= PollsHelper.plurarize(alternative[1], 'resposta') %></td>  
-            <%- (i === 0) ? "<td rowspan="+ question.statistics.length +" id='abstention' >"+((session.listeners.length - question.number_participants) ) +"</td>" : '' %> 
+            <%- (i === 0) ? "<td rowspan="+ question.statistics.length +" id='abstention' >"+((listeners_length - question.number_participants) ) +"</td>" : '' %> 
             </tr>
 
           <% }); %>
-          <tr>
+          <tr class="info">
+            <th><span class="glyphicon glyphicon-ok" aria-hidden="true"> Alternativa Correta: </th>
+            <td colspan="4"><%= question.alternatives[question.correct_alternative] %></td>
+          </tr>
+          <tr class="success">
             <th><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"> Acertos (%)</th>
-            <td colspan="4"><%= question.points %></td>
+            <td colspan="4" id="hits-<%= question.id %>"><%= (question.hits * 100) / listeners_length %> %</td>
           </tr>
-          <tr>
+          <tr class="danger">
             <th><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"> Erros (%)</th>
-            <td colspan="4"><%= question.points %></td>
+            <td colspan="4" id="errors-<%= question.id %>"><%= (question.errors * 100) /listeners_length %> %</td>
           </tr>
-          <tr>
-            <th><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> Não Responderam (%) </th>
-            <td colspan="4"><%= question.points %></td>
+          <tr class="warning">
+            <th><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"> Abstenções (%) </th>
+            <td colspan="4" id="abstentions-<%= question.id %>"><%= ((listeners_length - question.number_participants) * 100) / listeners_length  %> %</td>
           </tr>
         </tbody>
       </table>

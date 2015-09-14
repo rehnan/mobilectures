@@ -71,7 +71,17 @@ module.exports = {
 	   number_participants: {
 	   	type: 'integer',
 	   	defaultsTo: 0
-	   }
+	   },
+
+	   hits: {
+	   	type: 'integer',
+	   	defaultsTo: 0
+	   },
+
+	   errors: {
+	   	type: 'integer',
+	   	defaultsTo: 0
+	   },
 	},
 
 	validationMessages: {

@@ -151,14 +151,23 @@ ml.quizzes = {
 					console.log($("#"+data.id+" > td[id="+index+"]").text());
 					text(alternative[1])
 				});*/
+				var listeners_length = $("#listeners_length").data('listeners_length');
 
-				for (i = 0; i < data.statistics.length; i++) { 
-		  			$("tr[id="+data.id+"] > td[id="+i+"]").text(ml.quizzes.pluralize(data.statistics[i][1], 'voto'));
+				for (i = 0; i < data.question.statistics.length; i++) { 
+					var hits = (data.question.hits * 100) / listeners_length;
+					var errors = (data.question.errors * 100) / listeners_length;
+					var abstentions = ((listeners_length - data.question.number_participants) * 100) / listeners_length;
+		  			console.log(abstentions);
+		  			
+		  			$("tr[id="+data.question.id+"] > td[id="+i+"]").text(ml.quizzes.pluralize(data.question.statistics[i][1], 'voto'));
+					$("td[id=hits-"+data.question.id+"]").text(hits+' %');
+					$("td[id=errors-"+data.question.id+"]").text(errors+' %');
+					$("td[id=abstentions-"+data.question.id+"]").text(abstentions+' %');
 				}
 
-				var a = Number($("tr[id="+data.id+"] > td[id=abstention]").text());
+				var a = Number($("tr[id="+data.question.id+"] > td[id=abstention]").text());
 		 		a--;
-		 		$("tr[id="+data.id+"] > td[id=abstention]").text(a);		 		
+		 		$("tr[id="+data.question.id+"] > td[id=abstention]").text(a);		 		
 	 		}
 	 	}
 	},
@@ -178,7 +187,7 @@ ml.quizzes = {
 		 		console.log('Quizanswer Verb: '+obj.verb);
 		 		if(obj.verb == 'created') {
 		 			console.log(obj.data);
-		 			var new_statistics = obj.data.statistics;
+		 			var new_statistics = obj.data.question.statistics;
 		 			var question_id = obj.data.id;
 		 			$('#chart_div_'+question_id).attr('data-chart-json', JSON.stringify(new_statistics));
 		 			ml.quizzes.reports.chart.render(question_id);
