@@ -23,7 +23,10 @@ module.exports.sockets = {
   ***************************************************************************/
 
   onConnect: function(session, socket) {
-    sails.log.debug('Socket ID: '+socket.id+ ' connected!');   
+    sails.log.debug('Socket ID: '+socket.id+ ' connected!');  
+     Log.error("#############"); 
+    Log.error(sails.sockets.rooms()); 
+     Log.error("#################"); 
   },
 
 
@@ -35,13 +38,11 @@ module.exports.sockets = {
   ***************************************************************************/
   onDisconnect: function(session, socket) {
     // TODO: With more time
-    // Listener.leave(session, socket);
     //sails.log.debug('Socket ID: '+socket.id+ ' disconnected!'); 
-    //req.session.listener.id;
     if(session.listener) {
-      Log.error('Socket ID: '+session.listener.email+ ' disconnected!');
+      Listener.leave(session, socket);
+      Log.error('Listener: '+session.listener.email+ ' has unlogged the room!');
     }
-    //If existis listener unllog there
   },
 
 
