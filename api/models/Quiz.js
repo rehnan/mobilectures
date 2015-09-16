@@ -165,6 +165,8 @@ module.exports = {
        	Quiz.findOne(conditions).populate('questions', {status:'valid'}).exec(function (err, quiz) {
        		if (err) { return callback(err, null); }
        		response.pending = false;
+       		quiz.status = 'open';
+       		quiz.sent = true;
        		response.quiz = quiz;
        		
        		return callback(null, response);
