@@ -231,6 +231,11 @@ send: function (req, res) {
             return res.redirect('/speaker/sessions/'+session.id+'/polls');
           }
 
+          if (found_poll.sent === true) {
+            req.flash('error', 'Esta enquete já foi enviada!!');
+            return res.redirect('/speaker/sessions/'+session.id+'/polls/'+found_poll.id+'/reports');
+          }
+
           if (found_poll.status !== 'ready') {
             req.flash('error', 'Esta enquete é inválida!!');
             return res.redirect('/speaker/sessions/'+session.id+'/polls');

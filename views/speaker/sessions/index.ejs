@@ -14,7 +14,6 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th><%= i18n("session.id") %></th>
             <th><%= i18n("session.key") %></th>
             <th><%= i18n("session.name") %></th>
             <th><%= i18n("session.status") %></th>
@@ -24,14 +23,13 @@
         <tbody>
           <% _.each(sessions, function (session) { %>
             <tr>
-            <td><%= session.id     %></td>
             <td><%= session.key    %></td>
             <td><%= session.name   %></td>
             <td><%= ViewHelpers.status(session.status) %></td>
             <td class="text-right">
               <a class="btn btn-sm btn-success" href="/speaker/sessions/<%= session.id %>" 
                 title="<%= i18n('global.link.show') %>" role="button" >
-                <%= i18n("global.link.show") %>
+                Gerenciar Sessão
               </a>
               <a class="btn btn-sm btn-primary" href="/speaker/sessions/edit/<%= session.id %>" 
                 title="<%= i18n('lglobal.link.edit') %>" role="button" >

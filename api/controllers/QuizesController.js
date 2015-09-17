@@ -163,6 +163,12 @@ send: function (req, res) {
       var params = req.params.all();
       var quiz = session.quizes[0];
          //Before send, verify pending questions...
+
+         if (quiz.sent === true) {
+               req.flash('info', 'Este Quiz já foi enviado!!');
+               return res.redirect('/speaker/sessions/'+session.id+'/quizes/'+quiz.id+'/reports');
+         }
+
          Quiz.before_send(params, function (err, response){
             if (err) { return Log.error(err); }
 
@@ -170,7 +176,7 @@ send: function (req, res) {
                req.flash('error', 'Quiz inexistente!!!');
                return res.redirect('/speaker/sessions/'+session.id+'/quizes');
             }
-
+     
             if(response.pending) {
                req.flash('warning', 'Este quiz possui questões pendentes!!');
                return res.redirect('/speaker/sessions/'+session.id+'/quizes');
