@@ -40,7 +40,7 @@ var DoubtsController = {
                });
 
                var doubts = session.doubts;
-              
+               Log.info(doubts);
                return res.view('speaker/doubts/show', {layout: 'layouts/session', session: session, doubts: doubts});
             })
             .catch(function(err){
