@@ -53,6 +53,27 @@
     });
   },
 
+  listener_ranking: function (req, res) {
+      QuizAnswersApiController.beforeAction(req, res, function (session) {
+
+         var params = req.params.all();
+         var conditions = {quiz: params.quiz_id, sort: { pointing:-1, createdAt: -1 }};
+         var data = {};
+
+         Ranking.find(conditions).populate('listener').limit(2).exec(function(err, ranking){
+            data.ranking = ranking;
+            QuizAnswer.count().where({hit:true, quiz:params.quiz_id, listener:params.listener_id}).exec(function(err, hits){
+                data.hits = hits;
+                QuizAnswer.find({quiz:params.quiz_id, listener:params.listener_id, hit:true}).sum('pointing').exec(function(err, pointing){
+                  data.pointing = pointing;
+                  Log.error(data);
+                  return res.json([200], data);
+               });
+            });
+         });
+      });
+  },
+
  	beforeAction: function(req, res, callback) {
  		
       //Verifica se o ouvinte tem uma sessão e se  ele está está logado na sala

@@ -390,6 +390,11 @@ module.exports.routes = {
    'POST /api/quiz/ranking':{
       controller: 'api/QuizAnswersApiController',
       action: 'create_ranking'
+   },
+
+   'GET /api/quiz/:quiz_id/ranking/:listener_id':{
+      controller: 'api/QuizAnswersApiController',
+      action: 'listener_ranking'
    }
 
    /* ################# END MOBILE API ################### */
