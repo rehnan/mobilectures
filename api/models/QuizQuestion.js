@@ -82,6 +82,12 @@ module.exports = {
 	   	type: 'integer',
 	   	defaultsTo: 0
 	   },
+
+	   time: {
+	   	type: 'integer',
+	   	required: true,
+	   	defaultsTo: 60
+	   }
 	},
 
 	validationMessages: {
@@ -99,6 +105,11 @@ module.exports = {
 		points: {
 			integer: 'O parâmetro da alternativa correta deve ser do tipo inteiro!',
 			required: 'Você deve informar o valor da pontuação desta questão!'
+		},
+
+		time: {
+			integer: 'O parâmetro do tempo deve ser do tipo inteiro!',
+			required: 'Você deve informar o tempo (segundos) necessário para responder a questão!'
 		}
 	},
 

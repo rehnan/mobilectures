@@ -27,6 +27,15 @@
             <option <%- QuizesHelper.select_points(question, '10') %>>10</option>
          </select>
 		</div>
+		
+		<br>
+		<div class="input-group input-group-lg <%= Messages.errors.form.class('time', errors) %>'">
+		  <span class="input-group-addon" id="sizing-addon1">Tempo:</span>
+		  <input type="number" min="1" max="120	" class="form-control" name="time" value="<%= question.time %>" placeholder="Tempo em segundos para responder a questão" aria-describedby="sizing-addon1" title="Defina o tempo em segundos estimado para responder a questão">
+		</div>
+		<div class="input-group input-group-lg <%= Messages.errors.form.class('time', errors) %>'">
+			<%- Messages.errors.form.message("time", errors) %>
+		</div>
 
 		<div class="input-group input-group-lg <%= Messages.errors.form.class('points', errors) %>'">
 			<%- Messages.errors.form.message("points", errors) %>
