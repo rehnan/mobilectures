@@ -26,9 +26,6 @@ var DoubtsApiController = {
    create: function(req, res) {
       DoubtsApiController.beforeAction(req, res, function (session) {
       	var params = req.param('doubt');
-      	params.listener = req.session.listener.id;
-      	params.session = req.session.listener.logged_room;
-
       	Doubt.createIfValid(params, req, function (errors, record, index) {
       		if (errors) {
       			sails.log.debug('Error ==> ' + JSON.stringify(errors));
