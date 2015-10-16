@@ -11,6 +11,7 @@ module.exports = {
 
       description : { 
          type: 'text',
+         maxLength: 500,
          required: true 
       },
 
@@ -56,7 +57,8 @@ module.exports = {
       },
 
       description: {
-         required: 'você deve informar a descrição da dúvida',
+         required: 'Você deve informar a descrição da dúvida',
+         maxLength: 'A descrição excedeu o limite de 500 caracteres!'
       },  
    },
 
