@@ -25,7 +25,7 @@
        
  				if (!register) { 
           Log.error('Quiz Inexistente/Encerrado!');
-          return res.json([401], {errors: 'Quiz Encerrado!'});
+          return res.json([401], {errors: 'Este Quiz já foi encerrado!'});
         } 
         var conditions = {};
         conditions.quiz = params.quiz;
@@ -78,8 +78,9 @@
                   data.hits = hits;
                   QuizAnswer.find({quiz:params.quiz_id, listener:params.listener_id, hit:true}).sum('pointing').exec(function(err, pointing){
                      if(err) { return Log.error(err); }
-                     data.pointing = pointing[0].pointing;
-                     Log.error(data.place);
+                     (pointing.length > 0) ? data.pointing = pointing[0].pointing : data.pointing = 0;
+                     Log.info('DEBUGGG');
+                     Log.error(data);
                      return res.json([200], data);
                   });
                });
