@@ -29,7 +29,7 @@ module.exports = {
 	description: {
 		type: 'text',
 		required: true,
-		maxLength: 100,
+		maxLength: 200,
 		minLength: 5 
 	},
 
@@ -94,7 +94,7 @@ module.exports = {
 
 		description: {
 			required: 'Você deve informar a descrição da questão!',
-			maxLength: 'A descrição deve possuir no máximo 100 caracteres!',
+			maxLength: 'A descrição deve possuir no máximo 200 caracteres!',
 			minLength: 'A descrição deve possuir no mínimo 5 caracteres!'
 		},
 
