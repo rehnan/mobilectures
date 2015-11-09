@@ -246,6 +246,8 @@ send: function (req, res) {
               if (poll) {
                 req.flash('success', 'Enquete: '+ poll.title +' foi enviada com sucesso!!');
                 //Sending questions poll to connected listeners 
+                //poll.question = '<pre>'+poll.question+'</pre>';
+                Log.error(poll.question);
                 sails.sockets.broadcast(session.id, 'polls-receive', poll);
               } else {
                 req.flash('error', 'Enquete inexistente!!');

@@ -1,13 +1,13 @@
 <form action="<%= action %>" method="POST" id="form_update_altvs">
 	<article>
 		<div class="form-inline question-group well">
-		<label class="control-label">Múltipla escolha? </label>
-		<label class="radio choice_multiple">
-			<input value="false" <%- PollsHelper.check_radio_false(poll.choice_multiple) %> name="choice_multiple" type="radio">Não.
-		</label>
-		<label class="radio choice_multiple">
-			<input value="true" <%- PollsHelper.check_radio_true(poll.choice_multiple) %> name="choice_multiple" type="radio">Sim.
-		</label>
+			<label class="control-label">Múltipla escolha? </label>
+			<label class="radio choice_multiple">
+				<input value="false" <%- PollsHelper.check_radio_false(poll.choice_multiple) %> name="choice_multiple" type="radio">Não.
+			</label>
+			<label class="radio choice_multiple">
+				<input value="true" <%- PollsHelper.check_radio_true(poll.choice_multiple) %> name="choice_multiple" type="radio">Sim.
+			</label>
 		</div>
 	</article>
 
@@ -15,10 +15,15 @@
 		<div class="input-group input-group-lg <%= Messages.errors.form.class('question', errors) %>'">
 			<input type="hidden" name="title" value="<%= poll.title %>">
 			<input type="hidden" name="description" value="<%= poll.description %>">
-			<span class="input-group-addon" id="sizing-addon2">Questão: </span>
-			<input type="text" value="<%= poll.question %>" class="form-control" name="question" placeholder="Descrição da questão" aria-describedby="sizing-addon2">
+
 		</div>
-		<%- Messages.errors.form.message("question", errors) %>
+
+		<div class='form-group <%= Messages.errors.form.class("question", errors) %>'>   
+			<label for='question'>Descrição:</label>
+			<textarea class='form-control' name='question' placeholder="Informe a descrição da questão..." rows="6"><%= poll.question %></textarea>
+
+			<%- Messages.errors.form.message("question", errors) %>
+		</div>
 		<br>
 
 		<div class="input_fields_wrap question"> 
@@ -26,11 +31,12 @@
 				<%- PollsHelper.input_foreah(alternative, interator) %>
 				<% }); %>
 				<%- PollsHelper.input_for_missing(poll.alternatives) %>
-			</div>
+		</div>
 
-			<div class="input-group pull-right">
+		<div class="input-group pull-right">
 				<button type="button" class="btn btn-success btn-sm add_field_button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nova Alternativa</button>
-			</div> <br><br>
-			<button type="submit" class="btn btn-sm btn-primary btn-block btn_save_altvs">Salvar Alterações</button>
+		</div> <br><br>
+		<button type="submit" class="btn btn-sm btn-primary btn-block btn_save_altvs">Salvar Alterações</button>
 		</article>
 	</form>
+

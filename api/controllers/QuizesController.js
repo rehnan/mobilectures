@@ -192,6 +192,7 @@ send: function (req, res) {
                if (err) { return callback(err, null); }
                req.flash('success', 'Quiz: '+ response.quiz.title +' foi enviado com sucesso!!');
                //Sending quiz to connected listeners 
+
                sails.sockets.broadcast(session.id, 'quizzes-receive', response.quiz);
                return res.redirect('/speaker/sessions/'+session.id+'/quizes/'+updated[0].id+'/reports');
             });
@@ -261,7 +262,7 @@ new_question: function (req, res) {
    QuizesController.beforeAction(req, res, function (session) {
       application.title = req.__('quiz.config.title');
       var params = req.params.all();
-
+      
       Log.debug(req.params.all());
       Quiz.findOne({id:params.quiz_id, session:params.session_id, enabled:true}).populate('questions').exec(function (err, quiz) {
          if(err){return Log.error(err);}
@@ -284,6 +285,7 @@ create_question: function (req, res) {
       application.title = req.__('quiz.show.title');
       var params = req.params.all();
       params.quiz = req.param('quiz_id');
+      params.description = '<pre>'+params.description+'</pre>';
 
       QuizQuestion.createIfValid(params, function (errors, quiz, question) {
          if(errors){

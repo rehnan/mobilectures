@@ -1,14 +1,12 @@
 
 <form action="<%= action %>" method="POST" id="form_question">
 	<article>
-		<div class="input-group input-group-lg <%= Messages.errors.form.class('description', errors) %>'">
-			<span class="input-group-addon" id="sizing-addon2">Questão: </span>
-			<input type="text" value="<%= question.description %>" class="form-control" name="description" placeholder="Descrição da questão" aria-describedby="sizing-addon2">
-		</div>
-		<div class="input-group input-group-lg <%= Messages.errors.form.class('description', errors) %>'">
+		<div class='form-group <%= Messages.errors.form.class("description", errors) %>'>  
+			<label for='description'>Descrição:</label>
+			<textarea class='form-control' name='description' placeholder="Informe a descrição da questão..." rows="6"><%= question.description %></textarea>
+			
 			<%- Messages.errors.form.message("description", errors) %>
 		</div>
-
 		<br>
 		<!-- Refatoras colocando um for pra gerar as opções  -->
 		<div class="input-group input-group-lg <%= Messages.errors.form.class('points', errors) %>'">
